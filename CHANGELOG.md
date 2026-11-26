@@ -7,7 +7,7 @@ Each development stage is a commit on `main`. Finished milestones also get a tag
 ### Milestone 0 — terrain spike (WIP)
 
 - Date: 2026-11-27 (Asia/Singapore)
-- Commit: 
+- Commit: `b4bbfdb`
 - Tag: none yet (the `m0` tag will be added when the spike is accepted)
 
 A first working hex map of all 13 provinces and territories:
