@@ -10,7 +10,7 @@ This project is inspired by [usaciv](https://karpathy.ai/usaciv/) by [Andrej Kar
 
 ## Status
 
-**Documentation only.** This repository is the build-ready specification for implementing Canada Civ. Application code has not been written here yet. Coding agents should treat [docs/SPEC.md](docs/SPEC.md) as the source of truth for the deliverable, and [docs/MILESTONES.md](docs/MILESTONES.md) as the ordered work plan (start at Milestone 0 / MVP).
+**Milestone 0 terrain spike (work in progress).** A browsable hex map of all 13 provinces and territories is in this repository (`web/`, served by the pipeline). City chrome, yields, and lenses are not in yet. Staged commits and tags are listed in [CHANGELOG.md](CHANGELOG.md). [docs/SPEC.md](docs/SPEC.md) remains the source of truth for the deliverable, and [docs/MILESTONES.md](docs/MILESTONES.md) is the ordered work plan.
 
 ## What “done” looks like
 
