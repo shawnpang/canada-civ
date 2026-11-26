@@ -1,0 +1,29 @@
+# Pipeline caches and downloads (rebuild with `uv run python -m pipeline all`)
+data/raw/
+data/interim/
+data/tmp/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Agent / tool caches
+.claude/
+.cursor/
+.cache/
+
+# Build outputs that can be regenerated (keep web/data/*.json once produced)
+# Do not ignore web/data/*.json — those are the shipped atlas payloads, like usaciv.
+out/
+dist/
+*.part

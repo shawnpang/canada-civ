@@ -1,0 +1,35 @@
+Canada Civ
+==========
+
+This project is inspired by, and is a Canada counterpart to, **usaciv** by
+Andrej Karpathy:
+
+- Live site: https://karpathy.ai/usaciv/
+- Announcement: https://x.com/karpathy/status/2125779541952246039
+- MIT source zip: https://karpathy.ai/usaciv/usaciv-source.zip
+- Copyright (c) 2026 Andrej Karpathy, MIT License
+
+This repository currently contains **project documentation only**. It does not
+include a copy of the usaciv source tree. Implementers may read that zip for
+reference and may later reuse portions of it under the MIT License. If any
+usaciv source is incorporated, that code remains Copyright (c) 2026 Andrej
+Karpathy, the MIT license terms continue to apply to it, and this NOTICE must
+be preserved.
+
+The look of both projects is inspired by turn-based 4X strategy games.
+Every glyph, icon, and texture in Canada Civ must be original and drawn in
+code. This project is not affiliated with or endorsed by any game publisher,
+nor by Andrej Karpathy.
+
+Data licences (not MIT)
+-----------------------
+
+Most map and statistical inputs are published by the Government of Canada,
+Statistics Canada, Natural Resources Canada, the Canada Energy Regulator,
+Parks Canada, Public Safety Canada, and related agencies. Those datasets are
+**not** covered by this repository's MIT License. They are typically offered
+under the Open Government Licence – Canada
+(https://open.canada.ca/en/open-government-licence-canada) and/or the
+Statistics Canada Open Licence
+(https://www.statcan.gc.ca/en/reference/licence). Both require attribution.
+See docs/DATA-SOURCES.md for the source list, URLs, and required credit.
