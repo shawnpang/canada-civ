@@ -242,7 +242,7 @@ def build():
  for c in cities:c['peers']=[x['id'] for x in sorted((x for x in cities if x is not c),key=lambda x:abs((x['population'] or 0)-(c['population'] or 0)))[:5]]
  write('nation.json',nation);write('provinces.json',{'provinces':provinces});write('cities.json',cities)
  from pipeline.mvp_lenses import build as build_lenses, fraction
- lenses=build_lenses(world,profiles);write('lenses.json',lenses)
+ lenses=build_lenses(world,profiles)
  # Column-oriented CD values: land-cover measures are averages of the valid
  # sampled hex values, while census measures come directly from the profile.
  fields=['cduid','name','abbr','population','land_area','density','income','home','poverty','age','bachelors','forest','farmland','developed','official_language','cma','cell']
@@ -277,5 +277,8 @@ def build():
        'labour2021':['metadata.json']+[p.name for p in sorted((RAW/'labour2021').glob('data-*.json'))]}
  sources.extend(catalogue(used))
  from pipeline.mvp_annual import catalogue as annual_catalogue
- sources.extend(annual_catalogue());write('sources.json',sources)
+ sources.extend(annual_catalogue())
+ from pipeline.merge_disasters import merge as merge_disasters
+ lenses,sources=merge_disasters(world,lenses,sources)
+ write('lenses.json',lenses);write('sources.json',sources)
  print('Built MVP atlas data and source catalogue')

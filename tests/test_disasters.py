@@ -1,9 +1,11 @@
 import hashlib
 import json
 from pathlib import Path
+import tempfile
 import unittest
+from unittest.mock import patch
 
-from pipeline import disasters
+from pipeline import disasters, merge_disasters, mvp_sources
 from pipeline.core.geo import MapProjection, unproject
 from pipeline.core.hexgrid import HexGrid
 
@@ -71,6 +73,73 @@ class DisasterLensTests(unittest.TestCase):
             self.skipTest('Official source extract is not cached')
         self.assertEqual(hashlib.sha256(raw.read_bytes()).hexdigest(), self.source['files'][0]['sha256'])
         self.assertEqual(disasters.build(self.world, disasters.read_records(raw)), self.payload)
+
+    def test_catalogues_match_disaster_payload_and_preserve_other_lenses(self):
+        lenses = json.loads((ROOT / 'web/data/lenses.json').read_text())['lenses']
+        sources = json.loads((ROOT / 'web/data/sources.json').read_text())
+        self.assertEqual([lens for lens in lenses if lens['id'] == 'disasters'],
+                         [self.payload['lens']])
+        self.assertEqual([source for source in sources if source['id'] == 'cdd'],
+                         [self.source])
+        self.assertTrue({'density', 'income', 'home', 'poverty', 'age', 'bachelors',
+                         'forest', 'farmland', 'developed', 'official_language',
+                         'foreign_born', 'commute', 'homeownership', 'faith',
+                         'faith_tradition', 'migration'} <= {lens['id'] for lens in lenses})
+
+    def test_merge_replaces_stale_entries_and_is_idempotent(self):
+        lenses = {'vintage': 'original', 'groups': [{'id': 'land'}],
+                  'lenses': [{'id': 'other', 'values': [None]},
+                             {'id': 'disasters', 'values': [999]},
+                             {'id': 'disasters', 'values': [999]}]}
+        sources = [{'id': 'other', 'title': 'unchanged'}, {'id': 'cdd'}, {'id': 'cdd'}]
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            cache, out = root / 'raw', root / 'out'
+            cache.mkdir()
+            out.mkdir()
+            extract = cache / 'cdd-extract-1.xlsx'
+            extract.write_bytes(b'fixture')
+            source = disasters.source_record(extract, '2026-01-01')
+            (out / 'sources-disasters.json').write_text(json.dumps([source]))
+            with patch.object(merge_disasters, 'RAW', cache), patch.object(merge_disasters, 'OUT', out), \
+                    patch.object(disasters, 'read_records', return_value=[]), \
+                    patch.object(disasters, 'build', return_value=self.payload):
+                merged_lenses, merged_sources = merge_disasters.merge(self.world, lenses, sources)
+                self.assertEqual(merge_disasters.merge(self.world, merged_lenses, merged_sources),
+                                 (merged_lenses, merged_sources))
+            self.assertEqual(merged_lenses['vintage'], 'original')
+            self.assertEqual(merged_lenses['groups'], lenses['groups'])
+            self.assertEqual(merged_lenses['lenses'], [lenses['lenses'][0], self.payload['lens']])
+            self.assertEqual(merged_sources, [sources[0], source])
+            self.assertEqual(json.loads((out / 'disasters.json').read_text()), self.payload)
+            self.assertEqual(json.loads((out / 'sources-disasters.json').read_text()), [source])
+
+    def test_fetch_verifies_offline_cache_and_refreshes_corrupt_cache(self):
+        content = b'workbook fixture' * 20
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            cache = root / 'data/raw/cdd'
+            out = root / 'web/data'
+            cache.mkdir(parents=True)
+            out.mkdir(parents=True)
+            target = cache / 'cdd-extract-1.xlsx'
+            target.write_bytes(content)
+            source = disasters.source_record(target, '2026-01-01')
+            (out / 'sources-disasters.json').write_text(json.dumps([source]))
+            with patch.object(merge_disasters, 'RAW', cache), patch.object(merge_disasters, 'OUT', out), \
+                    patch.object(mvp_sources, 'ROOT', root), patch.object(mvp_sources, '_request') as request, \
+                    patch.object(disasters, 'read_records', return_value=[]):
+                merge_disasters.fetch(offline=True)
+                request.assert_not_called()
+                target.write_bytes(b'corrupt')
+                with self.assertRaisesRegex(RuntimeError, 'offline cache missing or unverified'):
+                    merge_disasters.fetch(offline=True)
+                request.return_value = content
+                merge_disasters.fetch()
+                request.assert_called_once()
+                entry = json.loads((cache / 'manifest.json').read_text())['files'][0]
+                self.assertEqual(entry['sha256'], hashlib.sha256(content).hexdigest())
+                self.assertEqual(entry['url'], disasters.URL)
 
 
 if __name__ == '__main__':

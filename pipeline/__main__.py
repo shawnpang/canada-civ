@@ -86,6 +86,8 @@ def main():
             fetch(args.offline); fetch_atlas(args.offline)
             from pipeline.mvp_annual import fetch as fetch_annual
             fetch_annual(args.offline)
+            from pipeline.merge_disasters import fetch as fetch_disasters
+            fetch_disasters(args.offline)
         elif args.command == 'process':
             from pipeline.mvp import process as process_atlas
             process(); process_atlas()
@@ -107,7 +109,8 @@ def main():
             from pipeline.world import check as validate
             from pipeline.mvp_check import check as validate_atlas
             from pipeline.mvp_annual import fetch as fetch_annual
-            fetch(args.offline); fetch_atlas(args.offline); fetch_annual(args.offline); process(); process_atlas(); build_atlas()
+            from pipeline.merge_disasters import fetch as fetch_disasters
+            fetch(args.offline); fetch_atlas(args.offline); fetch_annual(args.offline); fetch_disasters(args.offline); process(); process_atlas(); build_atlas()
             world_status = validate()
             atlas_status = validate_atlas(WEB / 'data')
             return int(bool(world_status or atlas_status))
