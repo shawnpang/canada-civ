@@ -1,0 +1,7 @@
+/* A compact panel for census agglomerations, without unsupported city yields. */
+@media (min-width: 901px) {
+  .cc-town-panel { width: min(340px, calc(100vw - 24px)); bottom: auto; max-height: calc(100vh - 130px); }
+}
+.town-pop-row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #bda15a30; font: 12px/1.4 Arial, sans-serif; }
+.town-pop-row strong { color: #f2dfb0; font: bold 15px Georgia, serif; white-space: nowrap; }
+.town-pop-row small { display: block; margin-top: 3px; color: #c0b593; font: 10px Arial, sans-serif; }
