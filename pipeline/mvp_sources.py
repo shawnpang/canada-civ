@@ -136,6 +136,9 @@ def fetch(offline=False, groups=None):
         'census2021': ('statcan_census_2021_profile',
             '2021 Census profile and cartographic boundaries', '98-401-X; 92-160-X',
             PROFILE, '2021 Census', 'Census characteristics and 2021 geography'),
+        'census_economy': ('statcan_census_2021_economy',
+            '2021 Census Profile: employment and tenant shelter costs', '98-401-X',
+            PROFILE, '2021 Census', 'Employed persons, median tenant shelter costs and tenant shelter-cost burden'),
         'population': ('statcan_census_population', '2021 Census population and dwelling counts',
             '98-10-0001-01, 98-10-0002-01, 98-10-0005-01, 98-10-0007-01',
             'https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/hlt-fst/pd-pl/index-eng.cfm',
@@ -243,6 +246,17 @@ def catalogue(used):
                             title='2021 Census cartographic boundaries', product_id='92-160-X',
                             homepage=BOUNDARIES, used_for='Census division and CMA/CA geography', files=boundaries)
                 output.append(item)
+        elif group == 'census_economy':
+            output.append(dict(manifest, files=entries,
+                characteristics={
+                    '2225': 'Employed persons aged 15 years and over in private households; 25% sample',
+                    '1480': 'Median monthly shelter costs for rented dwellings in CAD, including rent and applicable utilities; 25% sample',
+                    '1478': 'Percentage of tenant households spending 30% or more of income on shelter costs; divided by 100; 25% sample'},
+                filters={'frequency': 'A5 (2021 Census)', 'gender': '1 (total)',
+                         'statistic': '1 (counts and values)',
+                         'geographies': 'Canada, provinces and territories, CMA/CA, and census subdivisions; 2021 boundaries',
+                         'housing_universe': 'Tenant households in non-farm, non-reserve private dwellings'},
+                tables=['98-401-X2021001','98-401-X2021002','98-401-X2021005']))
         elif group == 'gdp':
             for entry in entries:
                 code = Path(entry['file']).stem
