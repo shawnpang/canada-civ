@@ -11,6 +11,16 @@ Residual art gaps accepted with Milestone 0, to be tightened after MVP/v1 featur
 - Procedural terrain marks are simpler and more repetitive than the reference atlas
 - Coastlines, lakes, and borders remain coarse hex approximations
 
+## 2026-11-27 — Milestone 2 accepted
+
+- Date: 2026-11-27 (Asia/Singapore)
+- Tag: `m2` (this commit)
+- Integration branch: `m2-integrate`
+
+v1 richness on the Milestone 1 atlas: unified header (Advisors, Share, help, Almanac, centred search), City View tabs with Census pictograms, location-quotient districts, official employed counts and tenant shelter costs, GDP per person only when both official GDP and population exist (vintages labelled), resource and infrastructure layers, Parks Canada wonders (universities omitted: no open institution-level R&D series), painted province names, denser mid-zoom banners, and six additional Census 2021 lenses. `pipeline check` and 71 unit tests pass. Screenshots: `/workspace/canada-civ-runs/screens/m2-*.png`.
+
+Residuals, recorded rather than invented: clipped Compare tab label and header vintage; some overlapping province labels; no GDP-per-person or growth ranks in the payload (medallions show a dash); immigrant-share and 30-minute commute lenses stand in for exact foreign-born share and mean commute duration; terrain-art polish remains deferred.
+
 ## 2026-11-27 — Milestone 1 accepted
 
 - Date: 2026-11-27 (Asia/Singapore)

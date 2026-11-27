@@ -86,11 +86,11 @@ Sources, schemas, UI, and the definition of done live in [SPEC.md](SPEC.md). Lic
 
 **Acceptance.**
 
-- [ ] Each v1 feature’s SPEC acceptance criteria pass.
-- [ ] Eager layer JSON files stay under the SPEC size budget, or are split/lazy-loaded with a documented exception.
-- [ ] Wonder and district rules are quoted in the Almanac from the data files, not hard-coded only in JS.
-- [ ] Military layer provenance is the public DND directory (or a better open GIS if one has appeared); no invented troop counts.
-- [ ] Tests and `pipeline check` pass.
+- [x] Each v1 feature’s SPEC acceptance criteria pass. **2026-11-27 note:** university wonders are omitted (no open institution-level R&D series). Immigrant share and 30-minute commute lenses are documented stand-ins for exact foreign-born share and mean commute. Terrain-art polish and a few chrome trims (clipped Compare label, truncated header vintage, some overlapping province names) remain residual.
+- [x] Eager layer JSON files stay under the SPEC size budget, or are split/lazy-loaded with a documented exception.
+- [x] Wonder and district rules are quoted in the Almanac from the data files, not hard-coded only in JS.
+- [x] Military layer provenance is the public DND directory (or a better open GIS if one has appeared); no invented troop counts.
+- [x] Tests and `pipeline check` pass.
 
 ---
 

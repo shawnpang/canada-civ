@@ -16,3 +16,7 @@ Additional checks recorded by the verification workstream (Census Profile SDMX C
 - All 41 official 2021 CMA codes are present; the atlas also includes two selected CAs plus Iqaluit as a territorial capital.
 
 Population estimates, Census counts, Census unemployment, and GDP use different years and geographies and should not be reconciled into a single total. No mismatches were found among the recorded comparisons. Application JSON was not changed to force a match.
+
+## Milestone 2 additions
+
+Census economy fields wired in Milestone 2 (employed, characteristic 2225; median tenant shelter costs, 1480; rent burden, 1478) were independently checked against the Census Profile SDMX CSV API on 2026-11-27. Toronto CMA employed 2,903,480, shelter cost $1,540, and rent burden 40.5%, and the Canada totals, all match. Unemployment is unchanged (2021 Census characteristic 2230). GDP per person shown in City View is official 2022 GDP divided by the July 2025 population estimate, with both vintages labelled; it is not a single official StatCan ratio series. Retrieval notes: `/workspace/canada-civ-runs/verification.md`.
