@@ -11,7 +11,10 @@ class WaterRendererTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1] / 'web/js/render'
         lod = 'data:text/javascript;base64,' + base64.b64encode(
             (root / 'art/lod.js').read_bytes()).decode('ascii')
-        source = (root / 'water.js').read_text().replace("'./art/lod.js'", repr(lod))
+        palette_source = (root / 'art/palette.js').read_text().replace("'./lod.js'", repr(lod))
+        palette = 'data:text/javascript;base64,' + base64.b64encode(
+            palette_source.encode()).decode('ascii')
+        source = (root / 'water.js').read_text().replace("'./art/lod.js'", repr(lod)).replace("'./art/palette.js'", repr(palette))
         module = 'data:text/javascript;base64,' + base64.b64encode(
             source.encode()).decode('ascii')
         script = r'''

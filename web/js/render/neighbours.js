@@ -16,7 +16,7 @@ export function paintNeighbours(ctx, w, {width, height, scale, ox, oy}) {
 
   // Draw to a transparent layer so the vignette reveals the actual ocean
   // underneath and never fades Canadian terrain. Match the cache's pixel ratio.
-  const transform = ctx.getTransform();
+  const transform = ctx.getTransform?.() || {a: 1, b: 0, c: 0, d: 1, e: 0, f: 0};
   const pixelRatio = Math.max(Math.abs(transform.a), Math.abs(transform.d)) || 1;
   const layer = document.createElement('canvas');
   layer.width = Math.ceil(width * pixelRatio);

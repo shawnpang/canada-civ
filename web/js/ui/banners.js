@@ -230,6 +230,8 @@ export function layoutBanners(ctx) {
     // Stack nearby metropolitan labels at national scale, retaining their
     // real anchor points and a leader to each one.
     const offsets = zoom <= 1.4 ? [30, 58, 86, 114] : [30, 55, 80];
+    // Two records on the same official point must not stack; nearby metros may.
+    if (placed.some(other => other.city && Math.hypot(other.x - x, other.y - y) < 4)) continue;
     let box = null;
     for (const offset of offsets) {
       const top = y - offset;

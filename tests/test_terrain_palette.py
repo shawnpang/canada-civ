@@ -31,6 +31,7 @@ function context() {
   const fills = [];
   const ctx = {fills, globalAlpha: 1, fill() { fills.push(this.fillStyle); },
     createLinearGradient() {return gradient;}, createRadialGradient() {return gradient;}};
+  ctx.getTransform = () => ({a:1,b:0,c:0,d:1,e:0,f:0});
   for (const method of ['beginPath','moveTo','lineTo','closePath','quadraticCurveTo','rect',
     'fillRect','save','restore','translate','scale','clip','stroke','ellipse','drawImage']) ctx[method] = () => {};
   return ctx;
