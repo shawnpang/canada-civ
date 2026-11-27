@@ -1,0 +1,29 @@
+[
+  {
+    "id": "statcan_csd_population_98100002",
+    "title": "Population and dwelling counts: Canada, provinces and territories, census divisions and census subdivisions",
+    "publisher": "Statistics Canada",
+    "product_id": "98-10-0002-01",
+    "vintage": "2021 Census, 2021 boundaries",
+    "license": "Statistics Canada Open Licence",
+    "homepage": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810000201",
+    "description": "Population and dwelling counts, land area and population density for census subdivisions. Percentage change compares 2016 and 2021 Census counts. Suppressed, unavailable and flagged estimates are null.",
+    "used_for": "Census subdivision Explorer table and scatter",
+    "files": [
+      {
+        "file": "data/raw/csd_explorer/98100002-eng.zip",
+        "url": "https://www150.statcan.gc.ca/n1/tbl/csv/98100002-eng.zip",
+        "retrieved": "2026-11-27",
+        "sha256": "36ab6c8f3f6b82d70d9dea927cb5cf04f6fbf9b543a7ad543695e6ea70d22876",
+        "bytes": 551875
+      },
+      {
+        "file": "data/raw/csd_explorer/98100002-fra.zip",
+        "url": "https://www150.statcan.gc.ca/n1/tbl/csv/98100002-fra.zip",
+        "retrieved": "2026-11-27",
+        "sha256": "9b862c8bdc0ee3bad8ccb76e24a25ec44b917faef5c6396336d24599bf203bdd",
+        "bytes": 561023
+      }
+    ]
+  }
+]

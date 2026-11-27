@@ -1,0 +1,28 @@
+[
+  {
+    "id": "elections_canada_2025",
+    "title": "45th General Election: Official Voting Results, Table 11; Electoral Geography Boundary Files (45th General Election), Federal Electoral Districts SHP",
+    "publisher": "Elections Canada",
+    "vintage": "2025-04-28",
+    "homepage": "https://www.elections.ca/content.aspx?dir=rep/off/45gedata&document=summary&lang=e&section=res",
+    "description": "Official electoral district results and 2025 federal electoral district boundaries.",
+    "used_for": "Federal election 2025 lens",
+    "license": "Elections Canada terms: non-commercial reproduction permitted with attribution; commercial redistribution requires permission. https://www.elections.ca/content.aspx?document=index&lang=e&section=pri",
+    "files": [
+      {
+        "file": "data/raw/election2025/results.csv",
+        "url": "https://www.elections.ca/res/rep/off/ovrGE45/62/data_donnees/table_tableau11.csv",
+        "sha256": "7a406ddd90b4ef9dfc96c718c04addfca5628ccbc657539626de54f26505cf82",
+        "bytes": 48201,
+        "retrieved": "2026-11-27T05:12:47.616184+00:00"
+      },
+      {
+        "file": "data/raw/election2025/boundaries.zip",
+        "url": "https://www.elections.ca/res/cir/mapsCorner/vector/FederalElectoralDistricts_2025_SHP.zip",
+        "sha256": "4004a6bff0303c46bc5d9318a3c0b4a0322599bc707712a3c41acffafbef0b93",
+        "bytes": 10301648,
+        "retrieved": "2026-11-27T05:12:48.848350+00:00"
+      }
+    ]
+  }
+]
