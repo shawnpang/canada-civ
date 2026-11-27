@@ -2,6 +2,8 @@
 // The paths are cached in map kilometres so they stay anchored while panning.
 import {lodFor, MID, NEAR} from './art/lod.js';
 const R = 25, DX = Math.sqrt(3) * R;
+// Keep terrain's canvas background and the grid-edge fade in sync.
+const DEEP_OCEAN = '#1b4967';
 const LAND = ['#81936d','#839b63','#526f4d','#718c60','#a1a47b','#b4a979','#a4a575','#bea96b','#849b79','#aaa487','#aaa998','#e0e7df'];
 const geometry = new WeakMap();
 function kind(w, i) { return w.water[i] === 3 ? 1 : w.water[i] ? 0 : -1; }
@@ -27,6 +29,7 @@ function landColor(w, i) {
 function makeGeometry(w) {
   const {rows, cols} = w.grid;
   const water = [new Path2D(), new Path2D()];
+  const shelf = new Path2D();
   const shores = [new Path2D(), new Path2D()];
   const cutouts = [new Path2D(), new Path2D()];
   const crossings = new Map();
@@ -42,7 +45,8 @@ function makeGeometry(w) {
     const p=centre(row,col), ns=neighbours(row,col);
     const ni=ns.map(([r,c])=>index(r,c,rows,cols));
     const nc=ns.map(([r,c])=>centre(r,c));
-    const path=water[type], extensions=[];
+    const isShelf=w.water[i]===2;
+    const path=isShelf ? new Path2D() : water[type], extensions=[];
     // A water hex loses the corner between two land neighbours. At the
     // opposite configuration, a triangle extends water into the land hex.
     for(let k=0;k<6;k++) {
@@ -70,6 +74,7 @@ function makeGeometry(w) {
     }
     path.closePath();
     for(const points of extensions) triangle(path,...points);
+    if(isShelf) { water[type].addPath(path); shelf.addPath(path); }
   }
   // Connect crossings by the pair of cells they lie between. Every complete
   // crossing has one incoming and one outgoing segment, with water on the
@@ -90,6 +95,9 @@ function makeGeometry(w) {
     const cross=(b.point[0]-a.point[0])*(wetPoint[1]-a.point[1])-(b.point[1]-a.point[1])*(wetPoint[0]-a.point[0]);
     const from=cross>0?a:b, to=cross>0?b:a;
     from.next=to; to.prev=from; from.type=type;
+    // For a smoothed marine shore, extend the shelf only when a contributing
+    // water cell is actually classified as shelf.
+    from.shelf=type===0 && ids.some((i,k)=>wet[k] && w.water[i]===2);
     from.land=ids[wet.indexOf(false)];
   }
   for(let row=0;row<rows-1;row++) for(let col=0;col<cols;col++) {
@@ -116,9 +124,12 @@ function makeGeometry(w) {
       ground.moveTo(...a); ground.lineTo(...p); ground.lineTo(...b); ground.quadraticCurveTo(...p,...a); ground.closePath();
     } else {
       path.moveTo(...b); path.lineTo(...p); path.lineTo(...a); path.quadraticCurveTo(...p,...b); path.closePath();
+      if(node.shelf) {
+        shelf.moveTo(...b); shelf.lineTo(...p); shelf.lineTo(...a); shelf.quadraticCurveTo(...p,...b); shelf.closePath();
+      }
     }
   }
-  return {water, shores, land, cutouts};
+  return {water, shelf, shores, land, cutouts};
 }
 
 export function paintWater(ctx, w, {width,height,scale,ox,oy}) {
@@ -141,12 +152,22 @@ export function paintWater(ctx, w, {width,height,scale,ox,oy}) {
     ctx.clip(outside,'evenodd'); ctx.clip(paths.water[type]);
     const gradient=ctx.createLinearGradient(0,0,DX*110,R*120);
     if(type===0) {
-      gradient.addColorStop(0,'#315f6b'); gradient.addColorStop(.48,'#396d77'); gradient.addColorStop(1,'#305e6b');
+      gradient.addColorStop(0,'#204e70'); gradient.addColorStop(.48,'#285d7d'); gradient.addColorStop(1,DEEP_OCEAN);
     } else {
-      gradient.addColorStop(0,'#294e60'); gradient.addColorStop(.55,'#315d6c'); gradient.addColorStop(1,'#294f60');
+      gradient.addColorStop(0,'#245d83'); gradient.addColorStop(.55,'#30779b'); gradient.addColorStop(1,'#245f86');
     }
     ctx.fillStyle=gradient;
     ctx.fillRect(-ox/scale,-oy/scale,width/scale,height/scale);
+    if(type===0) {
+      // Shelf is only the subset of the marine mask marked coast by the data;
+      // the shared marine clip retains the same smoothed coastline.
+      ctx.save(); ctx.clip(paths.shelf);
+      const shelfGradient=ctx.createLinearGradient(0,0,DX*110,R*120);
+      shelfGradient.addColorStop(0,'#347b91'); shelfGradient.addColorStop(.48,'#408ca0'); shelfGradient.addColorStop(1,'#33788f');
+      ctx.fillStyle=shelfGradient;
+      ctx.fillRect(-ox/scale,-oy/scale,width/scale,height/scale);
+      ctx.restore();
+    }
     ctx.lineJoin='round'; ctx.lineCap='round';
     // Clip to water so the strokes form bands on the water side only.
     if(lod>=MID) {
@@ -172,7 +193,7 @@ export function paintWater(ctx, w, {width,height,scale,ox,oy}) {
       for(const [x0,y0,x1,y1] of [[0,0,DX*2.5,0],[right,0,right-DX*2.5,0],
         [0,0,0,R*3.75],[0,bottom,0,bottom-R*3.75]]) {
         const fade=ctx.createLinearGradient(x0,y0,x1,y1);
-        fade.addColorStop(0,'#315e6b'); fade.addColorStop(1,'rgba(49,94,107,0)');
+        fade.addColorStop(0,DEEP_OCEAN); fade.addColorStop(1,'rgba(27,73,103,0)');
         ctx.fillStyle=fade; ctx.fillRect(-ox/scale,-oy/scale,width/scale,height/scale);
       }
     }
