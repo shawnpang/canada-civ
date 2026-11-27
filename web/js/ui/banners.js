@@ -114,6 +114,29 @@ function traceHex(g, x, y, radius) {
   g.closePath();
 }
 
+function tracePill(g, left, top, width, height, radius) {
+  const r = Math.min(radius, width / 2, height / 2);
+  g.beginPath();
+  g.moveTo(left + r, top); g.lineTo(left + width - r, top);
+  g.quadraticCurveTo(left + width, top, left + width, top + r);
+  g.lineTo(left + width, top + height - r);
+  g.quadraticCurveTo(left + width, top + height, left + width - r, top + height);
+  g.lineTo(left + r, top + height);
+  g.quadraticCurveTo(left, top + height, left, top + height - r);
+  g.lineTo(left, top + r);
+  g.quadraticCurveTo(left, top, left + r, top);
+  g.closePath();
+}
+
+// The colour is decorative; the initial and the close-zoom plaque both come
+// from the published city classification, not an inferred yield.
+function typeColour(id) {
+  const colours = ['#617e61', '#a96f4f', '#697d96', '#92719a', '#ad8a43', '#668a86'];
+  let hash = 0;
+  for (const char of String(id)) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+  return colours[hash % colours.length];
+}
+
 function highlightFootprint(ctx, city, camera) {
   const world = ctx.world, grid = world?.grid;
   if (!grid || !Array.isArray(city?.footprint)) return;
@@ -169,11 +192,12 @@ export function layoutBanners(ctx) {
     const population = Number.isFinite(city.population) ? compact.format(city.population) : null;
     const chipWidth = population ? Math.max(36, Math.ceil(g.measureText(population).width) + 12) : 0;
     const nameWidth = Math.max(56, Math.ceil(g.measureText(name).width) + 20);
-    const width = chipWidth + nameWidth, left = x - width / 2, height = 21;
     const badgeId = districts?.cities?.[String(city.id)]?.badge;
     const badgeType = districts?.types?.find(type => type.id === badgeId);
     const badgeName = typeof badgeType?.name === 'string' ? badgeType.name :
       (badgeType?.name?.[ctx.getLang()] || badgeType?.name?.en);
+    const emblemWidth = badgeName ? 20 : 0;
+    const width = chipWidth + nameWidth + emblemWidth, left = x - width / 2, height = 23;
     const showBadge = !!badgeName && (city === focused || zoom >= 2.5);
     g.font = 'bold 10px Georgia, serif';
     const badgeWidth = showBadge ? Math.ceil(g.measureText(badgeName).width) + 18 : 0;
@@ -184,9 +208,9 @@ export function layoutBanners(ctx) {
     let box = null;
     for (const offset of offsets) {
       const top = y - offset;
-      const candidate = {city, left, top, right: left + width, bottom: top + height + 5, x, y, name, nameWidth, chipWidth, population};
+      const candidate = {city, left, top, right: left + width, bottom: top + height + 5, x, y, name, nameWidth, chipWidth, population, badgeId, badgeName, emblemWidth};
       if (candidate.left > innerWidth || candidate.right < 0 || candidate.top > innerHeight || candidate.bottom < 0) continue;
-      candidate.collision = {left: Math.min(left, x - badgeWidth / 2), right: Math.max(left + width, x + badgeWidth / 2), top: top - (showBadge ? 19 : 0), bottom: candidate.bottom};
+      candidate.collision = {left: Math.min(left, x - badgeWidth / 2), right: Math.max(left + width, x + badgeWidth / 2), top: top - (showBadge ? 22 : 0), bottom: candidate.bottom};
       if (placed.some(other => candidate.collision.left < other.collision.right + 4 && candidate.collision.right + 4 > other.collision.left &&
           candidate.collision.top < other.collision.bottom + 3 && candidate.collision.bottom + 3 > other.collision.top)) continue;
       box = candidate;
@@ -259,17 +283,18 @@ export function onRedraw(ctx) {
       const active = String(town.id) === selected;
       g.beginPath(); g.moveTo(x, bottom); g.lineTo(x, y - 3);
       g.strokeStyle = 'rgba(239, 225, 185, .8)'; g.lineWidth = 1; g.stroke();
-      g.fillStyle = active ? '#b49b69' : '#d9cba4';
-      g.fillRect(left, top, right - left, bottom - top);
+      tracePill(g, left, top, right - left, bottom - top, 4);
+      g.fillStyle = active ? '#b49b69' : '#c8bb9b';
+      g.fill();
       g.strokeStyle = active ? '#fff3c9' : '#867754'; g.lineWidth = active ? 2 : 1;
-      g.strokeRect(left, top, right - left, bottom - top);
+      g.stroke();
       g.font = '10px Georgia, serif'; g.fillStyle = '#302c22';
       g.fillText(name, x, (top + bottom) / 2);
       g.font = 'bold 11px Georgia, serif';
       townHitBoxes.push(box);
       continue;
     }
-    const {city, x, y, left, top, right, bottom, name, nameWidth, chipWidth, population} = box;
+    const {city, x, y, left, top, right, bottom, name, nameWidth, chipWidth, population, badgeId, badgeName, emblemWidth} = box;
     const active = city === focused;
     g.globalAlpha = focused && !active ? .72 : 1;
     if (y - bottom > 9) {
@@ -279,28 +304,34 @@ export function onRedraw(ctx) {
     g.shadowColor = 'rgba(0,0,0,.65)';
     g.shadowBlur = 4;
     g.shadowOffsetY = 2;
-    g.beginPath();
-    g.moveTo(left + 4, top); g.lineTo(right - 4, top);
-    g.lineTo(right, top + 4); g.lineTo(right, bottom - 9);
-    g.lineTo(right - 4, bottom - 5); g.lineTo(x + 4, bottom - 5);
-    g.lineTo(x, bottom); g.lineTo(x - 4, bottom - 5);
-    g.lineTo(left + 4, bottom - 5); g.lineTo(left, bottom - 9);
-    g.lineTo(left, top + 4); g.closePath();
+    g.beginPath(); g.moveTo(x - 5, bottom - 7); g.lineTo(x, bottom);
+    g.lineTo(x + 5, bottom - 7); g.closePath();
     g.fillStyle = active ? '#76572d' : '#202a2b'; g.fill();
     g.strokeStyle = active ? '#ffe3a0' : '#c5a15d'; g.lineWidth = active ? 2 : 1; g.stroke();
+    tracePill(g, left, top, right - left, bottom - top - 5, 9);
+    g.fill(); g.stroke();
     g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
     if (population) {
-      g.fillStyle = active ? '#8b9b54' : '#627b4b';
-      g.fillRect(left + 2, top + 2, chipWidth - 2, 17);
+      tracePill(g, left + 2, top + 2, chipWidth - 2, 19, 7);
+      g.fillStyle = active ? '#8b9b54' : '#627b4b'; g.fill();
       g.fillStyle = '#fff2c8';
-      g.fillText(population, left + chipWidth / 2, top + 11);
+      g.fillText(population, left + chipWidth / 2 + 1, top + 12);
     }
     g.fillStyle = '#fff0c9';
-    g.fillText(name, left + chipWidth + nameWidth / 2, top + 11);
+    g.fillText(name, left + chipWidth + nameWidth / 2, top + 12);
+    if (emblemWidth) {
+      const bx = right - emblemWidth / 2 - 2, by = top + 11.5;
+      g.beginPath(); g.arc(bx, by, 7, 0, Math.PI * 2);
+      g.fillStyle = typeColour(badgeId); g.fill();
+      g.strokeStyle = '#d9c18a'; g.lineWidth = .8; g.stroke();
+      g.fillStyle = '#fff4d5'; g.font = 'bold 9px Georgia, serif';
+      g.fillText(Array.from(badgeName)[0].toLocaleUpperCase(ctx.getLang() === 'fr' ? 'fr-CA' : 'en-CA'), bx, by + .5);
+      g.font = 'bold 11px Georgia, serif';
+    }
     // At city scale there is room for the published type plaque; its own
     // bounds participate in hit testing, just like the banner itself.
     if (districts && (active || zoom >= 2.5)) {
-      const badge = drawCityTypeBadge(g, districts, city.id, {x, y: top - 10, lang: ctx.getLang()});
+      const badge = drawCityTypeBadge(g, districts, city.id, {x, y: top - 12, lang: ctx.getLang()});
       if (badge) hitBoxes.push({city, left: badge.left, right: badge.left + badge.width, top: badge.top, bottom: badge.top + badge.height});
     }
     hitBoxes.push(box);
