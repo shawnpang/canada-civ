@@ -1,22 +1,13 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Canada Civ</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Canada Civ</title><link rel="stylesheet" href="css/style.css"></head>
 <body>
-  <canvas id="map" aria-label="Map of Canada"></canvas>
-  <header>
-    <div class="brand"><span class="leaf" aria-hidden="true">✦</span><div><b>CANADA CIV</b><small id="subtitle">A living atlas of the land</small></div></div>
-    <div class="header-right"><span class="tag" id="vintage">THE LAND · 2021 / 2020</span><button id="lang" aria-label="Français">FR</button><button id="help" aria-label="Help">?</button></div>
-  </header>
-  <div id="loading">Surveying the land…</div>
-  <div class="minimap-frame"><canvas id="minimap" tabindex="0" width="200" height="164" aria-label="Overview map; drag to navigate"></canvas></div>
-  <div class="controls"><button id="plus" aria-label="Zoom in">+</button><button id="minus" aria-label="Zoom out">−</button><button id="home" aria-label="Reset view">⌂</button></div>
-  <footer><span id="hint">DRAG TO EXPLORE · SCROLL TO ZOOM</span><span id="credit">Statistics Canada · Natural Resources Canada · NOAA · Natural Earth</span></footer>
-  <div id="dialog" hidden><button id="close" aria-label="Close">×</button><h2 id="helpTitle">Explore the map</h2><p id="helpText">Drag to pan, scroll or use + and − to zoom. This is a schematic atlas, not a legal boundary map. Terrain uses 2020 land cover and MRDEM elevation. Data: Statistics Canada Open Licence; Open Government Licence – Canada; NOAA; Natural Earth.</p></div>
-  <script type="module" src="js/main.js"></script>
-</body>
-</html>
+<canvas id="map" aria-label="Map of Canada"></canvas>
+<header><div class="brand"><span class="leaf" aria-hidden="true">✦</span><b>CANADA CIV</b></div><div id="yields" class="yields"></div><div class="header-right"><span class="tag" id="vintage"></span><button id="searchButton">⌕</button><button id="shareButton"></button><button id="almanacButton"></button><button id="lang">FR</button><button id="help">?</button></div></header>
+<div id="loading">Surveying the land…</div>
+<div class="lens-dock"><div id="quickLenses"></div><label id="lensLabel" for="lensSelect"></label><select id="lensSelect"></select></div><div id="legend" hidden></div>
+<aside id="panel" hidden></aside>
+<div class="minimap-frame"><canvas id="minimap" tabindex="0" width="200" height="164" aria-label="Overview map"></canvas></div>
+<div class="controls"><button id="plus" aria-label="Zoom in">+</button><button id="minus" aria-label="Zoom out">−</button><button id="home" aria-label="Reset view">⌂</button></div>
+<footer><span id="hint"></span><span id="credit">Statistics Canada · Natural Resources Canada · NOAA · Natural Earth</span></footer>
+<div id="modal" hidden><div class="modal-card"><button id="modalClose" class="close">×</button><div id="modalContent"></div></div></div>
+<script type="module" src="js/main.js"></script></body></html>
