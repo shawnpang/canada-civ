@@ -1,0 +1,258 @@
+[
+  {
+    "id": "nrcan_clean_generation",
+    "title": "Clean power generating stations by type in megawatts (MW)",
+    "publisher": "Natural Resources Canada",
+    "product_id": "65d3db23-b83c-4f49-ab93-65c59ee0e6aa",
+    "vintage": "2016",
+    "homepage": "https://open.canada.ca/data/en/dataset/65d3db23-b83c-4f49-ab93-65c59ee0e6aa",
+    "license": "Open Government Licence – Canada",
+    "used_for": "Resource sites and published selection rules",
+    "files": [
+      {
+        "file": "data/raw/resources-generation-1.json",
+        "url": "https://geoappext.nrcan.gc.ca/arcgis/rest/services/Energy/CERP_EN/MapServer/1/query?where=1%3D1&outFields=*&outSR=4326&f=json",
+        "retrieved": "2026-11-27",
+        "sha256": "9c447d725c8237a8a22ab6ab5c51f329913a1a696a2369febdbfcdceb62cb6a2",
+        "bytes": 44098
+      },
+      {
+        "file": "data/raw/resources-generation-2.json",
+        "url": "https://geoappext.nrcan.gc.ca/arcgis/rest/services/Energy/CERP_EN/MapServer/2/query?where=1%3D1&outFields=*&outSR=4326&f=json",
+        "retrieved": "2026-11-27",
+        "sha256": "c6f0f70489833dad68283915cd67ce9122721b6ae8b713f52cad10c5bd4b1e79",
+        "bytes": 173139
+      },
+      {
+        "file": "data/raw/resources-generation-3.json",
+        "url": "https://geoappext.nrcan.gc.ca/arcgis/rest/services/Energy/CERP_EN/MapServer/3/query?where=1%3D1&outFields=*&outSR=4326&f=json",
+        "retrieved": "2026-11-27",
+        "sha256": "f48b6ead1b5b3e55de980f7fb933637f36b1348c464ee16711201c95a7078f57",
+        "bytes": 2828
+      },
+      {
+        "file": "data/raw/resources-generation-4.json",
+        "url": "https://geoappext.nrcan.gc.ca/arcgis/rest/services/Energy/CERP_EN/MapServer/4/query?where=1%3D1&outFields=*&outSR=4326&f=json",
+        "retrieved": "2026-11-27",
+        "sha256": "d546a2f3ed7f60bece35964c65d6371dbc0338ce58a5b9faec3798f23935645e",
+        "bytes": 42842
+      },
+      {
+        "file": "data/raw/resources-generation-5.json",
+        "url": "https://geoappext.nrcan.gc.ca/arcgis/rest/services/Energy/CERP_EN/MapServer/5/query?where=1%3D1&outFields=*&outSR=4326&f=json",
+        "retrieved": "2026-11-27",
+        "sha256": "642804e64b7deb06fc724d5111174d2098b968ea1182abc8cb2f0e0d58b268f8",
+        "bytes": 1648
+      },
+      {
+        "file": "data/raw/resources-generation-6.json",
+        "url": "https://geoappext.nrcan.gc.ca/arcgis/rest/services/Energy/CERP_EN/MapServer/6/query?where=1%3D1&outFields=*&outSR=4326&f=json",
+        "retrieved": "2026-11-27",
+        "sha256": "4e723f45df825691372cb01a70e89973f900fe3114d31ae48b3aed07b7479e5c",
+        "bytes": 67228
+      }
+    ]
+  },
+  {
+    "id": "nrcan_900a",
+    "title": "Principal Mineral Areas, Producing Mines, and Oil and Gas Fields (900A)",
+    "publisher": "Natural Resources Canada",
+    "product_id": "000183ed-8864-42f0-ae43-c4313a860720",
+    "vintage": "2025",
+    "homepage": "https://open.canada.ca/data/en/dataset/000183ed-8864-42f0-ae43-c4313a860720",
+    "license": "Open Government Licence – Canada",
+    "used_for": "Resource sites and published selection rules",
+    "files": [
+      {
+        "file": "data/raw/resources-mines-3.json",
+        "url": "https://maps-cartes.services.geo.ca/server_serveur/rest/services/NRCan/900A_and_top_100_en/MapServer/3/query?where=1%3D1&outFields=*&outSR=4326&f=json",
+        "retrieved": "2026-11-27",
+        "sha256": "a85add91bb3cb3f3c1e476eafac99730d791f3e6f833ec35f7f18a6393107edd",
+        "bytes": 41975
+      },
+      {
+        "file": "data/raw/resources-mines-4.json",
+        "url": "https://maps-cartes.services.geo.ca/server_serveur/rest/services/NRCan/900A_and_top_100_en/MapServer/4/query?where=1%3D1&outFields=*&outSR=4326&f=json",
+        "retrieved": "2026-11-27",
+        "sha256": "f5bcea11ed27394abb4e8e8e18d59a22ce516a0fa78736f27abd63925e4d03ab",
+        "bytes": 41311
+      },
+      {
+        "file": "data/raw/resources-mines-5.json",
+        "url": "https://maps-cartes.services.geo.ca/server_serveur/rest/services/NRCan/900A_and_top_100_en/MapServer/5/query?where=1%3D1&outFields=*&outSR=4326&f=json",
+        "retrieved": "2026-11-27",
+        "sha256": "cbd08a2521c92192cbbfd57212c9b6c626aabed914d507bb7ac37b6c30725e91",
+        "bytes": 6767
+      },
+      {
+        "file": "data/raw/resources-mines-6.json",
+        "url": "https://maps-cartes.services.geo.ca/server_serveur/rest/services/NRCan/900A_and_top_100_en/MapServer/6/query?where=1%3D1&outFields=*&outSR=4326&f=json",
+        "retrieved": "2026-11-27",
+        "sha256": "35c5b2f9d1138f047ed7cf6398079e5a671f41db9076cf4cd17cfa21cd87ff78",
+        "bytes": 4838
+      }
+    ]
+  },
+  {
+    "id": "atlas_15m_roads",
+    "title": "Atlas of Canada National Scale Data 1:15,000,000 – Roads",
+    "product_id": "1326fb30-046a-546e-b9a3-1102bcfb44b8",
+    "vintage": "2017",
+    "publisher": "Natural Resources Canada",
+    "homepage": "https://open.canada.ca/data/en/dataset/1326fb30-046a-546e-b9a3-1102bcfb44b8",
+    "license": "Open Government Licence – Canada",
+    "description": "Atlas of Canada National Scale Data 1:15,000,000 – Roads",
+    "used_for": "Generalized road routes",
+    "files": [
+      {
+        "file": "data/raw/infra/roads.zip",
+        "url": "https://ftp.geogratis.gc.ca/pub/nrcan_rncan/vector/framework_cadre/Atlas_of_Canada_15M/transportation/AC_15M_Roads.shp.zip",
+        "retrieved": "2026-11-27",
+        "sha256": "12312ffa361c2c70b9f9dd70923f917bd26d21f409135538f8978fb425fe3fc2",
+        "bytes": 116675
+      }
+    ]
+  },
+  {
+    "id": "atlas_15m_rail",
+    "title": "Atlas of Canada National Scale Data 1:15,000,000 – Railways",
+    "product_id": "c751172b-37d5-5115-92f0-6652f97b1743",
+    "vintage": "2017",
+    "publisher": "Natural Resources Canada",
+    "homepage": "https://open.canada.ca/data/en/dataset/c751172b-37d5-5115-92f0-6652f97b1743",
+    "license": "Open Government Licence – Canada",
+    "description": "Atlas of Canada National Scale Data 1:15,000,000 – Railways",
+    "used_for": "Generalized railway routes",
+    "files": [
+      {
+        "file": "data/raw/infra/rail.zip",
+        "url": "https://ftp.geogratis.gc.ca/pub/nrcan_rncan/vector/framework_cadre/Atlas_of_Canada_15M/transportation/AC_15M_Railways.shp.zip",
+        "retrieved": "2026-11-27",
+        "sha256": "1197bd7a5f22154bd58d97eb5b82ed70d0be3c60c1c22661058393c22d28dfa7",
+        "bytes": 83906
+      }
+    ]
+  },
+  {
+    "id": "tc_airports",
+    "title": "Airports with air navigation services",
+    "product_id": "3a1eb6ef-6054-4f9d-b1f6-c30322cd7abf",
+    "vintage": "2021",
+    "publisher": "Transport Canada",
+    "homepage": "https://open.canada.ca/data/en/dataset/3a1eb6ef-6054-4f9d-b1f6-c30322cd7abf",
+    "license": "Open Government Licence – Canada",
+    "description": "Airports with air navigation services",
+    "used_for": "Airports served by NAV CANADA control towers or flight service stations",
+    "files": [
+      {
+        "file": "data/raw/infra/airports-en.zip",
+        "url": "https://ftp.cartes.canada.ca/pub/tc_tc/Airports_Aeroport/canadian_airports_w_air_navigation_services/Airports_Aeroports_en_shape.zip",
+        "retrieved": "2026-11-27",
+        "sha256": "03f14ab347e9c214443347bb2843d31a87b140b71fa731dda43699f2f6148f36",
+        "bytes": 8036
+      },
+      {
+        "file": "data/raw/infra/airports-fr.zip",
+        "url": "https://ftp.cartes.canada.ca/pub/tc_tc/Airports_Aeroport/canadian_airports_w_air_navigation_services/Airports_Aeroports_fr_shape.zip",
+        "retrieved": "2026-11-27",
+        "sha256": "5452f39ff85b6dfdf02117b5a4b2b71cc62fb50e273865100354de7868bd6336",
+        "bytes": 8089
+      }
+    ]
+  },
+  {
+    "id": "dfo_small_craft_harbours",
+    "title": "Small Craft Harbours Locations and Information",
+    "product_id": "262451e7-6416-47b5-8453-f31d212ea657",
+    "vintage": "2026-03-24",
+    "publisher": "Fisheries and Oceans Canada",
+    "homepage": "https://open.canada.ca/data/en/dataset/262451e7-6416-47b5-8453-f31d212ea657",
+    "license": "Open Government Licence – Canada",
+    "description": "Small Craft Harbours Locations and Information",
+    "used_for": "Core fishing harbour points, not commercial port rankings",
+    "files": [
+      {
+        "file": "data/raw/infra/harbours.json",
+        "url": "https://egisp.dfo-mpo.gc.ca/arcgis/rest/services/open_data_donnees_ouvertes/small_craft_harbours_en/MapServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=geojson",
+        "retrieved": "2026-11-27",
+        "sha256": "566e629301f3202b3e7364cc54abd0df902e734a8180c99d7e1691f8ca9e2737",
+        "bytes": 297718
+      },
+      {
+        "file": "data/raw/infra/harbour-count.json",
+        "url": "https://egisp.dfo-mpo.gc.ca/arcgis/rest/services/open_data_donnees_ouvertes/small_craft_harbours_en/MapServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
+        "retrieved": "2026-11-27",
+        "sha256": "3d1d61bddbf08a80cc751a2a08d61168bc271ac84c5771ba1a1bd3d4bcaa28fb",
+        "bytes": 13
+      }
+    ]
+  },
+  {
+    "id": "dnd_bases",
+    "title": "Canadian Armed Forces bases and support units",
+    "product_id": "CAF bases and support units directory",
+    "vintage": "current directory; retrieval date in files",
+    "publisher": "Department of National Defence",
+    "homepage": "https://www.canada.ca/en/department-national-defence/services/bases-support-units.html",
+    "license": "Crown copyright; Canada.ca terms",
+    "description": "Canadian Armed Forces bases and support units",
+    "used_for": "Public directory used to select curated military points",
+    "files": [
+      {
+        "file": "data/raw/infra/dnd-en.html",
+        "url": "https://www.canada.ca/en/department-national-defence/services/bases-support-units.html",
+        "retrieved": "2026-11-27",
+        "sha256": "f30321706259fe256ac4710bd622cada11d1a3d8c8cdc34631eba5593bf2716e",
+        "bytes": 29202
+      },
+      {
+        "file": "data/raw/infra/dnd-fr.html",
+        "url": "https://www.canada.ca/fr/ministere-defense-nationale/services/bases-unites-de-soutien.html",
+        "retrieved": "2026-11-27",
+        "sha256": "f0d2b2f4a869c6cf9d193f56d76775703d5ff6359edc2034d06e553962f50f43",
+        "bytes": 30042
+      }
+    ]
+  },
+  {
+    "id": "cgn_military",
+    "title": "Canadian Geographical Names Database",
+    "product_id": "CGNDB keys EQBXK, CAABW, IAAGV, JCEFI",
+    "vintage": "decisions 1990; retrieval date in files",
+    "publisher": "Natural Resources Canada",
+    "homepage": "https://natural-resources.canada.ca/maps-tools-publications/maps/geographical-names-canada/geoname-service-api",
+    "license": "Open Government Licence – Canada",
+    "description": "Canadian Geographical Names Database",
+    "used_for": "Official geographical name coordinates for selected directory entries",
+    "files": [
+      {
+        "file": "data/raw/infra/geoname-EQBXK.json",
+        "url": "https://geogratis.gc.ca/services/geoname/en/geonames/EQBXK.json",
+        "retrieved": "2026-11-27",
+        "sha256": "98681bd6611fff71e830c1ba2f55d35690ea00f5a66e8412407c29be4a42c3a3",
+        "bytes": 3498
+      },
+      {
+        "file": "data/raw/infra/geoname-CAABW.json",
+        "url": "https://geogratis.gc.ca/services/geoname/en/geonames/CAABW.json",
+        "retrieved": "2026-11-27",
+        "sha256": "69108f72fb3160a5b71b5c6e1f4b79143818ce3449716cc130fe91d5a84e4e3e",
+        "bytes": 3482
+      },
+      {
+        "file": "data/raw/infra/geoname-IAAGV.json",
+        "url": "https://geogratis.gc.ca/services/geoname/en/geonames/IAAGV.json",
+        "retrieved": "2026-11-27",
+        "sha256": "a153bd4506d42ca47ff1e859bec1ee92c1dcf41bc057fd6fc4bd3eaa459dedc7",
+        "bytes": 3473
+      },
+      {
+        "file": "data/raw/infra/geoname-JCEFI.json",
+        "url": "https://geogratis.gc.ca/services/geoname/en/geonames/JCEFI.json",
+        "retrieved": "2026-11-27",
+        "sha256": "ccf6fd8964c8bf9fd7baddc6dee2d83488d26e3247741522c7dca48bf1da6cb0",
+        "bytes": 3481
+      }
+    ]
+  }
+]
