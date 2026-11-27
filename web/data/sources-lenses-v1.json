@@ -1,0 +1,39 @@
+[
+  {
+    "id": "statcan_census_2021_profile",
+    "title": "2021 Census Profile, census divisions",
+    "product_id": "98-401-X2021006; SDMX DF_CD 1.3",
+    "publisher": "Statistics Canada",
+    "homepage": "https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/index.cfm?Lang=E",
+    "license": "Statistics Canada Open Licence; https://www.statcan.gc.ca/en/reference/licence",
+    "vintage": "2021 Census",
+    "characteristic_ids": [
+      "1400",
+      "1401",
+      "1513",
+      "1515",
+      "1935",
+      "1937",
+      "1959",
+      "1969",
+      "1976",
+      "2611",
+      "2614",
+      "2615",
+      "2616"
+    ],
+    "used_for": "foreign_born, commute, homeownership, faith, faith_tradition, migration",
+    "files": [
+      {
+        "file": "data/raw/lenses_v1/DF_CD.csv",
+        "url": "https://api.statcan.gc.ca/census-recensement/profile/sdmx/rest/data/STC_CP,DF_CD/A5..1.1400+1401+1513+1515+1935+1937+1959+1969+1976+2611+2614+2615+2616.1",
+        "retrieved": "2026-11-27T01:20:55.531846+00:00",
+        "sha256": "6f15775da8cc296a97ef756b71e71edd9839186e3d0a090fbbc2fe183da3970f",
+        "bytes": 474618,
+        "request_headers": {
+          "Accept": "text/csv"
+        }
+      }
+    ]
+  }
+]

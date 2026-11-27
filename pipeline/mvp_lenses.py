@@ -86,6 +86,20 @@ def build(world, profiles):
                        'domain': limits, 'ramp': ['#1b2838', '#e6c35c'],
                        'higher_is': 'neutral', 'source': source,
                        'description': bilingual(desc_en, desc_fr), 'note': note, 'values': values})
+    # Rebuild the published v1 lenses from their separately verified Profile
+    # request. If the published payload contains them, never silently erase
+    # them when the cache is absent. Small synthetic test grids are independent.
+    from pathlib import Path
+    import json
+    from pipeline.lenses_v1 import CACHE, MANIFEST, LENS_IDS, build as build_v1, load_profiles
+    shipped = Path(__file__).resolve().parents[1] / 'web/data/lenses.json'
+    if CACHE.exists() and MANIFEST.exists():
+        output.extend(build_v1(world, load_profiles()))
+    elif shipped.exists():
+        previous = json.loads(shipped.read_text())
+        if any(row.get('id') in LENS_IDS and len(row.get('values', [])) == len(owner)
+               for row in previous.get('lenses', [])):
+            raise RuntimeError('Census v1 lens cache missing; run python -m pipeline.lenses_v1 --fetch')
     return {'vintage': 'Census 2021; land cover 2020',
             'groups': [{'id': 'people', 'name': bilingual('People', 'Population')},
                        {'id': 'land', 'name': bilingual('Land', 'Territoire')},
