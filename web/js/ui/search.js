@@ -3,8 +3,8 @@ import {setHashKeys, writeHash} from './hash.js';
 let input, resultsBox, context, matches = [], active = 0, animation;
 
 const copy = {
-  en: {placeholder: 'Search cities & provinces', label: 'Search cities and provinces', city: 'City', province: 'Province or territory', empty: 'No matching cities, provinces or territories'},
-  fr: {placeholder: 'Chercher une ville ou province', label: 'Chercher une ville, une province ou un territoire', city: 'Ville', province: 'Province ou territoire', empty: 'Aucune ville, province ou territoire correspondant'}
+  en: {placeholder: 'Search places', label: 'Search cities, towns and provinces', city: 'City', town: 'Town', province: 'Province or territory', empty: 'No matching cities, towns, provinces or territories'},
+  fr: {placeholder: 'Chercher un lieu', label: 'Chercher une ville, une localité, une province ou un territoire', city: 'Ville', town: 'Localité', province: 'Province ou territoire', empty: 'Aucune ville, localité, province ou territoire correspondant'}
 };
 const text = () => copy[context?.getLang() === 'fr' ? 'fr' : 'en'];
 const normalize = value => String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
@@ -12,9 +12,11 @@ const displayName = item => item.name?.[context.getLang()] || item.name?.en || i
 
 function items() {
   const cities = Array.isArray(context.cities) ? context.cities : context.cities?.cities || [];
+  const towns = Array.isArray(context.towns) ? context.towns : context.towns?.towns || [];
   const provinces = Array.isArray(context.provinces) ? context.provinces : context.provinces?.provinces || context.world?.provinces || [];
   return [
     ...cities.map(place => ({kind: 'city', place})),
+    ...towns.map(place => ({kind: 'town', place})),
     ...provinces.map(place => ({kind: 'province', place}))
   ];
 }
@@ -93,6 +95,7 @@ function cellPosition(index) {
 function position(entry) {
   const p = entry.place;
   if (Number.isFinite(p.x) && Number.isFinite(p.y)) return {x: p.x, y: p.y};
+  if (entry.kind === 'town') return null;
   if (Number.isFinite(p.label?.x) && Number.isFinite(p.label?.y)) return p.label;
   const cell = cellPosition(p.cell);
   if (cell) return cell;
@@ -113,7 +116,7 @@ function flyTo(point, kind) {
   if (!point) return;
   cancelAnimationFrame(animation);
   const start = context.getCamera();
-  const targetScale = Math.min(3, Math.max(start.scale, kind === 'city' ? 0.65 : 0.25));
+  const targetScale = Math.min(3, Math.max(start.scale, kind !== 'province' ? 0.65 : 0.25));
   // The selection opens a side panel or mobile bottom sheet synchronously.
   // Centre the place in the remaining map area so its banner is not hidden.
   const panel = document.querySelector('.cc-panel:not([hidden])');
@@ -146,9 +149,9 @@ function choose(entry) {
   input.setAttribute('aria-expanded', 'false');
   input.removeAttribute('aria-activedescendant');
   input.blur();
-  if (entry.kind === 'city') {
+  if (entry.kind === 'city' || entry.kind === 'town') {
     setHashKeys({city: String(entry.place.id), province: null});
-    window.dispatchEvent(new CustomEvent('canadaciv:select-city', {detail: {id: entry.place.id}}));
+    window.dispatchEvent(new CustomEvent(`canadaciv:select-${entry.kind}`, {detail: {id: entry.place.id}}));
   }
   else setHashKeys({province: String(entry.place.abbr), city: null});
   flyTo(point, entry.kind);

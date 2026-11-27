@@ -7002,5 +7002,103 @@
     ],
     "description": "Canadian Geographical Names Database (open dataset e27c6eba-3c5d-4051-9db2-082dc6411c2c). Landmark entries also cite individual official name records on each item via source_url.",
     "product_id": "e27c6eba-3c5d-4051-9db2-082dc6411c2c"
+  },
+  {
+    "id": "statcan_ade_ca",
+    "title": "Population estimates, July 1, by census metropolitan area and census agglomeration, 2021 boundaries",
+    "publisher": "Statistics Canada / Statistique Canada",
+    "vintage": "July 1, 2025 preliminary postcensal estimates; 2021 boundaries; released January 14, 2026",
+    "license": "Statistics Canada Open Licence",
+    "homepage": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710014801",
+    "table_id": "17-10-0148-01",
+    "used_for": "2025 population estimates for census agglomeration towns",
+    "files": [
+      {
+        "file": "17100148-eng.zip",
+        "url": "https://www150.statcan.gc.ca/n1/tbl/csv/17100148-eng.zip",
+        "retrieved": "2026-11-27",
+        "sha256": "7b007a0ff50bb1bad6a041093c3c71502c095f2516d20c961d9c26ed55b327d5",
+        "bytes": 22688780
+      }
+    ],
+    "product_id": "17-10-0148-01"
+  },
+  {
+    "id": "statcan_census_ca",
+    "title": "Population and dwelling counts: Canada, provinces and territories, census metropolitan areas and census agglomerations",
+    "publisher": "Statistics Canada / Statistique Canada",
+    "vintage": "2021 Census",
+    "license": "Statistics Canada Open Licence",
+    "homepage": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810000501",
+    "table_id": "98-10-0005-01",
+    "used_for": "Bilingual census agglomeration names and 2021 population counts",
+    "files": [
+      {
+        "file": "98100005-eng.zip",
+        "url": "https://www150.statcan.gc.ca/n1/tbl/csv/98100005-eng.zip",
+        "retrieved": "2026-11-27",
+        "sha256": "d289e3647cdddede1b61beb08931fd975caa311bc2f690c1dc96e7724d4ceac7",
+        "bytes": 23676
+      },
+      {
+        "file": "98100005-fra.zip",
+        "url": "https://www150.statcan.gc.ca/n1/tbl/csv/98100005-fra.zip",
+        "retrieved": "2026-11-27",
+        "sha256": "f6f012d08411af3c7bac1874e71690a2bce3468cb3554ce916e0253d4a3f1e01",
+        "bytes": 24812
+      }
+    ],
+    "product_id": "98-10-0005-01"
+  },
+  {
+    "id": "statcan_geosuite_csd",
+    "title": "2021 Census GeoSuite, census subdivisions",
+    "publisher": "Statistics Canada / Statistique Canada",
+    "vintage": "2021 Census geography",
+    "license": "Statistics Canada Open Licence",
+    "homepage": "https://www150.statcan.gc.ca/n1/en/catalogue/92-150-x",
+    "used_for": {
+      "en": "Census agglomeration town anchor coordinates and province membership",
+      "fr": "Coordonnées des repères des agglomérations et appartenance provinciale"
+    },
+    "description": {
+      "en": "The official GeoSuite package blocked automated retrieval. The included CSV is an extract of the third-party MountainMath mirror of the 2021 GeoSuite census subdivision table. Each town uses the representative point of its most populous member census subdivision with an available point (ties by smallest CSDUID); this is not the census agglomeration centroid. The nearest land hex in that subdivision’s province or territory is used as the map cell.",
+      "fr": "Le téléchargement automatisé du fichier officiel GéoSuite a été bloqué. Le CSV inclus est un extrait du miroir tiers MountainMath de la table des subdivisions de recensement de GéoSuite 2021. Chaque ville utilise le point représentatif de sa subdivision membre la plus peuplée dont le point est disponible (en cas d’égalité, le plus petit SDRIDU); ce point n’est pas le centroïde de l’agglomération. La cellule est l’hexagone terrestre le plus proche dans la province ou le territoire de cette subdivision."
+    },
+    "files": [
+      {
+        "file": "CSD.parquet",
+        "url": "https://data.mountainmath.ca/census/geo_suite/2021/CSD.parquet",
+        "retrieved": "2026-11-27",
+        "sha256": "d07c33ba8db8da59ca4bc7659372eb01c4495d18a7f727349a5eeada5ca6fc57",
+        "bytes": 335216
+      }
+    ],
+    "official_download_url": "https://www12.statcan.gc.ca/census-recensement/2021/geo/aip-pia/geosuite/files-fichiers/2021_92-150-X_eng.zip",
+    "product_id": "92-150-X",
+    "included_extract": {
+      "file": "pipeline/ca_towns_geosuite.csv",
+      "sha256": "7afe7b1c1335830445229c8f28215b18c76df3dc676fe360c33866d672bf08de"
+    }
+  },
+  {
+    "id": "cdd",
+    "title": "Canadian Disaster Database — CDD_Extract_2022_EN",
+    "publisher": "Public Safety Canada",
+    "product_id": "1c3d15f9-9cfa-4010-8462-0d67e493d9b9",
+    "vintage": "CDD_Extract_2022_EN; resource updated 2026-02-10",
+    "license": "Open Government Licence – Canada",
+    "license_url": "https://open.canada.ca/en/open-government-licence-canada",
+    "homepage": "https://open.canada.ca/data/en/dataset/1c3d15f9-9cfa-4010-8462-0d67e493d9b9",
+    "used_for": "Distinct CDD event point markers assigned to Canadian land hexes",
+    "files": [
+      {
+        "file": "cdd-extract-1.xlsx",
+        "url": "https://open.canada.ca/data/dataset/1c3d15f9-9cfa-4010-8462-0d67e493d9b9/resource/c701e05e-4554-4c96-b7c9-0ec4a845fe91/download/cdd-extract-1.xlsx",
+        "retrieved": "2026-11-27",
+        "sha256": "1321a40003599b690e8970d422177582c67db1323dbf4cc6d5e02cbcc0eb0f2a",
+        "bytes": 551792
+      }
+    ]
   }
 ]

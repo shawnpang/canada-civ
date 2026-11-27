@@ -1,5 +1,6 @@
 import {cell} from '../hex.js';
 import {hitCity} from './banners.js';
+import {getYear} from './timeslider.js';
 
 let root;
 let lastId = null;
@@ -18,8 +19,8 @@ function format(value, lang, type = 'number') {
   const result = new Intl.NumberFormat(locale, {maximumFractionDigits: 0}).format(value);
   return type === 'cad' ? `${result} CAD` : result;
 }
-function stat(label, value, rank, lang) {
-  const ranking = typeof rank === 'number' && Number.isFinite(rank) ? `<span class="cc-stat-rank">${esc(words[lang].rank)}: ${esc(rank)}</span>` : '';
+function stat(label, value, rank, lang, rankYear = null) {
+  const ranking = typeof rank === 'number' && Number.isFinite(rank) ? `<span class="cc-stat-rank">${esc(words[lang].rank)}${rankYear ? ` · ${esc(rankYear)}` : ''}: ${esc(rank)}</span>` : '';
   return `<div class="cc-stat"><span class="cc-stat-label">${esc(label)}</span><strong class="cc-stat-value">${esc(value)}</strong>${ranking}</div>`;
 }
 function updateHash(code) {
@@ -41,9 +42,10 @@ function render(ctx) {
   }
   const lang = ctx.getLang() === 'fr' ? 'fr' : 'en', t = words[lang], yields = province.yields || {}, ranks = province.ranks || {};
   const gold = Object.hasOwn(yields, 'gold') ? yields.gold : province.gdp;
+  const year = getYear();
   const stats = [
-    stat(t.population, format(province.population, lang), ranks.population, lang),
-    stat(t.gold, format(gold, lang, 'cad'), ranks.gold ?? ranks.gdp, lang),
+    stat(`${t.population} · ${year ?? '—'}`, format(province.population, lang), ranks.population, lang, year !== 2025 ? 2025 : null),
+    stat(`${t.gold} · 2021`, format(gold, lang, 'cad'), ranks.gold ?? ranks.gdp, lang),
     stat(t.food, format(yields.food, lang), ranks.food, lang),
     stat(t.production, format(yields.production, lang), ranks.production, lang),
     stat(t.science, format(yields.science, lang), ranks.science, lang),

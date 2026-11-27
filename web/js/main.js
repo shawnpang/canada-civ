@@ -2,11 +2,13 @@ import {paintMapTerrain} from './terrain.js';
 import {setupMinimap} from './minimap.js';
 import * as i18n from './ui/i18n.js';
 import * as hash from './ui/hash.js';
+import * as timeslider from './ui/timeslider.js';
 import * as search from './ui/search.js';
 import * as almanac from './ui/almanac.js';
 import * as share from './ui/share.js';
 import * as yields from './ui/yields.js';
 import * as city from './ui/city.js';
+import * as town from './ui/town.js';
 import * as province from './ui/province.js';
 import * as banners from './ui/banners.js';
 import * as advisors from './ui/advisors.js';
@@ -16,7 +18,7 @@ import * as layers from './ui/layers.js';
 import * as lensRender from './render/lenses.js';
 import * as labels from './render/labels.js';
 
-const modules = [i18n, hash, search, almanac, share, yields, city, province, banners, advisors, lenses, legend, layers, lensRender];
+const modules = [i18n, hash, timeslider, search, almanac, share, yields, city, town, province, banners, advisors, lenses, legend, layers, lensRender];
 
 const canvas = document.querySelector('#map');
 canvas.tabIndex = 0;
@@ -25,7 +27,7 @@ let w, scale, ox, oy, drag = null, dragStart = null;
 const initialLang = new URLSearchParams(location.hash.slice(1)).get('lang');
 let lang = initialLang === 'en' || initialLang === 'fr' ? initialLang : (navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en');
 let viewportWidth = innerWidth, viewportHeight = innerHeight, saveTimer;
-const data = {world: null, nation: null, provinces: null, cities: null, lenses: null, sources: null, divisions: null, wonders: null};
+const data = {world: null, nation: null, provinces: null, cities: null, towns: null, lenses: null, sources: null, divisions: null, wonders: null};
 
 const drawMinimap = setupMinimap({
   getWorld: () => w,
@@ -154,6 +156,7 @@ function api() {
     nation: data.nation,
     provinces: data.provinces,
     cities: data.cities,
+    towns: data.towns,
     lenses: data.lenses,
     sources: data.sources,
     divisions: data.divisions,
@@ -206,6 +209,8 @@ canvas.addEventListener('pointerup', e => {
     // Banners own hits over the land beneath them.
     if (banners.hitCity(ctxObj, mapEvent)) {
       banners.onClick(ctxObj, mapEvent);
+    } else if (banners.hitTown(ctxObj, mapEvent)) {
+      banners.selectTown(ctxObj, mapEvent);
     } else {
       for (const m of modules) {
         if (m !== banners && m.onClick && m.onClick(ctxObj, mapEvent)) break;
@@ -291,21 +296,23 @@ Promise.all([
   loadPayload('nation'),
   loadPayload('provinces'),
   loadPayload('cities'),
+  loadPayload('towns'),
   loadPayload('lenses'),
   loadPayload('sources'),
   loadPayload('divisions'),
   loadPayload('wonders')
-]).then(async ([world, nation, provinces, cities, lensesp, sources, divisions, wonders]) => {
+]).then(async ([world, nation, provinces, cities, towns, lensesp, sources, divisions, wonders]) => {
   w = world;
   data.world = world;
   data.nation = nation.data;
   data.provinces = provinces.data;
   data.cities = cities.data;
+  data.towns = towns.data;
   data.lenses = lensesp.data;
   data.sources = sources.data;
   data.divisions = divisions.data;
   data.wonders = wonders.data;
-  data.payloadSources = {nation: nation, provinces, cities, lenses: lensesp, sources, divisions};
+  data.payloadSources = {nation: nation, provinces, cities, towns, lenses: lensesp, sources, divisions};
   document.querySelector('#loading').hidden = true;
   reset();
   canonicalizeProvince();

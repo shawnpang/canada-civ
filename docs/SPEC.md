@@ -515,19 +515,20 @@ Modal with pages for About, yields, lenses, terrain, sources / licences, and (v1
 Use this contract (query-string after `#`):
 
 ```
-#lang=fr&lens=income&city=535&province=ON&at=x,y,z&layers=roads,rail
+#lang=fr&lens=income&city=535&province=ON&year=2024&at=x,y,z&layers=roads,rail
 ```
 
 | Key | Value |
 | --- | --- |
 | `lang` | `en` or `fr`. Omit to use the default (§11). |
 | `lens` | A `lenses.json` id, or omit for terrain. |
-| `city` | A `cities.json` id (`535` or `csd-…`). |
+| `city` | A `cities.json` id (`535` or `csd-…`) or a census agglomeration id from `towns.json`. |
 | `province` | P/T `abbr` (`ON`, `QC`, `NU`, …). If both `city` and `province` are set, city wins the panel. |
+| `year` | An available `pop_series` year (`YYYY`). Missing or invalid years select the latest available year. This changes population estimates only; other measures retain their own vintages. |
 | `at` | `x,y,z` where `x,y` are map-km centre (rounded) and `z` is a zoom parameter that **frames the same area on any screen** (usaciv uses `log2(scale / home-fit scale)` — do the same or document an equivalent). |
 | `layers` | Comma-separated toggle ids that differ from defaults, or `none`. Omit when all toggles are default. |
 
-Lens, language, or selection changes **push** a history entry (Back undoes them). Camera moves **replace** the current entry. Debounce camera writes (~350 ms). Hash updates must not break the back button.
+Lens, language, population year, or selection changes **push** a history entry (Back undoes them). Camera moves **replace** the current entry. Debounce camera writes (~350 ms). Hash updates must not break the back button.
 
 ### 10.12 Keyboard and pointer (MVP)
 

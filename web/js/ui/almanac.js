@@ -27,7 +27,7 @@ const copy = {
   en: {
     open: 'Almanac', close: 'Close Almanac', about: 'About', yields: 'Yields',
     lenses: 'Lenses', terrain: 'Terrain', sources: 'Sources & licences',
-    districts: 'Districts', wonders: 'Wonders', layers: 'Map layers', citizens: 'Citizens',
+    districts: 'Districts', wonders: 'Wonders', layers: 'Map layers', citizens: 'Citizens', towns: 'Towns',
     loading: 'Loading data…', unavailableData: 'Data unavailable.', attendance: 'Attendance', unmapped: 'No mapped point',
     aboutText: 'Canada Civ is a read-only visualizer of Canada, not a game. Inspired by usaciv by Andrej Karpathy.',
     code: 'The Canada Civ code is MIT licensed. Data is covered by its own licences.',
@@ -55,7 +55,7 @@ const copy = {
   fr: {
     open: 'Almanach', close: 'Fermer l’almanach', about: 'À propos', yields: 'Rendements',
     lenses: 'Couches', terrain: 'Terrain', sources: 'Sources et licences',
-    districts: 'Quartiers', wonders: 'Merveilles', layers: 'Couches de la carte', citizens: 'Citoyens',
+    districts: 'Quartiers', wonders: 'Merveilles', layers: 'Couches de la carte', citizens: 'Citoyens', towns: 'Agglomérations',
     loading: 'Chargement des données…', unavailableData: 'Données indisponibles.', attendance: 'Fréquentation', unmapped: 'Aucun point cartographié',
     aboutText: 'Canada Civ est un visualiseur du Canada en lecture seule, pas un jeu. Inspiré d’usaciv par Andrej Karpathy.',
     code: 'Le code de Canada Civ est sous licence MIT. Les données sont assujetties à leurs propres licences.',
@@ -233,6 +233,21 @@ function renderWonders() {
     if (!Number.isFinite(item.x) || !Number.isFinite(item.y)) paragraph(section, text('unmapped'));
   }
 }
+function renderTowns() {
+  const payload = context.towns;
+  if (!payload) { paragraph(content, text('unavailableData')); return; }
+  paragraph(content, local(payload.selection));
+  paragraph(content, local(payload.coordinate_method));
+  for (const source of payload.sources || []) {
+    sourceReference(content, source.id);
+    paragraph(content, local(source.notes));
+    if (source.mirror_url) {
+      const p = element('p');
+      link(p, 'MountainMath · GeoSuite', source.mirror_url);
+      content.append(p);
+    }
+  }
+}
 function renderSources() {
   paragraph(content, text('licencesIntro'));
   if (context.sources?.fixture || context.payloadSources?.sources?.official === false) paragraph(content, text('fixture'));
@@ -274,7 +289,7 @@ function render() {
   close.setAttribute('aria-label', text('close'));
   overlay.querySelector('h2').textContent = text('open');
   tabs.replaceChildren();
-  for (const page of ['about', 'yields', 'lenses', 'terrain', 'citizens', 'districts', 'wonders', 'layers', 'sources']) {
+  for (const page of ['about', 'yields', 'lenses', 'terrain', 'citizens', 'districts', 'wonders', 'towns', 'layers', 'sources']) {
     const button = element('button', '', text(page));
     button.type = 'button';
     if (activePage === page) button.setAttribute('aria-current', 'page');
@@ -286,7 +301,7 @@ function render() {
     tabs.append(button);
   }
   content.replaceChildren();
-  ({about: renderAbout, yields: renderYields, lenses: renderLenses, terrain: renderTerrain, citizens: renderCitizens, districts: renderDistricts, wonders: renderWonders, layers: renderLayers, sources: renderSources})[activePage]();
+  ({about: renderAbout, yields: renderYields, lenses: renderLenses, terrain: renderTerrain, citizens: renderCitizens, districts: renderDistricts, wonders: renderWonders, towns: renderTowns, layers: renderLayers, sources: renderSources})[activePage]();
 }
 function close() {
   overlay.hidden = true;

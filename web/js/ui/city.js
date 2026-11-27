@@ -1,5 +1,6 @@
 import {renderCitizens, clearCitizens} from './citizens.js';
 import {drawDistrictPlaques} from '../render/districts.js';
+import {getYear, populationFor} from './timeslider.js';
 
 // City View is driven by the city id in the URL, including non-CMA capitals.
 let root;
@@ -15,8 +16,10 @@ const copy = {
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const list = payload => Array.isArray(payload) ? payload : (payload?.cities || []);
 const finite = value => typeof value === 'number' && Number.isFinite(value);
-const gdpPerPerson = area => finite(area.gdp) && finite(area.population) && area.population > 0
-  ? area.gdp / area.population : null;
+const gdpPerPerson = area => {
+  const population = populationFor(area, 2025);
+  return finite(area.gdp) && finite(population) && population > 0 ? area.gdp / population : null;
+};
 // Rank cities and provinces separately, excluding missing values. Ties share a
 // rank, with the next rank reflecting the number of areas ahead of it.
 function rankMeasures(areas) {
@@ -127,7 +130,9 @@ function render(ctx) {
   const type = districts?.types?.find(item => item.id === district?.badge);
   const badge = districts === null ? x.loading : local(type?.name, lang) || x.unavailable;
   const years = Array.isArray(city.growth_years) ? city.growth_years.join('–') : '';
-  const medals = [[t.population,ranks.population],[t.gold,ranks.gdp ?? ranks.gold],[x.perPerson,ranks.gdp_per_person ?? ranks.gdp_per_capita],[x.growth,ranks.growth]].map(([label,rank]) => `<div class="city-medal"><span class="city-medal-disc">${typeof rank === 'number' && Number.isFinite(rank) ? `#${esc(rank)}` : '—'}</span><span>${esc(label)}</span></div>`).join('');
+  const year = getYear();
+  const rank2025 = label => year !== 2025 ? `${label} · ${lang === 'fr' ? 'rang 2025' : '2025 rank'}` : label;
+  const medals = [[rank2025(t.population),ranks.population],[t.gold,ranks.gdp ?? ranks.gold],[rank2025(x.perPerson),ranks.gdp_per_person ?? ranks.gdp_per_capita],[rank2025(`${x.growth} · ${years}`),ranks.growth]].map(([label,rank]) => `<div class="city-medal"><span class="city-medal-disc">${typeof rank === 'number' && Number.isFinite(rank) ? `#${esc(rank)}` : '—'}</span><span>${esc(label)}</span></div>`).join('');
   const economic = [stat(t.food, format(yields.food,lang), ranks.food,lang),stat(t.production,format(yields.production,lang),ranks.production,lang),stat(t.science,format(yields.science,lang),ranks.science,lang),stat(t.culture,format(yields.culture,lang),ranks.culture,lang),stat(t.income,format(city.median_income,lang,'cad'),null,lang),stat(t.home,format(city.home_value,lang,'cad'),null,lang),stat(t.rent,format(city.median_rent,lang,'cad'),null,lang)].join('');
   const jobs = Object.entries(city.jobs || {}).filter(([,v]) => typeof v === 'number' && Number.isFinite(v));
   const jobRows = jobs.map(([key,value]) => `<li><span>${esc(local(ctx.nation?.industries?.[key],lang) || local(industryNames[key],lang) || key.replaceAll('_',' '))}</span><strong>${esc(format(value,lang))}</strong></li>`).join('');
@@ -145,11 +150,12 @@ function render(ctx) {
   }
   if (activeTab === 'compare') {
     const peers = (city.peers || []).map(peer => list(ctx.cities).find(item => String(item.id) === String(peer))).filter(Boolean);
-    body = `<section class="cc-panel-section"><h3>${esc(x.compare)} · ${esc(t.population)}</h3>${peers.length ? `<ul class="cc-jobs-list">${peers.map(peer => `<li><span>${esc(local(peer.name,lang))}</span><strong>${esc(format(peer.population,lang))}</strong></li>`).join('')}</ul><p class="cc-panel-note">${esc(x.peerNote)}</p>` : `<p>${esc(t.noData)}</p>`}</section>`;
+    const peerNote = lang === 'fr' ? `Villes choisies selon leur population de juillet 2025; valeurs affichées pour ${year ?? '—'}.` : `Cities selected by July 2025 population; displayed values are for ${year ?? '—'}.`;
+    body = `<section class="cc-panel-section"><h3>${esc(x.compare)} · ${esc(t.population)} · ${esc(year ?? '—')}</h3>${peers.length ? `<ul class="cc-jobs-list">${peers.map(peer => `<li><span>${esc(local(peer.name,lang))}</span><strong>${esc(format(peer.population,lang))}</strong></li>`).join('')}</ul><p class="cc-panel-note">${esc(peerNote)}</p>` : `<p>${esc(t.noData)}</p>`}</section>`;
   }
   const tabs = ['citizens','districts','economy','workforce','resources','compare'];
   const geographyNote = city.gdp_geography_vintage ? (lang === 'fr' ? `Géographie du PIB : ${city.gdp_geography_vintage}.` : `GDP geography: ${city.gdp_geography_vintage}.`) : '';
-  root.innerHTML = `<div class="cc-panel-header"><div><span class="cc-panel-kicker">${esc(t.city)} · ${esc(kind)}</span><h2>${esc(local(city.name,lang))}</h2><p>${esc(provinces)}${city.capital ? ` · ${esc(t.capitalBadge)}` : ''}</p><span class="city-type-badge">${esc(x.badge)}: ${esc(badge)}</span></div><button type="button" class="cc-panel-close" aria-label="${esc(t.close)}">×</button><div class="cc-stat-grid city-head-stats">${stat(`${t.population} · 2025`,format(city.population,lang),null,lang)}${stat(`${t.gold}${city.gdp_year ? ` · ${city.gdp_year}` : ''}`,format(gold,lang,'cad'),null,lang)}${stat(`${x.growth} · ${years}`,format(city.growth,lang,'percent'),null,lang)}${stat(x.perPerson,format(perPerson,lang,'cad'),null,lang)}</div><p class="cc-panel-note">${esc(x.ratioNote)} ${esc(geographyNote)}</p><div class="city-medals">${medals}</div></div><div class="cc-panel-tabs" role="tablist">${tabs.map(tab => `<button type="button" class="cc-panel-tab" role="tab" data-tab="${tab}" aria-selected="${activeTab === tab}">${esc(x[tab] || t[tab])}</button>`).join('')}</div><div class="cc-panel-body">${body}</div>`;
+  root.innerHTML = `<div class="cc-panel-header"><div><span class="cc-panel-kicker">${esc(t.city)} · ${esc(kind)}</span><h2>${esc(local(city.name,lang))}</h2><p>${esc(provinces)}${city.capital ? ` · ${esc(t.capitalBadge)}` : ''}</p><span class="city-type-badge">${esc(x.badge)}: ${esc(badge)}</span></div><button type="button" class="cc-panel-close" aria-label="${esc(t.close)}">×</button><div class="cc-stat-grid city-head-stats">${stat(`${t.population} · ${year ?? '—'}`,format(city.population,lang),null,lang)}${stat(`${t.gold}${city.gdp_year ? ` · ${city.gdp_year}` : ''}`,format(gold,lang,'cad'),null,lang)}${stat(`${x.growth} · ${years}`,format(city.growth,lang,'percent'),null,lang)}${stat(x.perPerson,format(perPerson,lang,'cad'),null,lang)}</div><p class="cc-panel-note">${esc(x.ratioNote)} ${esc(geographyNote)}</p><div class="city-medals">${medals}</div></div><div class="cc-panel-tabs" role="tablist">${tabs.map(tab => `<button type="button" class="cc-panel-tab" role="tab" data-tab="${tab}" aria-selected="${activeTab === tab}">${esc(x[tab] || t[tab])}</button>`).join('')}</div><div class="cc-panel-body">${body}</div>`;
   root.hidden = false;
   root.querySelector('.cc-panel-close').onclick = () => changeSelection(null);
   root.querySelectorAll('[data-tab]').forEach(button => button.addEventListener('click', () => { activeTab = button.dataset.tab; render(ctx); }));

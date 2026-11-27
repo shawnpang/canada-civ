@@ -4,12 +4,21 @@ import {drawCityTypeBadge} from '../render/districts.js';
 // Banner coordinates are always derived from the payload. In particular,
 // a missing coordinate must not turn into a marker at the origin.
 let hitBoxes = [];
+let townHitBoxes = [];
 let roster;
 let rosterOpen = false;
 let districts = null;
 
 function cities(ctx) {
   return Array.isArray(ctx.cities) ? ctx.cities : (ctx.cities?.cities || []);
+}
+
+function towns(ctx) {
+  return Array.isArray(ctx.towns) ? ctx.towns : (ctx.towns?.towns || []);
+}
+
+function townPosition(town) {
+  return Number.isFinite(town.x) && Number.isFinite(town.y) ? [town.x, town.y] : null;
 }
 
 function position(city, world) {
@@ -162,12 +171,39 @@ export function layoutBanners(ctx) {
     }
     if (box) placed.push(box);
   }
+  // Place towns after cities so city banners always keep priority. Only the
+  // official representative point may anchor a town, never its nearby hex.
+  const orderedTowns = [...towns(ctx)].sort((a, b) => {
+    if (String(a.id) === selected) return -1;
+    if (String(b.id) === selected) return 1;
+    return (b.population ?? -1) - (a.population ?? -1) || String(a.id).localeCompare(String(b.id));
+  });
+  g.font = '10px Georgia, serif';
+  for (const town of orderedTowns) {
+    const pos = townPosition(town);
+    if (!pos) continue;
+    const x = camera.ox + pos[0] * camera.scale, y = camera.oy + pos[1] * camera.scale;
+    const name = label(town, ctx.getLang());
+    const width = Math.max(42, Math.ceil(g.measureText(name).width) + 16);
+    const left = x - width / 2;
+    for (const offset of zoom >= 1.4 ? [25, 45, 65] : [25]) {
+      const top = y - offset;
+      const candidate = {town, left, right: left + width, top, bottom: top + 18, x, y, name};
+      candidate.collision = {left, right: left + width, top, bottom: candidate.bottom};
+      if (candidate.left > innerWidth || candidate.right < 0 || candidate.top > innerHeight || candidate.bottom < 0) continue;
+      if (placed.some(other => candidate.collision.left < other.collision.right + 4 && candidate.collision.right + 4 > other.collision.left &&
+          candidate.collision.top < other.collision.bottom + 3 && candidate.collision.bottom + 3 > other.collision.top)) continue;
+      placed.push(candidate);
+      break;
+    }
+  }
   g.restore();
   return placed;
 }
 
 export function onRedraw(ctx) {
   hitBoxes = [];
+  townHitBoxes = [];
   if (!ctx.world || !ctx.ctx) return;
   const camera = ctx.getCamera();
   if (!camera || !Number.isFinite(camera.scale) || camera.scale <= 0) return;
@@ -182,8 +218,32 @@ export function onRedraw(ctx) {
   g.font = 'bold 11px Georgia, serif';
   g.textAlign = 'center';
   g.textBaseline = 'middle';
+  // Small light markers remain visible even when a town's label collides.
+  for (const town of towns(ctx)) {
+    const pos = townPosition(town);
+    if (!pos) continue;
+    const x = camera.ox + pos[0] * camera.scale, y = camera.oy + pos[1] * camera.scale;
+    g.beginPath(); g.arc(x, y, 3, 0, Math.PI * 2);
+    g.fillStyle = '#eee1b7'; g.fill();
+    g.strokeStyle = '#82704e'; g.lineWidth = 1; g.stroke();
+  }
   // Paint the selected banner last and use the same rectangles for hit tests.
   for (const box of placed.reverse()) {
+    if (box.town) {
+      const {town, x, y, left, right, top, bottom, name} = box;
+      const active = String(town.id) === selected;
+      g.beginPath(); g.moveTo(x, bottom); g.lineTo(x, y - 3);
+      g.strokeStyle = 'rgba(239, 225, 185, .8)'; g.lineWidth = 1; g.stroke();
+      g.fillStyle = active ? '#b49b69' : '#d9cba4';
+      g.fillRect(left, top, right - left, bottom - top);
+      g.strokeStyle = active ? '#fff3c9' : '#867754'; g.lineWidth = active ? 2 : 1;
+      g.strokeRect(left, top, right - left, bottom - top);
+      g.font = '10px Georgia, serif'; g.fillStyle = '#302c22';
+      g.fillText(name, x, (top + bottom) / 2);
+      g.font = 'bold 11px Georgia, serif';
+      townHitBoxes.push(box);
+      continue;
+    }
     const {city, x, y, left, top, right, bottom, name, nameWidth, chipWidth, population} = box;
     const active = city === focused;
     g.globalAlpha = focused && !active ? .72 : 1;
@@ -244,6 +304,27 @@ export function hitCity(ctx, event) {
 export function onClick(ctx, event) {
   const city = hitCity(ctx, event);
   if (city) select(city);
+}
+
+export function hitTown(ctx, event) {
+  for (let i = townHitBoxes.length - 1; i >= 0; i--) {
+    const b = townHitBoxes[i];
+    if (event.clientX >= b.left && event.clientX <= b.right && event.clientY >= b.top && event.clientY <= b.bottom) return b.town;
+  }
+  const camera = ctx.getCamera();
+  let closest = null, distance = 7;
+  for (const town of towns(ctx)) {
+    const pos = townPosition(town);
+    if (!pos) continue;
+    const d = Math.hypot(event.clientX - (camera.ox + pos[0] * camera.scale), event.clientY - (camera.oy + pos[1] * camera.scale));
+    if (d < distance) { closest = town; distance = d; }
+  }
+  return closest;
+}
+
+export function selectTown(ctx, event) {
+  const town = hitTown(ctx, event);
+  if (town) window.dispatchEvent(new CustomEvent('canadaciv:select-town', {detail: {id: town.id}}));
 }
 
 export function onLang(ctx) { renderRoster(ctx); }
