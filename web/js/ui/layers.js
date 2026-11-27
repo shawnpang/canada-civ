@@ -1,8 +1,10 @@
 import {drawLayers, hitLayer} from '../render/layers.js';
 import {onRedraw as drawWonders, hitWonder, clearHits, wonderName} from '../render/wonders.js';
 
-// All overlays start off. The hash lists the enabled (non-default) overlays.
+// Roads and rail default on; all other layers default off. The hash omits
+// layers at the default, lists enabled ids otherwise, or uses none for all off.
 const ids = ['resources', 'roads', 'rail', 'airports', 'ports', 'military', 'wonders'];
+const defaultIds = ['roads', 'rail'];
 const data = {resources: null, infrastructure: null};
 let app = null;
 let enabled = new Set();
@@ -34,17 +36,20 @@ const copy = {
 const lang = () => app?.getLang?.() === 'fr' ? 'fr' : 'en';
 const localized = (value) => typeof value === 'string' ? value : value?.[lang()] || value?.en || '';
 const available = id => id === 'resources' ? !!data.resources : id === 'wonders' ? Array.isArray(app?.wonders?.items) : !!data.infrastructure && Array.isArray(data.infrastructure[id]);
+const defaults = () => new Set(defaultIds.filter(available));
 
 function applyHash(ctx) {
   const hash = ctx.getHash?.() || Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
   const value = typeof hash.get === 'function' ? hash.get('layers') : hash.layers;
-  enabled = new Set((value && value !== 'none' ? value.split(',') : []).filter(id => ids.includes(id) && available(id)));
+  enabled = value == null ? defaults() : new Set((value !== 'none' ? value.split(',') : []).filter(id => ids.includes(id) && available(id)));
 }
 function toggle(id) {
   if (!available(id)) return;
   const next = new Set(enabled);
   if (next.has(id)) next.delete(id); else next.add(id);
-  const value = ids.filter(key => next.has(key)).join(',') || null;
+  const initial = defaults();
+  const atDefault = ids.every(key => next.has(key) === initial.has(key));
+  const value = atDefault ? null : ids.filter(key => next.has(key)).join(',') || 'none';
   if (app.setHashKeys) app.setHashKeys({layers: value});
   else {
     const hash = new URLSearchParams(location.hash.slice(1));
