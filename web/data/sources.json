@@ -7100,5 +7100,25 @@
         "bytes": 551792
       }
     ]
+  },
+  {
+    "id": "statcan_agriculture_32100309",
+    "title": "Field crops and hay, Census of Agriculture, 2021",
+    "publisher": "Statistics Canada",
+    "product_id": "32-10-0309-01",
+    "vintage": "2021",
+    "homepage": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210030901",
+    "license": "Statistics Canada Open Licence",
+    "description": "Census of Agriculture field crops and hay by census division, in hectares; quality E means use with caution.",
+    "used_for": "Schematic crop symbols and census-division crop areas",
+    "files": [
+      {
+        "file": "data/raw/crops/32100309-eng.zip",
+        "url": "https://www150.statcan.gc.ca/n1/en/tbl/csv/32100309-eng.zip",
+        "retrieved": "2026-11-27T05:11:44.141698+00:00",
+        "sha256": "4347084c6262bc27262a14ab0a52f826115ee733dedc3644c30c623da716476f",
+        "bytes": 2465360
+      }
+    ]
   }
 ]
