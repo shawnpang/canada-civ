@@ -169,7 +169,7 @@ export function paintCityTiles(g, w, view, opts = {}) {
   const r=(w.grid.radius || 25)*view.scale;
   const city=list(opts.cities,'cities').find(c=>String(c.id)===String(opts.selectedCityId));
   if (!opts.plaquesOnly && city) paintHighlight(g,w,view,city,r);
-  if (!opts.plaquesOnly && r >= 10) {
+  if (!opts.plaquesOnly && !opts.highlightOnly && r >= 10) {
     for(const [i,tile] of tileIndex(w,opts.cities,opts.towns)) {
       const [x,y]=point(w,i,view);
       if(x < -r*2 || y < -r*2 || x > view.width+r*2 || y > view.height+r*2) continue;

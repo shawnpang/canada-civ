@@ -71,7 +71,12 @@ function hexPath(context, x, y, radius) {
 export async function init() {}
 
 export function onRedraw(app) {
-  const lens = getActiveLens();
+  paintLens(app, getActiveLens(), getBrush());
+}
+
+// Explicit lens input also lets off-screen renderers use the atlas painter
+// without changing the selection held by the visitor-facing picker.
+export function paintLens(app, lens, brush = null) {
   const world = app.world, context = app.ctx;
   if (!lens || !world?.grid || !context || !Array.isArray(lens.values)) return;
   const {cols, rows, radius = 25} = world.grid;
@@ -82,8 +87,6 @@ export function onRedraw(app) {
   const r = radius * scale, dx = SQRT3 * r, dy = 1.5 * r;
   const firstRow = Math.max(0, Math.floor((-r - oy) / dy));
   const lastRow = Math.min(rows - 1, Math.ceil((height + r - oy) / dy));
-  const brush = getBrush();
-
   context.save();
   for (let row = firstRow; row <= lastRow; row++) {
     const y = oy + row * dy, shift = 0.5 * (row & 1);

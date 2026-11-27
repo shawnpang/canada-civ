@@ -4,6 +4,7 @@ Each development stage is a commit on `main`. Finished milestones also get a tag
 
 ## Unreleased
 
+- Add an unlinked developer trailer maker using the atlas renderer and payloads, adapted from usaciv's MIT-licensed trailer technique, with a synthesised JavaScript score. See NOTICE for attribution.
 - Serve the atlas at `https://shawnpang.xyz/canada-civ` (a path on the personal site, rewritten to this project's Vercel deployment) as well as `https://canada-civ.vercel.app`. Relative asset URLs now stay correct under the `/canada-civ` prefix, including hash updates used by share links, City View, and province panels.
 
 ## 2026-11-27 — v1.2

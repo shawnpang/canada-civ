@@ -180,7 +180,7 @@ export function layoutBanners(ctx) {
   if (!ctx.world || !ctx.ctx) return [];
   const camera = ctx.getCamera();
   if (!camera || !Number.isFinite(camera.scale) || camera.scale <= 0) return [];
-  const selected = new URLSearchParams(location.hash.slice(1)).get('city');
+  const selected = ctx.selectedCityId ?? new URLSearchParams(location.hash.slice(1)).get('city');
   const all = cities(ctx);
   const focused = all.find(city => String(city.id) === selected);
   // At a national view many CMA centres are only a few pixels apart. Place the
@@ -214,8 +214,9 @@ export function layoutBanners(ctx) {
     const population = Number.isFinite(city.population) ? compact.format(city.population) : null;
     const chipWidth = population ? Math.max(36, Math.ceil(g.measureText(population).width) + (zoom <= 1.4 ? 8 : 12)) : 0;
     const nameWidth = Math.max(56, Math.ceil(g.measureText(name).width) + (zoom <= 1.4 ? 12 : 20));
-    const badgeId = districts?.cities?.[String(city.id)]?.badge;
-    const badgeType = districts?.types?.find(type => type.id === badgeId);
+    const districtData = ctx.districts || districts;
+    const badgeId = districtData?.cities?.[String(city.id)]?.badge;
+    const badgeType = districtData?.types?.find(type => type.id === badgeId);
     const badgeName = typeof badgeType?.name === 'string' ? badgeType.name :
       (badgeType?.name?.[ctx.getLang()] || badgeType?.name?.en);
     const emblemWidth = badgeName ? 20 : 0;
@@ -283,7 +284,7 @@ export function onRedraw(ctx) {
   if (!ctx.world || !ctx.ctx) return;
   const camera = ctx.getCamera();
   if (!camera || !Number.isFinite(camera.scale) || camera.scale <= 0) return;
-  const selected = new URLSearchParams(location.hash.slice(1)).get('city');
+  const selected = ctx.selectedCityId ?? new URLSearchParams(location.hash.slice(1)).get('city');
   const focused = cities(ctx).find(city => String(city.id) === selected);
   const placed = layoutBanners(ctx);
   const g = ctx.ctx;
@@ -360,8 +361,9 @@ export function onRedraw(ctx) {
     }
     // At city scale there is room for the published type plaque; its own
     // bounds participate in hit testing, just like the banner itself.
-    if (districts && (active || zoom >= 2.5)) {
-      const badge = drawCityTypeBadge(g, districts, city.id, {x, y: top - 12, lang: ctx.getLang()});
+    const districtData = ctx.districts || districts;
+    if (districtData && (active || zoom >= 2.5)) {
+      const badge = drawCityTypeBadge(g, districtData, city.id, {x, y: top - 12, lang: ctx.getLang()});
       if (badge) hitBoxes.push({city, left: badge.left, right: badge.left + badge.width, top: badge.top, bottom: badge.top + badge.height});
     }
     hitBoxes.push(box);

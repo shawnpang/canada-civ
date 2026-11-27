@@ -40,6 +40,12 @@ uv run python -m unittest discover -s tests
 
 Rebuilding published JSON from official extracts is optional and needs the cached source files under `data/raw/` (that directory is gitignored). `uv run python -m pipeline fetch` downloads what the pipeline knows how to fetch; `uv run python -m pipeline build` and `all` rebuild the web catalogues and automatically re-merge the Canadian Disaster Database lens when the official extract is present.
 
+## Trailer
+
+The unlinked developer page at [http://127.0.0.1:8765/dev/trailer.html](http://127.0.0.1:8765/dev/trailer.html) previews and renders a 30-second trailer using the atlas renderer and published data. The storyboard and titles are in `web/dev/trailer/storyboard.js`; the original score is synthesised in JavaScript. The trailer maker adapts usaciv's MIT-licensed technique; see [NOTICE](NOTICE).
+
+To automate a render, run `node scripts/render-trailer.mjs`. This uses system Chrome and FFmpeg and writes the MP4, poster, and review stills to `TRAILER_OUT` (default `/workspace/demo-video/`). The developer page is not part of the atlas navigation.
+
 ## Screenshots
 
 The national landing view, with painted terrain, default roads and rail, and official province names:
