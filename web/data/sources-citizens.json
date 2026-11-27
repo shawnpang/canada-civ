@@ -1,0 +1,29 @@
+[
+  {
+    "id": "statcan_census_2021_profile",
+    "title": "Census Profile, 2021 Census of Population (Catalogue 98-401-X)",
+    "publisher": "Statistics Canada",
+    "homepage": "https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/index.cfm?Lang=E",
+    "license": "Statistics Canada Open Licence",
+    "license_url": "https://www.statcan.gc.ca/en/reference/licence",
+    "vintage": "2021",
+    "description": "Census Profile SDMX dataflows DF_CMACA and DF_CSD, version 1.3, all genders, counts.",
+    "used_for": "City citizen pictogram rows: age, occupation, commuting, education and immigrant status.",
+    "files": [
+      {
+        "file": "cma.csv",
+        "url": "https://api.statcan.gc.ca/census-recensement/profile/sdmx/rest/data/STC_CP,DF_CMACA/A5..1.8+9+13+24+1513+1514+1515+1523+1998+1999+2000+2002+2008+2248+2249+2250+2251+2252+2253+2254+2255+2256+2257+2258+2603+2604+2607+2608+2609+2610.1",
+        "retrieved": "2026-11-27T01:05:45+00:00",
+        "sha256": "656280f1fa3f914da03a4754ae8850924bdcd4fe1ed3423dae31319fe32ae580",
+        "bytes": 580223
+      },
+      {
+        "file": "iqaluit.csv",
+        "url": "https://api.statcan.gc.ca/census-recensement/profile/sdmx/rest/data/STC_CP,DF_CSD/A5.2021A00056204003.1.8+9+13+24+1513+1514+1515+1523+1998+1999+2000+2002+2008+2248+2249+2250+2251+2252+2253+2254+2255+2256+2257+2258+2603+2604+2607+2608+2609+2610.1",
+        "retrieved": "2026-11-27T01:05:47+00:00",
+        "sha256": "88fe1578ab3f890040d5406c816c3092ba1c08f86e9229c60b461d358e02cd9d",
+        "bytes": 4103
+      }
+    ]
+  }
+]

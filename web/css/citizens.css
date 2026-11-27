@@ -1,0 +1,32 @@
+/* Standalone citizen profiles; the shell owns the surrounding City View panel. */
+.citizens {
+  --citizen-color-0: #82b7d0; --citizen-color-1: #c39b5a;
+  --citizen-color-2: #81b88c; --citizen-color-3: #b990c5;
+  --citizen-color-4: #d48269; --citizen-color-5: #d3bb72;
+  --citizen-color-6: #98a7d4; --citizen-color-7: #a8b4a3;
+  --citizen-color-8: #d5a69a; --citizen-color-9: #80b8b6;
+  color: #eee1c0;
+}
+.citizens-title, .citizens-row-title { margin: 0; color: #e8ce8c; font-family: Georgia, serif; font-weight: normal; text-transform: uppercase; letter-spacing: .12em; }
+.citizens-title { margin-bottom: 10px; font-size: 14px; }
+.citizens-row { margin: 0 0 7px; padding: 10px; background: #101e2acc; border: 1px solid #a88f584d; border-radius: 3px; }
+.citizens-row-title { font-size: 12px; }
+.citizens-universe, .citizens-figure-note, .citizens-total, .citizens-footnote, .citizens-rules, .citizens-source, .citizens-loading, .citizens-missing { color: #c7bb9b; font: 11px/1.45 Arial, sans-serif; }
+.citizens-universe { margin: 3px 0 6px; }
+.citizens-figures { display: flex; flex-wrap: wrap; align-items: end; gap: 3px; min-height: 25px; padding: 2px 0; }
+.citizens-figure { position: relative; display: inline-block; width: 12px; height: 23px; flex: 0 0 12px; }
+.citizens-figure::before { content: ''; position: absolute; top: 0; left: 3px; width: 6px; height: 6px; border-radius: 50%; background: #e2c7a4; box-shadow: 0 0 0 1px #080d12; }
+.citizens-figure::after { content: ''; position: absolute; top: 8px; left: 1px; width: 10px; height: 12px; border-radius: 3px 3px 1px 1px; background: var(--citizen-color); box-shadow: inset 0 -3px #0003, 0 2px 0 #070d14, 0 3px 0 #b5a68970; }
+.citizens-figure-note { margin: 4px 0 7px; }
+.citizens-legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 4px 10px; margin: 0; padding: 0; list-style: none; }
+.citizens-legend-item { display: flex; align-items: baseline; gap: 5px; font: 11px/1.35 Arial, sans-serif; }
+.citizens-swatch { flex: 0 0 8px; width: 8px; height: 8px; border-radius: 1px; background: var(--citizen-color); }
+.citizens-category { flex: 1; }
+.citizens-count { white-space: nowrap; color: #f1dfb7; font-weight: normal; font-variant-numeric: tabular-nums; }
+.citizens-total { margin: 7px 0 0; }
+.citizens-footnote { margin: 10px 0; }
+.citizens-rules { margin: 9px 0; }
+.citizens-rules summary { cursor: pointer; color: #e3cd96; }
+.citizens-rules p { margin: 5px 0; }
+.citizens-source a { color: #e3cd96; }
+.citizens-retry { margin-top: 4px; }

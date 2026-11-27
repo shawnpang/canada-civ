@@ -47,3 +47,7 @@ Shared-shell work for the integrator (`main.js`, hash helpers, chrome layout). W
 - Include the open `.map-layer-menu` in the shell's ordered Escape handling when coordinating topmost surfaces. The module has a local Escape fallback.
 - The layer menu exposes the payload's bilingual selection and coverage rules, but the v1 Almanac still needs a layers entry citing the shipped sources and their licences. The help sheet should also mention the R shortcut.
 
+## Workstream Citizens
+
+- Include `css/citizens.css` in `index.html`. Add a bilingual Citizens / Citoyens tab in City View and a mount element in its panel body. Import `renderCitizens` and `clearCitizens` from `web/js/ui/citizens.js` and call `renderCitizens(mount, {cityId: city.id, lang: ctx.getLang()})` only when that tab is shown. Call it again for a changed city or language; call `clearCitizens(mount)` when hiding or reusing the mount to invalidate pending loads. A new mount on City View rerender is also fine. The module fetches `data/citizens.json` on first use, caches successful loads, and handles unavailable data and retry itself.
+- Merge the records in `data/sources-citizens.json` into the Almanac source list by source ID, combining file provenance when the ID already exists, and expose the bilingual `rules` and vintage from the lazy citizens payload there. Keep the Statistics Canada Open Licence attribution visible in the Almanac, help and share image.
