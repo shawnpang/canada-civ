@@ -4,29 +4,22 @@ Each development stage is a commit on `main`. Finished milestones also get a tag
 
 ## Unreleased
 
-### Milestone 0 — visual fidelity pass (WIP)
+### Later — visual polish (deferred)
+
+Residual art gaps accepted with Milestone 0, to be tightened after MVP/v1 feature work rather than blocking the atlas:
+
+- Procedural terrain marks are simpler and more repetitive than the reference atlas
+- Coastlines, lakes, and borders remain coarse hex approximations
+
+## 2026-11-27 — Milestone 0 accepted
 
 - Date: 2026-11-27 (Asia/Singapore)
-- Commit: `638fffb`
-- Tag: none yet
+- Tag: `m0` → `638fffb`
+- Commits: `b4bbfdb` (terrain spike), `638fffb` (visual fidelity pass and relief-sampling notes)
 
-Ocean now fills the canvas, the header is compact so labels stay visible, a minimap was added, and terrain marks (forests, crops, mountains, shading) are richer. Elevation sampling was rebuilt from a 16× MRDEM overview after a 64× overview was found to smooth mountain variation; published relief thresholds are unchanged. Residual gaps versus the reference atlas (simpler procedural marks, coarse hex coasts) are recorded in `docs/spike-notes.md`.
+A browsable 25 km hex map of all 13 provinces and territories, CRS EPSG:3347, 134 × 134 cells. Official elevation, land cover, boundaries, and hydrography are recorded in `sources.json`. The viewer is bilingual, with pan, zoom, minimap, canvas-filling ocean, and a compact header. Elevation sampling uses a 16× MRDEM overview after a 64× extract was found to smooth mountain variation.
 
-### Milestone 0 — terrain spike (WIP)
-
-- Date: 2026-11-27 (Asia/Singapore)
-- Commit: `b4bbfdb`
-- Tag: none yet (the `m0` tag will be added when the spike is accepted)
-
-A first working hex map of all 13 provinces and territories:
-
-- 25 km pointy-top odd-r grid, 134 × 134 cells (17,956 hexes), CRS EPSG:3347
-- Terrain, land cover, coasts, lakes, rivers, and province/territory borders and names
-- Bilingual (English / French) Canvas viewer with pan, zoom, and URL camera restore
-- Pipeline commands (`fetch`, `process`, `build`, `check`, `serve`) and `pipeline check` passing
-- Compact `web/data/world.json` and a `sources.json` catalogue with official URLs, product ids, vintages, and licences (Statistics Canada, Natural Resources Canada, NOAA, and Natural Earth)
-
-Still in progress: visual and interaction fidelity to the reference atlas (hillshade and terrain art, ocean filling the canvas, label overlap, minimap, relief-class audit). City panels, yields, and lenses belong to later milestones.
+The `m0` tag is the fidelity-pass commit `638fffb`. Remaining art residuals listed under Unreleased are not part of this acceptance.
 
 ## 2026-11-26 — specification
 

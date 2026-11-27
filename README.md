@@ -10,7 +10,7 @@ This project is inspired by [usaciv](https://karpathy.ai/usaciv/) by [Andrej Kar
 
 ## Status
 
-**Milestone 0 terrain spike (work in progress).** A browsable hex map of all 13 provinces and territories is in this repository (`web/`, served by the pipeline). City chrome, yields, and lenses are not in yet. Staged commits and tags are listed in [CHANGELOG.md](CHANGELOG.md). [docs/SPEC.md](docs/SPEC.md) remains the source of truth for the deliverable, and [docs/MILESTONES.md](docs/MILESTONES.md) is the ordered work plan.
+**Milestone 0 accepted** (tag `m0`). A browsable hex map of all 13 provinces and territories is in this repository (`web/`, served by the pipeline). City chrome, yields, and lenses are Milestone 1 work. Remaining terrain-art polish is deferred; see [CHANGELOG.md](CHANGELOG.md). [docs/SPEC.md](docs/SPEC.md) remains the source of truth for the deliverable, and [docs/MILESTONES.md](docs/MILESTONES.md) is the ordered work plan.
 
 ## What “done” looks like
 
