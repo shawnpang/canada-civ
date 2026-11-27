@@ -62,6 +62,7 @@ function renderBar() {
   bar.replaceChildren();
   bar.setAttribute('aria-label', tr('National yields', 'Rendements nationaux'));
   const national = context.nation?.nation;
+  const strip = element('div', 'yield-strip');
   for (const metric of metrics) {
     const button = element('button', 'yield-chip');
     button.type = 'button';
@@ -74,8 +75,9 @@ function renderBar() {
     const value = element('span', 'yield-value', compact(valueFor(national, metric.key), metric.key));
     button.append(icon, label, value);
     button.addEventListener('click', () => openReport(metric.key));
-    bar.append(button);
+    strip.append(button);
   }
+  bar.append(strip);
   const year = context.nation?.year;
   const turn = element('span', 'yield-turn', `${tr('Turn', 'Tour')} ${year == null ? '—' : year} · ${vintage()}`);
   bar.append(turn);

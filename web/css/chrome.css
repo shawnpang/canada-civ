@@ -53,3 +53,13 @@ header { z-index: 5; }
   .almanac-launch { right: 72px; }
   .share-trigger { right: 8px; }
 }
+
+@media (max-width: 600px) {
+  /* Give search and the translated launch buttons their own rows. */
+  body #search-root { top: 130px; left: 8px; right: 8px; width: auto; }
+  body #search-root:focus-within { z-index: 12; }
+  body .almanac-launch, body .share-trigger, body .adv-launch { top: 170px; min-height: 30px; padding: 6px 9px; font-size: 12px; }
+  body .almanac-launch { left: 8px; right: auto; }
+  body .share-trigger { left: 105px; right: auto; }
+  body .adv-launch { left: auto; right: 8px; }
+}
