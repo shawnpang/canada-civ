@@ -8,27 +8,29 @@
     // When this atlas is mounted at https://shawnpang.xyz/canada-civ,
     // relative CSS, module, and data URLs must resolve under that prefix.
     // The root deployment at canada-civ.vercel.app is left unchanged.
+    // Stylesheets and the module entry are injected here so the browser
+    // preload scanner cannot fetch them against the site root before
+    // <base href> exists (that happens on the slash-less /canada-civ URL).
     (function () {
       var prefix = "/canada-civ";
       var path = location.pathname;
-      if (path !== prefix && path.indexOf(prefix + "/") !== 0) return;
-      var base = document.createElement("base");
-      base.href = prefix + "/";
-      document.head.insertBefore(base, document.head.firstChild);
-      if (path === prefix) {
-        history.replaceState(null, "", prefix + "/" + location.search + location.hash);
+      if (path === prefix || path.indexOf(prefix + "/") === 0) {
+        var base = document.createElement("base");
+        base.href = prefix + "/";
+        document.head.insertBefore(base, document.head.firstChild);
+        if (path === prefix) {
+          history.replaceState(null, "", prefix + "/" + location.search + location.hash);
+        }
+      }
+      var styles = ["css/style.css","css/panels.css","css/town.css","css/lenses.css","css/chrome.css","css/advisors.css","css/citizens.css","css/layers.css","css/timeslider.css"];
+      for (var i = 0; i < styles.length; i++) {
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = styles[i];
+        document.head.appendChild(link);
       }
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/panels.css">
-  <link rel="stylesheet" href="css/town.css">
-  <link rel="stylesheet" href="css/lenses.css">
-  <link rel="stylesheet" href="css/chrome.css">
-  <link rel="stylesheet" href="css/advisors.css">
-  <link rel="stylesheet" href="css/citizens.css">
-  <link rel="stylesheet" href="css/layers.css">
-  <link rel="stylesheet" href="css/timeslider.css">
 </head>
 <body>
   <canvas id="map" aria-label="Map of Canada"></canvas>
@@ -51,6 +53,13 @@
   <div class="controls"><button id="plus" aria-label="Zoom in">+</button><button id="minus" aria-label="Zoom out">−</button><button id="home" aria-label="Reset view">⌂</button></div>
   <footer><span id="hint">DRAG TO EXPLORE · SCROLL TO ZOOM</span><span id="credit">Statistics Canada · Natural Resources Canada · NOAA · Natural Earth</span></footer>
   <div id="dialog" role="dialog" aria-labelledby="helpTitle" hidden><button id="close" aria-label="Close">×</button><h2 id="helpTitle">Explore the map</h2><p id="helpText">Drag to pan, scroll or use + and − to zoom. This is a schematic atlas, not a legal boundary map. Terrain uses 2020 land cover and MRDEM elevation. Data: Statistics Canada Open Licence; Open Government Licence – Canada; NOAA; Natural Earth.</p></div>
-  <script type="module" src="js/main.js"></script>
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "module";
+      script.src = "js/main.js";
+      document.body.appendChild(script);
+    })();
+  </script>
 </body>
 </html>
