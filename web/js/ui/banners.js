@@ -174,7 +174,6 @@ export function layoutBanners(ctx) {
   });
   const g = ctx.ctx;
   g.save();
-  g.font = 'bold 11px Georgia, serif';
   g.textAlign = 'center';
   g.textBaseline = 'middle';
   const placed = [];
@@ -182,7 +181,9 @@ export function layoutBanners(ctx) {
   const compact = new Intl.NumberFormat(locale, {notation: 'compact', maximumFractionDigits: 1});
   const fit = Math.min(innerWidth / (ctx.world.width + 200), (innerHeight - 95) / (ctx.world.height + 200));
   const zoom = camera.scale / fit;
-  const reservations = zoom <= 1.15 && ctx.world.grid && Array.isArray(ctx.world.owner) && Array.isArray(ctx.world.provinces)
+  const cityFont = zoom <= 1.4 ? 'bold 10px Georgia, serif' : 'bold 11px Georgia, serif';
+  g.font = cityFont;
+  const reservations = zoom <= 2 && ctx.world.grid && Array.isArray(ctx.world.owner) && Array.isArray(ctx.world.provinces)
     ? smallProvinceReservations(ctx.world, camera) : [];
   for (const city of ordered) {
     const pos = position(city, ctx.world);
@@ -190,8 +191,8 @@ export function layoutBanners(ctx) {
     const x = camera.ox + pos[0] * camera.scale, y = camera.oy + pos[1] * camera.scale;
     const name = label(city, ctx.getLang());
     const population = Number.isFinite(city.population) ? compact.format(city.population) : null;
-    const chipWidth = population ? Math.max(36, Math.ceil(g.measureText(population).width) + 12) : 0;
-    const nameWidth = Math.max(56, Math.ceil(g.measureText(name).width) + 20);
+    const chipWidth = population ? Math.max(36, Math.ceil(g.measureText(population).width) + (zoom <= 1.4 ? 8 : 12)) : 0;
+    const nameWidth = Math.max(56, Math.ceil(g.measureText(name).width) + (zoom <= 1.4 ? 12 : 20));
     const badgeId = districts?.cities?.[String(city.id)]?.badge;
     const badgeType = districts?.types?.find(type => type.id === badgeId);
     const badgeName = typeof badgeType?.name === 'string' ? badgeType.name :
@@ -204,14 +205,14 @@ export function layoutBanners(ctx) {
     const showBadge = !!badgeName && (city === focused || zoom >= 2.5);
     g.font = 'bold 10px Georgia, serif';
     const badgeWidth = showBadge ? Math.ceil(g.measureText(badgeName).width) + 18 : 0;
-    g.font = 'bold 11px Georgia, serif';
-    // At intermediate zoom, alternate vertical offsets make room for nearby
-    // city labels while keeping a leader line to each official map coordinate.
-    const offsets = zoom >= 1.4 ? [30, 55, 80] : [30];
+    g.font = cityFont;
+    // Stack nearby metropolitan labels at national scale, retaining their
+    // real anchor points and a leader to each one.
+    const offsets = zoom <= 1.4 ? [30, 58, 86, 114] : [30, 55, 80];
     let box = null;
     for (const offset of offsets) {
       const top = y - offset;
-      const candidate = {city, left, top, right: left + width, bottom: top + height + 5, x, y, name, nameWidth, chipWidth, population, badgeId, badgeName, emblemWidth};
+      const candidate = {city, left, top, right: left + width, bottom: top + height + 5, x, y, name, nameWidth, chipWidth, population, badgeId, badgeName, emblemWidth, font: cityFont};
       if (candidate.left > innerWidth || candidate.right < 0 || candidate.top > innerHeight || candidate.bottom < 0) continue;
       candidate.collision = {left: Math.min(left, x - badgeWidth / 2), right: Math.max(left + width, x + badgeWidth / 2), top: top - (showBadge ? 22 : 0), bottom: candidate.bottom};
       if (placed.some(other => candidate.collision.left < other.collision.right + 4 && candidate.collision.right + 4 > other.collision.left &&
@@ -229,7 +230,7 @@ export function layoutBanners(ctx) {
     return (b.population ?? -1) - (a.population ?? -1) || String(a.id).localeCompare(String(b.id));
   });
   g.font = '10px Georgia, serif';
-  for (const town of orderedTowns) {
+  for (const town of zoom > 1.4 ? orderedTowns : []) {
     const pos = townPosition(town);
     if (!pos) continue;
     const x = camera.ox + pos[0] * camera.scale, y = camera.oy + pos[1] * camera.scale;
@@ -298,6 +299,7 @@ export function onRedraw(ctx) {
     }
     const {city, x, y, left, top, right, bottom, name, nameWidth, chipWidth, population, badgeId, badgeName, emblemWidth} = box;
     const active = city === focused;
+    g.font = box.font;
     g.globalAlpha = focused && !active ? .72 : 1;
     if (y - bottom > 9) {
       g.beginPath(); g.moveTo(x, bottom); g.lineTo(x, y - 2);
