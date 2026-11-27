@@ -20,7 +20,9 @@ const modules = [i18n, hash, search, almanac, share, yields, city, province, ban
 const canvas = document.querySelector('#map');
 const ctx = canvas.getContext('2d');
 let w, scale, ox, oy, drag = null, dragStart = null;
-let lang = new URLSearchParams(location.hash.slice(1)).get('lang') || 'en';
+const initialLang = new URLSearchParams(location.hash.slice(1)).get('lang');
+let lang = initialLang === 'en' || initialLang === 'fr' ? initialLang : (navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en');
+let viewportWidth = innerWidth, viewportHeight = innerHeight, saveTimer;
 const data = {world: null, nation: null, provinces: null, cities: null, lenses: null, sources: null, divisions: null};
 
 const drawMinimap = setupMinimap({
@@ -58,16 +60,29 @@ function translate() {
   for (const m of modules) if (m.onLang) m.onLang(ctxObj);
 }
 
+function fitScale(width, height) {
+  return Math.min(width / (w.width + 200), (height - 95) / (w.height + 200));
+}
+
 function resize() {
+  if (w && scale > 0) {
+    const x = (viewportWidth / 2 - ox) / scale;
+    const y = (viewportHeight / 2 - oy) / scale;
+    scale *= fitScale(innerWidth, innerHeight) / fitScale(viewportWidth, viewportHeight);
+    ox = innerWidth / 2 - x * scale;
+    oy = innerHeight / 2 - y * scale;
+  }
+  viewportWidth = innerWidth;
+  viewportHeight = innerHeight;
   canvas.width = innerWidth * devicePixelRatio;
   canvas.height = innerHeight * devicePixelRatio;
   ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-  if (w) draw();
+  if (w) { draw(); scheduleSave(); }
 }
 window.addEventListener('resize', resize);
 
 function reset() {
-  scale = Math.min(innerWidth / (w.width + 200), (innerHeight - 95) / (w.height + 200));
+  scale = fitScale(innerWidth, innerHeight);
   ox = (innerWidth - w.width * scale) / 2;
   oy = 75 + (innerHeight - 75 - w.height * scale) / 2;
   draw();
@@ -93,33 +108,25 @@ function zoom(f, x = innerWidth / 2, y = innerHeight / 2) {
   oy = y - (y - oy) * s / scale;
   scale = s;
   draw();
-  save();
+  scheduleSave();
 }
 
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(save, 350);
+}
+
+function flushSave() { if (saveTimer) save(); }
+
 function save() {
-  if (hash.writeHash) {
-    hash.writeHash(api());
-    return;
-  }
-  const p = new URLSearchParams();
-  p.set('lang', lang);
-  p.set('at', `${((innerWidth / 2 - ox) / scale).toFixed(1)},${((innerHeight / 2 - oy) / scale).toFixed(1)},${scale.toFixed(4)}`);
-  history.replaceState(null, '', '#' + p);
+  clearTimeout(saveTimer);
+  saveTimer = null;
+  hash.writeHash(api());
 }
 
 function applyHash() {
-  const p = new URLSearchParams(location.hash.slice(1));
-  lang = p.get('lang') || 'en';
-  translate();
-  const at = p.get('at');
-  if (at) {
-    const [x, y, z] = at.split(',').map(Number);
-    if ([x, y, z].every(Number.isFinite) && z > 0) {
-      scale = z;
-      ox = innerWidth / 2 - x * z;
-      oy = innerHeight / 2 - y * z;
-    }
-  }
+  clearTimeout(saveTimer);
+  saveTimer = null;
   const ctxObj = api();
   for (const m of modules) if (m.onHash) m.onHash(ctxObj);
   draw();
@@ -156,6 +163,8 @@ function api() {
       draw();
     },
     redraw: draw,
+    getHash: hash.getHash,
+    setHashKeys: hash.setHashKeys,
     getLang: () => lang,
     setLang: (next) => {
       lang = next === 'fr' ? 'fr' : 'en';
@@ -189,7 +198,14 @@ canvas.addEventListener('pointerup', e => {
   if (start && Math.hypot(e.clientX - start[0], e.clientY - start[1]) < 4) {
     const ctxObj = api();
     const mapEvent = {clientX: e.clientX, clientY: e.clientY, x: (e.clientX - ox) / scale, y: (e.clientY - oy) / scale};
-    for (const m of modules) if (m.onClick) m.onClick(ctxObj, mapEvent);
+    // Banners own hits over the land beneath them.
+    if (banners.hitCity(ctxObj, mapEvent)) {
+      banners.onClick(ctxObj, mapEvent);
+    } else {
+      for (const m of modules) {
+        if (m !== banners && m.onClick && m.onClick(ctxObj, mapEvent)) break;
+      }
+    }
   }
 });
 canvas.addEventListener('wheel', e => {
@@ -200,10 +216,67 @@ canvas.addEventListener('dblclick', e => zoom(1.5, e.clientX, e.clientY));
 document.querySelector('#plus').onclick = () => zoom(1.3);
 document.querySelector('#minus').onclick = () => zoom(1 / 1.3);
 document.querySelector('#home').onclick = () => { reset(); save(); };
-document.querySelector('#lang').onclick = () => { lang = lang === 'en' ? 'fr' : 'en'; translate(); draw(); save(); };
-document.querySelector('#help').onclick = () => { document.querySelector('#dialog').hidden = false; };
-document.querySelector('#close').onclick = () => { document.querySelector('#dialog').hidden = true; };
-window.addEventListener('hashchange', () => { if (w) applyHash(); });
+document.querySelector('#lang').onclick = () => { flushSave(); api().setLang(lang === 'en' ? 'fr' : 'en'); };
+const helpDialog = document.querySelector('#dialog');
+function openHelp() { helpDialog.hidden = false; document.querySelector('#close').focus(); }
+function closeHelp() { helpDialog.hidden = true; document.querySelector('#help').focus(); }
+document.querySelector('#help').onclick = openHelp;
+document.querySelector('#close').onclick = closeHelp;
+
+// Search owns result rendering and camera flight. Dispatch before its result
+// handler writes the same hash, so the city selection creates one history entry.
+function dispatchSearchCity(button) {
+  if (!button || !data.cities) return;
+  const resultName = button.querySelector('.search-result-name')?.textContent;
+  const type = button.querySelector('.search-result-type')?.textContent;
+  if (type !== (lang === 'fr' ? 'Ville' : 'City')) return;
+  const cities = Array.isArray(data.cities) ? data.cities : (data.cities.cities || []);
+  const candidates = cities.filter(place => (place.name?.[lang] || place.name?.en || place.name?.fr || '') === resultName)
+    .sort((a, b) => (b.population ?? -1) - (a.population ?? -1));
+  if (candidates.length) window.dispatchEvent(new CustomEvent('canadaciv:select-city', {detail: {id: candidates[0].id}}));
+}
+window.addEventListener('click', event => {
+  flushSave();
+  dispatchSearchCity(event.target.closest?.('#search-root .search-result'));
+}, true);
+window.addEventListener('keydown', event => {
+  if (!event.ctrlKey && !event.metaKey && !event.altKey) flushSave();
+  if (event.key === 'Enter' && event.target.matches?.('#search-root .search-input')) {
+    dispatchSearchCity(document.querySelector('#search-root .search-result[aria-selected="true"]'));
+  }
+  const editing = event.target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName || '');
+  if (event.key === '?' && !editing && !event.ctrlKey && !event.metaKey && !event.altKey) {
+    event.preventDefault();
+    openHelp();
+    return;
+  }
+  if (event.key !== 'Escape') return;
+  const searchInput = document.querySelector('#search-root .search-input');
+  const visible = selector => document.querySelector(selector + ':not([hidden])');
+  let close;
+  if (!helpDialog.hidden) close = closeHelp;
+  else if (visible('.share-overlay')) close = () => document.querySelector('.share-overlay .share-close')?.click();
+  else if (visible('.almanac-overlay')) close = () => document.querySelector('.almanac-overlay .almanac-close')?.click();
+  else if (document.activeElement === searchInput) close = () => { searchInput.value = ''; searchInput.blur(); };
+  else if (document.querySelector('.lens-picker[open]')) close = () => { document.querySelector('.lens-picker').open = false; };
+  else if (visible('.yield-report')) close = () => document.querySelector('.yield-report .yield-report-close')?.click();
+  else if (visible('.cc-panel')) close = () => document.querySelector('.cc-panel:not([hidden]) .cc-panel-close')?.click();
+  if (close) { event.preventDefault(); event.stopImmediatePropagation(); close(); }
+}, true);
+
+function canonicalizeProvince() {
+  const params = new URLSearchParams(location.hash.slice(1));
+  const value = params.get('province');
+  if (!value || !w) return;
+  const entry = w.provinces.find(place => place.abbr === value || place.pruid === value);
+  const codes = {'10':'NL', '11':'PE', '12':'NS', '13':'NB', '24':'QC', '35':'ON', '46':'MB', '47':'SK', '48':'AB', '59':'BC', '60':'YT', '61':'NT', '62':'NU'};
+  const code = codes[entry?.pruid];
+  if (code && code !== value) {
+    params.set('province', code);
+    history.replaceState(null, '', `#${params}`);
+  }
+}
+window.addEventListener('hashchange', () => { if (w) { canonicalizeProvince(); applyHash(); } });
 
 resize();
 translate();
@@ -228,6 +301,7 @@ Promise.all([
   data.payloadSources = {nation: nation, provinces, cities, lenses: lensesp, sources, divisions};
   document.querySelector('#loading').hidden = true;
   reset();
+  canonicalizeProvince();
   applyHash();
   const ctxObj = api();
   for (const m of modules) {
