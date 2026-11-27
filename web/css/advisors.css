@@ -1,7 +1,7 @@
 /* Advisors dock: deliberately independent of the map and other panels. */
 .adv-launch { position: fixed; top: 14px; right: 196px; z-index: 22; padding: 6px 10px; border: 1px solid #9b834b; border-radius: 4px; background: #192838; color: #e9d39a; cursor: pointer; font: 12px Georgia, serif; }
 .adv-launch:hover, .adv-launch:focus-visible { background: #3a3529; outline: 2px solid #e0bb60; }
-.adv-panel { position: fixed; z-index: 38; top: 74px; bottom: 0; left: 0; width: min(420px, 100vw); display: flex; flex-direction: column; background: #142130; color: #e2d6b4; border: 1px solid #756440; box-shadow: 3px 0 20px #0009; font: 13px/1.45 system-ui, sans-serif; }
+.adv-panel { position: fixed; z-index: 18; top: 44px; bottom: 0; left: 0; width: min(420px, 100vw); display: flex; flex-direction: column; background: #142130; color: #e2d6b4; border: 1px solid #756440; box-shadow: 3px 0 20px #0009; font: 13px/1.45 system-ui, sans-serif; }
 .adv-panel[hidden] { display: none; }
 .adv-nav { display: flex; align-items: center; gap: 3px; padding: 8px; border-bottom: 1px solid #76623b; overflow-x: auto; flex-shrink: 0; }
 .adv-nav-button, .adv-close { flex: 0 0 auto; width: 27px; height: 27px; border: 1px solid #665d49; border-radius: 50%; color: #dfc991; background: #243444; cursor: pointer; }

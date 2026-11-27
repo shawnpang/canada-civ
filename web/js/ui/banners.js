@@ -1,10 +1,12 @@
 import {center} from '../hex.js';
+import {drawCityTypeBadge} from '../render/districts.js';
 
 // Banner coordinates are always derived from the payload. In particular,
 // a missing coordinate must not turn into a marker at the origin.
 let hitBoxes = [];
 let roster;
 let rosterOpen = false;
+let districts = null;
 
 function cities(ctx) {
   return Array.isArray(ctx.cities) ? ctx.cities : (ctx.cities?.cities || []);
@@ -63,6 +65,13 @@ export async function init(ctx) {
   roster.className = 'city-roster';
   document.querySelector('#panel-root')?.after(roster);
   renderRoster(ctx);
+  // District metadata is optional and shared by the city panel. A failed load
+  // leaves the city banner intact without fabricating a classification.
+  try {
+    const response = await fetch('data/districts.json');
+    if (response.ok) districts = await response.json();
+  } catch { /* unavailable */ }
+  ctx.redraw?.();
 }
 
 function traceHex(g, x, y, radius) {
@@ -120,6 +129,8 @@ export function onRedraw(ctx) {
   const placed = [];
   const locale = ctx.getLang() === 'fr' ? 'fr-CA' : 'en-CA';
   const compact = new Intl.NumberFormat(locale, {notation: 'compact', maximumFractionDigits: 1});
+  const fit = Math.min(innerWidth / (ctx.world.width + 200), (innerHeight - 95) / (ctx.world.height + 200));
+  const zoom = camera.scale / fit;
   for (const city of ordered) {
     const pos = position(city, ctx.world);
     if (!pos) continue;
@@ -128,18 +139,40 @@ export function onRedraw(ctx) {
     const population = Number.isFinite(city.population) ? compact.format(city.population) : null;
     const chipWidth = population ? Math.max(36, Math.ceil(g.measureText(population).width) + 12) : 0;
     const nameWidth = Math.max(56, Math.ceil(g.measureText(name).width) + 20);
-    const width = chipWidth + nameWidth, left = x - width / 2, top = y - 30, height = 21;
-    const box = {city, left, top, right: left + width, bottom: top + height + 5, x, y, name, nameWidth, chipWidth, population};
-    if (box.left > innerWidth || box.right < 0 || box.top > innerHeight || box.bottom < 0) continue;
-    if (placed.some(other => box.left < other.right + 4 && box.right + 4 > other.left &&
-        box.top < other.bottom + 3 && box.bottom + 3 > other.top)) continue;
-    placed.push(box);
+    const width = chipWidth + nameWidth, left = x - width / 2, height = 21;
+    const badgeId = districts?.cities?.[String(city.id)]?.badge;
+    const badgeType = districts?.types?.find(type => type.id === badgeId);
+    const badgeName = typeof badgeType?.name === 'string' ? badgeType.name :
+      (badgeType?.name?.[ctx.getLang()] || badgeType?.name?.en);
+    const showBadge = !!badgeName && (city === focused || zoom >= 2.5);
+    g.font = 'bold 10px Georgia, serif';
+    const badgeWidth = showBadge ? Math.ceil(g.measureText(badgeName).width) + 18 : 0;
+    g.font = 'bold 11px Georgia, serif';
+    // At intermediate zoom, alternate vertical offsets make room for nearby
+    // city labels while keeping a leader line to each official map coordinate.
+    const offsets = zoom >= 1.4 ? [30, 55, 80] : [30];
+    let box = null;
+    for (const offset of offsets) {
+      const top = y - offset;
+      const candidate = {city, left, top, right: left + width, bottom: top + height + 5, x, y, name, nameWidth, chipWidth, population};
+      if (candidate.left > innerWidth || candidate.right < 0 || candidate.top > innerHeight || candidate.bottom < 0) continue;
+      candidate.collision = {left: Math.min(left, x - badgeWidth / 2), right: Math.max(left + width, x + badgeWidth / 2), top: top - (showBadge ? 19 : 0), bottom: candidate.bottom};
+      if (placed.some(other => candidate.collision.left < other.collision.right + 4 && candidate.collision.right + 4 > other.collision.left &&
+          candidate.collision.top < other.collision.bottom + 3 && candidate.collision.bottom + 3 > other.collision.top)) continue;
+      box = candidate;
+      break;
+    }
+    if (box) placed.push(box);
   }
   // Paint the selected banner last and use the same rectangles for hit tests.
   for (const box of placed.reverse()) {
-    const {city, x, left, top, right, bottom, name, nameWidth, chipWidth, population} = box;
+    const {city, x, y, left, top, right, bottom, name, nameWidth, chipWidth, population} = box;
     const active = city === focused;
     g.globalAlpha = focused && !active ? .72 : 1;
+    if (y - bottom > 9) {
+      g.beginPath(); g.moveTo(x, bottom); g.lineTo(x, y - 2);
+      g.strokeStyle = 'rgba(230, 201, 143, .85)'; g.lineWidth = 1; g.stroke();
+    }
     g.shadowColor = 'rgba(0,0,0,.65)';
     g.shadowBlur = 4;
     g.shadowOffsetY = 2;
@@ -161,6 +194,12 @@ export function onRedraw(ctx) {
     }
     g.fillStyle = '#fff0c9';
     g.fillText(name, left + chipWidth + nameWidth / 2, top + 11);
+    // At city scale there is room for the published type plaque; its own
+    // bounds participate in hit testing, just like the banner itself.
+    if (districts && (active || zoom >= 2.5)) {
+      const badge = drawCityTypeBadge(g, districts, city.id, {x, y: top - 10, lang: ctx.getLang()});
+      if (badge) hitBoxes.push({city, left: badge.left, right: badge.left + badge.width, top: badge.top, bottom: badge.top + badge.height});
+    }
     hitBoxes.push(box);
   }
   g.restore();

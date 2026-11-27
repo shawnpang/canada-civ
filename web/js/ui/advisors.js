@@ -224,7 +224,7 @@ function closePanel() { active = null; selectedDivision = null; render(); contex
 export async function init(ctx) {
   context = ctx; root = document.querySelector('#advisors-root'); if (!root) return;
   launch = button('adv-launch','',() => { active = active ? null : 'council'; if (active) document.dispatchEvent(new CustomEvent('canadaciv:panel-open',{detail:{source:'advisors'}})); render(); });
-  panel = node('aside','adv-panel'); panel.hidden = true; root.append(launch,panel);
+  panel = node('aside','adv-panel'); panel.hidden = true; root.append(launch); document.body.append(panel);
   document.addEventListener('canadaciv:panel-open',event => {
     const source = event.detail?.source;
     if (source !== 'advisors' && active && (!['city','province'].includes(source) || innerWidth <= 700)) closePanel();

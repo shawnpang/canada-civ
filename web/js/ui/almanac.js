@@ -8,6 +8,8 @@ let tabs;
 let launch;
 let activePage = 'about';
 let previousFocus;
+const payloads = {};
+const requests = {};
 
 // The current nation payload has definitions but no source fields. These IDs
 // are the actual inputs recorded in the catalogue for each measure.
@@ -25,6 +27,8 @@ const copy = {
   en: {
     open: 'Almanac', close: 'Close Almanac', about: 'About', yields: 'Yields',
     lenses: 'Lenses', terrain: 'Terrain', sources: 'Sources & licences',
+    districts: 'Districts', wonders: 'Wonders', layers: 'Map layers', citizens: 'Citizens',
+    loading: 'Loading data…', unavailableData: 'Data unavailable.', attendance: 'Attendance', unmapped: 'No mapped point',
     aboutText: 'Canada Civ is a read-only visualizer of Canada, not a game. Inspired by usaciv by Andrej Karpathy.',
     code: 'The Canada Civ code is MIT licensed. Data is covered by its own licences.',
     missing: 'Missing or suppressed data is null, never a fabricated zero.',
@@ -51,6 +55,8 @@ const copy = {
   fr: {
     open: 'Almanach', close: 'Fermer l’almanach', about: 'À propos', yields: 'Rendements',
     lenses: 'Couches', terrain: 'Terrain', sources: 'Sources et licences',
+    districts: 'Quartiers', wonders: 'Merveilles', layers: 'Couches de la carte', citizens: 'Citoyens',
+    loading: 'Chargement des données…', unavailableData: 'Données indisponibles.', attendance: 'Fréquentation', unmapped: 'Aucun point cartographié',
     aboutText: 'Canada Civ est un visualiseur du Canada en lecture seule, pas un jeu. Inspiré d’usaciv par Andrej Karpathy.',
     code: 'Le code de Canada Civ est sous licence MIT. Les données sont assujetties à leurs propres licences.',
     missing: 'Les données manquantes ou supprimées sont nulles (null), jamais remplacées par un faux zéro.',
@@ -176,6 +182,57 @@ function renderTerrain() {
     if (sourceById(id)) sourceReference(content, id);
   }
 }
+function load(name) {
+  if (!requests[name]) requests[name] = fetch(`data/${name}.json`)
+    .then(response => { if (!response.ok) throw Error(response.status); return response.json(); })
+    .catch(() => null);
+  return requests[name];
+}
+function dataPage(names, draw) {
+  const missing = names.filter(name => !(name in payloads));
+  if (missing.length) {
+    paragraph(content, text('loading'));
+    const page = activePage;
+    Promise.all(missing.map(async name => { payloads[name] = await load(name); })).then(() => {
+      if (activePage === page) render();
+    });
+    return;
+  }
+  draw();
+}
+function describePayload(section, payload) {
+  if (!payload) { paragraph(section, text('unavailableData')); return; }
+  const rules = Array.isArray(payload.rules) ? payload.rules : [payload.rules];
+  for (const rule of rules) paragraph(section, local(rule));
+  if (payload.vintage && typeof payload.vintage !== 'object') metadata(section, text('vintage'), local(payload.vintage));
+  else if (payload.vintage) for (const [id, vintage] of Object.entries(payload.vintage)) metadata(section, `${text('vintage')} · ${id}`, local(vintage));
+  for (const id of payload.sources || payload.source_ids || []) sourceReference(section, id);
+}
+function renderDistricts() {
+  dataPage(['districts'], () => describePayload(content, payloads.districts));
+}
+function renderCitizens() {
+  dataPage(['citizens'], () => describePayload(content, payloads.citizens));
+}
+function renderLayers() {
+  dataPage(['resources', 'infrastructure'], () => {
+    for (const name of ['resources', 'infrastructure']) {
+      const section = entry(name === 'resources' ? (lang() === 'fr' ? 'Ressources' : 'Resources') : (lang() === 'fr' ? 'Infrastructures' : 'Infrastructure'));
+      describePayload(section, payloads[name]);
+      for (const type of payloads[name]?.types || []) paragraph(section, `${local(type.name)}: ${local(type.description)}`);
+    }
+  });
+}
+function renderWonders() {
+  const payload = context.wonders;
+  describePayload(content, payload);
+  if (!payload) return;
+  for (const item of payload.items || []) {
+    const section = entry(local(item.name));
+    if (Number.isFinite(item.attendance)) metadata(section, `${text('attendance')} · 2025–26`, new Intl.NumberFormat(lang() === 'fr' ? 'fr-CA' : 'en-CA').format(item.attendance));
+    if (!Number.isFinite(item.x) || !Number.isFinite(item.y)) paragraph(section, text('unmapped'));
+  }
+}
 function renderSources() {
   paragraph(content, text('licencesIntro'));
   if (context.sources?.fixture || context.payloadSources?.sources?.official === false) paragraph(content, text('fixture'));
@@ -217,7 +274,7 @@ function render() {
   close.setAttribute('aria-label', text('close'));
   overlay.querySelector('h2').textContent = text('open');
   tabs.replaceChildren();
-  for (const page of ['about', 'yields', 'lenses', 'terrain', 'sources']) {
+  for (const page of ['about', 'yields', 'lenses', 'terrain', 'citizens', 'districts', 'wonders', 'layers', 'sources']) {
     const button = element('button', '', text(page));
     button.type = 'button';
     if (activePage === page) button.setAttribute('aria-current', 'page');
@@ -229,7 +286,7 @@ function render() {
     tabs.append(button);
   }
   content.replaceChildren();
-  ({about: renderAbout, yields: renderYields, lenses: renderLenses, terrain: renderTerrain, sources: renderSources})[activePage]();
+  ({about: renderAbout, yields: renderYields, lenses: renderLenses, terrain: renderTerrain, citizens: renderCitizens, districts: renderDistricts, wonders: renderWonders, layers: renderLayers, sources: renderSources})[activePage]();
 }
 function close() {
   overlay.hidden = true;
@@ -271,7 +328,8 @@ export async function init(ctx) {
       close();
     }
   });
-  root.replaceChildren(launch, overlay);
+  root.replaceChildren(launch);
+  document.body.append(overlay);
   render();
 }
 export function onLang(ctx) { context = ctx; render(); }
