@@ -33,6 +33,7 @@ The interface is **bilingual English and French**. The map includes **all 10 pro
 - Legal, cadastral, or survey-grade boundaries. Hexes are schematic (about 1,600 km² at 25 km radius).
 - Copying Civilization (or any publisher’s) art, logos, or typography.
 - Gamifying Indigenous lands as territory to settle, conquer, or harvest.
+- An Indigenous lands overlay, and an Indigenous-identity share lens, until a future explicit sensitivity review. These are dropped from Milestone 3: usaciv has no equivalent, and that review cannot be completed in this project.
 - Inventing GDP, employment, or other figures at a geography Statistics Canada does not publish (in particular: **no census-division GDP**).
 - Real-time feeds, user accounts, or personal data.
 - Dropping the territories, or cropping them into an inset so the south fills the screen.
@@ -577,7 +578,7 @@ Lens, language, or selection changes **push** a history entry (Back undoes them)
 - Yields are names on real figures. Positions are schematic.
 - Selection rules (wonders, districts, resource cutoffs) are published inside the data files.
 - Credit Open Government Licence – Canada and, where applicable, the Statistics Canada Open Licence, in the Almanac, help footer, and share image. See [DATA-SOURCES.md](DATA-SOURCES.md).
-- Indigenous lands overlay is **not MVP**. If added later: optional toggle, official names from the NRCan legislative-boundaries product, no yields or “territory” game language, and an Almanac caveat that these are legislative / administrative boundaries, not a complete map of traditional territories, treaties, or unceded land. Ship only after a written sensitivity review in the PR.
+- Indigenous lands overlay is **out of scope for now** (dropped from Milestone 3). usaciv has no equivalent, and a sensitivity review cannot be completed in this project. If it is ever reconsidered: optional toggle, official names from the NRCan legislative-boundaries product, no yields or “territory” game language, an Almanac caveat that these are legislative / administrative boundaries rather than a complete map of traditional territories, treaties, or unceded land, and a written sensitivity review before shipping. Default off.
 
 ---
 
@@ -611,10 +612,10 @@ Resolve these in spike notes or a spec PR; do not block Milestone 0 on them exce
 
 1. **Hex radius:** stay at 25 km after measurements, or move to 30 km with a written performance reason? (Default: 25 km.)
 2. **University wonders:** is there an open, citable Canadian university R&D series good enough for a published rule? If no, omit the slot.
-3. **Indigenous lands overlay:** who reviews it, and what default (on/off) and naming do they want? (Not MVP.)
+3. **Indigenous lands overlay:** dropped from current scope (see §2 non-goals and §13). Reopen only after an explicit sensitivity review.
 4. **Raster preprocess:** is a documented one-time GDAL step acceptable for MRDEM and land cover? (Allowed by §3 if documented.)
 5. **Trade routes:** is there a Canadian freight-flow matrix that is open enough? If no, omit `trade.json`.
-6. **CA cutoff for later “town” panels:** what population threshold, besides always keeping territorial CAs?
+6. **CA cutoff for later “town” panels:** resolved for Milestone 3 — 10,000 residents (July 2025 CA estimates where available, otherwise Census 2021), and every territorial CA is included even if smaller.
 7. **Public name and host:** keep the repo name `canada-civ`, or a quieter public title? Hosting is out of band.
 8. **Census vintage:** stay on 2021 geography until 2026 Census products are fully available, then plan a version bump.
 

@@ -94,21 +94,22 @@ Sources, schemas, UI, and the definition of done live in [SPEC.md](SPEC.md). Lic
 
 ---
 
-## Milestone 3 — Later
+## Milestone 3 — Later features and visual polish
 
-**Goal.** Sensitivity-heavy or data-thin work. Do not start as a default agent assignment.
+**Goal.** Remaining atlas features that do not require a sensitivity review, plus a fidelity pass so the map and chrome sit closer to usaciv.
 
-**Depends on.** Milestone 2, plus an explicit human go-ahead for the Indigenous lands overlay.
+**Depends on.** Milestone 2. The Indigenous lands overlay is **out of scope** for this milestone (no usaciv equivalent; a sensitivity review cannot be completed here).
 
 **Tasks (each can be its own PR).**
 
-1. Census agglomerations as towns with a lighter panel, using the published population cutoff. Territorial CAs stay in even if small.
-2. Indigenous lands overlay **after** a documented sensitivity review: optional, official names, no yields, Almanac caveat that legislative boundaries are not all Indigenous land. Default off unless the review says otherwise.
+1. Census agglomerations as towns with a lighter panel, using the published cutoff of 10,000 residents (July 2025 CA estimates where available, otherwise Census 2021). Every territorial CA stays in even if smaller.
+2. ~~Indigenous lands overlay~~ **Dropped from scope for now.** See SPEC §2 non-goals and §13.
 3. Disasters lens from the Canadian Disaster Database (and wildfire/flood if open layers exist).
-4. Time slider if `pop_series` and GDP history are in the payloads.
+4. Time slider for official `pop_series` years already in the payloads. Add official GDP history only if a citable series is retrieved; never invent one.
 5. Optional: CSD-level Explorer columns, crop resources, elections lens — only with a citable open source.
+6. Fidelity and polish versus usaciv: terrain art (NW-lit painted relief, cover-scaled vegetation marks, smoother coasts/lakes, river lines); province-name / banner collision handling; GDP-per-person and growth ranks computed from official payloads; header vintage and Compare-tab clipping; mobile chrome; bilingual loading screen; Advisors filled from published data; Explorer table/scatter; Share PNG 1600×900; keyboard parity (WASD, L / Shift+L, R, `/`, Escape chain).
 
-**Acceptance.** Per-task SPEC criteria. The lands overlay must not ship without the review note in the Almanac and the PR.
+**Acceptance.** Per-task SPEC criteria for the features that shipped. The lands overlay must not ship. `pipeline check` and unit tests pass. Headless screenshots compared with usaciv, with an honest residual-gap list.
 
 ---
 
