@@ -4,8 +4,10 @@ import {FAR, MID, NEAR, CLOSE, lodFor, hexPath} from './render/art/lod.js';
 import {getSprite, drawSprite, seedRand} from './render/art/sprites.js';
 import {paintWater} from './render/water.js';
 import {paintNeighbours} from './render/neighbours.js';
-import {landFill, SHADE_TINTS, FAR_MOUNTAIN} from './render/art/palette.js';
+import {arcticFarColor} from './render/art/arctic.js';
+import {landFill, SHADE_TINTS, FAR_MOUNTAIN, LAND_FILLS} from './render/art/palette.js';
 
+const LAND_FAR = LAND_FILLS[FAR];
 const SQRT3 = Math.sqrt(3);
 const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
 function rand(i,n) {
@@ -298,14 +300,15 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
       const corners=R>3?exposedCorners(w,row,col,rows,cols,j=>!w.water[j]):null;
       const rounded=corners&&corners.some(Boolean);
       const cover=w.cover[i]||0;
+      const arcticColor=lod===FAR?arcticFarColor(w,row,col,LAND_FAR):null;
       // High northern barren and shrub cells receive a cool surface treatment;
       // ice cover itself remains the only explicit ice classification.
       const cold=(cover===4||cover===5||cover===10)&&rand(i,44)<clamp((2200-wy)/700,0,1);
-      ctx.fillStyle=cold?'#b5bcb0':landFill(cover,lod);
+      ctx.fillStyle=arcticColor||(cold?'#b5bcb0':landFill(cover,lod));
       if(rounded)boundaryHex(ctx,x,y,R+.35,corners);else hexPath(ctx,x,y,R+.35);
       ctx.fill();ctx.globalAlpha=1;
       if(o<0)continue;
-      const light=shade(w,i,row,col,rows,cols);
+      const light=shade(w,i,row,col,rows,cols)*(arcticColor ? .35 : 1);
       if(light){
         const strength=lod===FAR?1.3:1;
         ctx.fillStyle=light>0?`rgba(${SHADE_TINTS.light},${(.14*strength*light).toFixed(3)})`:`rgba(${SHADE_TINTS.dark},${(-.16*strength*light).toFixed(3)})`;
@@ -315,12 +318,14 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
       const shore=lod!==FAR&&neighbours(row,col).some(([r,c])=>{
         const j=indexAt(r,c,rows,cols);return j<0||!!w.water[j];
       });
-      cells.push({i,x,y,wx,wy,cover,cold,corners:rounded?corners:null,shore});
+      cells.push({i,x,y,wx,wy,cover,cold,arcticColor,corners:rounded?corners:null,shore});
     }
   }
   // A second pass permits pigment to overlap adjacent land classifications.
   for(const cell of cells){
-    const {i,x,y,cover,cold,corners}=cell;
+    const {i,x,y,cover,cold,arcticColor,corners}=cell;
+    // The large random washes obscure small Arctic islands at national zoom.
+    if(lod===FAR&&arcticColor)continue;
     const variant=Math.floor(rand(i,3)*8),key=`${cover}:${variant}:${cold}`;
     if(lod<=MID){
       const texture=sprite(textures,key,()=>pigmentSprite(cover,variant,cold,scale));
