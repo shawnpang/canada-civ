@@ -1,0 +1,1 @@
+These files are **fixtures** for UI workstreams. They use official names already present in `world.json` (and well-known CMA titles) but **all statistics are null**. They must not be copied over official `web/data/*.json` payloads.

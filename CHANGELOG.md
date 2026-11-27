@@ -4,6 +4,10 @@ Each development stage is a commit on `main`. Finished milestones also get a tag
 
 ## Unreleased
 
+### Parallel workstreams (in progress)
+
+Branches `ws-a` (data), `ws-b` (panels), `ws-c` (lenses), `ws-d` (search/almanac/share/i18n) plus a solo checkpoint branch `m1-solo-wip`. Shared contract: `docs/CONTRACT-MVP.md` and `docs/WORKSTREAMS.md`. Fixture payloads in `web/data/fixtures/` contain official names and null statistics only.
+
 ### Later — visual polish (deferred)
 
 Residual art gaps accepted with Milestone 0, to be tightened after MVP/v1 feature work rather than blocking the atlas:

@@ -27,3 +27,6 @@ __pycache__/
 out/
 dist/
 *.part
+
+# Local git worktrees (parallel workstreams)
+.worktrees/
