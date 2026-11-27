@@ -1,5 +1,9 @@
 # Integration hook requests
 
+## Follow-up for the UI workstream
+
+The shell bridges search results to `canadaciv:select-city` before the current search handler runs, identifying the result by its rendered name and type. Please move that dispatch into `search.js`'s `choose` function, where the actual city id is available, and remove the shell bridge when merging the change. Make `city.js`'s selection handler skip a history write if the same city is already selected; it currently pushes a duplicate entry when a selected city is chosen again.
+
 Shared-shell work for the integrator (`main.js`, hash helpers, chrome layout). Workstream modules should keep working with their fallbacks until these land.
 
 ## Workstream B — panels and banners

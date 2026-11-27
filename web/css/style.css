@@ -23,3 +23,15 @@ footer { position: absolute; bottom: 0; left: 0; right: 0; padding: 9px 18px; di
 #close { float: right; }
 #dialog h2 { font-weight: normal; }
 @media (max-width: 600px) { header { height: 42px; padding: 0 8px; } .tag, .brand small, #credit { display: none; } .brand b { font-size: 13px; } footer { justify-content: center; } .minimap-frame { left: 8px; bottom: 33px; } #minimap { width: 132px; height: 108px; } .controls { right: 8px; bottom: 35px; } }
+
+/* Keep the shared chrome rows clear of the national yields and each other. */
+body #search-root, body .almanac-launch, body .share-trigger { top: 100px; }
+body .city-roster, body .cc-panel, body .yield-report { top: 145px; }
+body .yield-report { max-height: calc(100vh - 160px); }
+body #dialog { z-index: 30; }
+@media (max-width: 600px) {
+  body #search-root, body .almanac-launch, body .share-trigger { top: 93px; }
+  body .city-roster, body .yield-report { top: 135px; }
+  body .yield-report { max-height: calc(100vh - 165px); }
+  body .cc-panel { top: auto; }
+}
