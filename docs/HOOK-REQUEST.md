@@ -51,3 +51,10 @@ Shared-shell work for the integrator (`main.js`, hash helpers, chrome layout). W
 
 - Include `css/citizens.css` in `index.html`. Add a bilingual Citizens / Citoyens tab in City View and a mount element in its panel body. Import `renderCitizens` and `clearCitizens` from `web/js/ui/citizens.js` and call `renderCitizens(mount, {cityId: city.id, lang: ctx.getLang()})` only when that tab is shown. Call it again for a changed city or language; call `clearCitizens(mount)` when hiding or reusing the mount to invalidate pending loads. A new mount on City View rerender is also fine. The module fetches `data/citizens.json` on first use, caches successful loads, and handles unavailable data and retry itself.
 - Merge the records in `data/sources-citizens.json` into the Almanac source list by source ID, combining file provenance when the ID already exists, and expose the bilingual `rules` and vintage from the lazy citizens payload there. Keep the Statistics Canada Open Licence attribution visible in the Almanac, help and share image.
+
+## Workstream wonders
+
+- Load the optional eager `web/data/wonders.json` and merge the `web/data/sources-wonders.json` catalogue fragment into `sources.json` without dropping other sources. Pass the payload as `ctx.wonders`.
+- Import `web/js/render/wonders.js` and call `onRedraw(ctx)` when the Wonders layer is enabled. Provide a Wonders map toggle and preserve its non-default state in the URL hash. Call `clearHits()` on disable; use `hitWonder(event)` and `wonderName(item, lang)` for a bilingual tooltip, showing attendance and 2025–26 only where present.
+- Add a Wonders Almanac page that quotes the bilingual `rules` array directly from the payload, including the university omission and caveat, and resolves the listed source IDs and vintages. A null point means a ranked reporting unit remains listable but cannot be drawn.
+- To make rebuilding and validation part of the common pipeline, integrate `pipeline.wonders` fetch/build and validate the optional payload; `uv run python -m pipeline.wonders --fetch` refreshes the inputs and rebuilds it, while the command without `--fetch` uses the cached source files.
