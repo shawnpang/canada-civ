@@ -1,4 +1,5 @@
 import {paintMapTerrain} from './terrain.js';
+import {createMapCache} from './render/mapcache.js';
 import {setupMinimap} from './minimap.js';
 import * as i18n from './ui/i18n.js';
 import * as hash from './ui/hash.js';
@@ -23,6 +24,7 @@ const modules = [i18n, hash, timeslider, search, almanac, share, yields, city, t
 const canvas = document.querySelector('#map');
 canvas.tabIndex = 0;
 const ctx = canvas.getContext('2d');
+const mapCache = createMapCache();
 let w, scale, ox, oy, drag = null, dragStart = null;
 const initialLang = new URLSearchParams(location.hash.slice(1)).get('lang');
 let lang = initialLang === 'en' || initialLang === 'fr' ? initialLang : (navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en');
@@ -96,7 +98,10 @@ function draw() {
   if (!w) return;
   const W = innerWidth, H = innerHeight;
   ctx.clearRect(0, 0, W, H);
-  paintMapTerrain(ctx, w, {width: W, height: H, scale, ox, oy});
+  const view = hash.getHash();
+  const key = JSON.stringify([view.lens, view.layers, view.city, view.province, timeslider.getYear(), lang]);
+  mapCache.draw(ctx, {world: w, width: W, height: H, scale, ox, oy, pixelRatio: devicePixelRatio, key},
+    (target, camera) => paintMapTerrain(target, w, camera));
   const ctxObj = api();
   if (lensRender.onRedraw) lensRender.onRedraw(ctxObj);
   labels.onRedraw(ctxObj);
