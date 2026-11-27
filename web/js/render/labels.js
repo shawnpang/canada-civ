@@ -4,6 +4,10 @@ import {layoutBanners} from '../ui/banners.js';
 // Candidate centres are actual owned cells. Cache them because the world does
 // not change on pan; screen-space collision checks are repeated on redraw.
 let cachedWorld, anchors = [];
+// These offsets stay inside a pointy-top hex, in units of its radius.
+const CELL_OFFSETS = [[0, 0], [0, -.5], [0, .5], [-.5, 0], [.5, 0],
+  [-.5, -.5], [.5, -.5], [-.5, .5], [.5, .5], [.3, .8], [-.3, .8],
+  [0, .95], [.85, 0], [-.85, 0]];
 
 function makeAnchors(world) {
   const grid = world?.grid;
@@ -18,9 +22,16 @@ function makeAnchors(world) {
     const meanX = points.reduce((sum, point) => sum + point[0], 0) / points.length;
     const meanY = points.reduce((sum, point) => sum + point[1], 0) / points.length;
     points.sort((a, b) => Math.hypot(a[0] - meanX, a[1] - meanY) - Math.hypot(b[0] - meanX, b[1] - meanY));
+    if (points.length <= 2) points.sort((a, b) => a[0] - b[0]);
     const xs = points.map(point => point[0]), ys = points.map(point => point[1]);
     return {province: world.provinces[index], points, width: Math.max(...xs) - Math.min(...xs), height: Math.max(...ys) - Math.min(...ys)};
-  }).filter(Boolean).sort((a, b) => a.points.length - b.points.length);
+  // Place the smallest province first, then the other compact provinces before
+  // larger ones. Within the compact group, larger ones get first choice.
+  }).filter(Boolean).sort((a, b) => {
+    const rank = anchor => anchor.points.length <= 2 ? 0 : anchor.points.length <= 100 ? 1 : 2;
+    const ar = rank(a), br = rank(b);
+    return ar - br || (ar === 1 ? b.points.length - a.points.length : a.points.length - b.points.length);
+  });
 }
 
 function spacedWidth(g, text, spacing) {
@@ -86,23 +97,27 @@ export function onRedraw(ctx) {
     let chosen = null;
     // Prefer a readable size before shrinking. Within each size, try the
     // unwrapped name first and then balanced two-line alternatives.
-    for (let size = initialSize; size >= 8 && !chosen; size -= 1) {
+    const tinyAtNationalZoom = anchor.points.length <= 2 && zoom <= 1.15;
+    const maxSize = tinyAtNationalZoom ? Math.min(initialSize, 9) : initialSize;
+    const offsets = tinyAtNationalZoom ? [[0, .95], ...CELL_OFFSETS] : CELL_OFFSETS;
+    for (let size = Math.floor(maxSize); size >= 8 && !chosen; size -= 1) {
       g.font = `${size}px Georgia, serif`;
-      const spacing = size * .15, outline = Math.max(2, size * .13);
+      const spacing = size * (size <= 10 ? .06 : .15), outline = Math.max(2, size * .13);
       const options = lineOptions(text).map(lines => ({lines, width: Math.max(...lines.map(line => spacedWidth(g, line, spacing)))}));
       options.splice(1, options.length - 1, ...options.slice(1).sort((a, b) => a.lines.length - b.lines.length || a.width - b.width));
       for (const option of options) {
         if (option.width > areaWidth) continue;
         const height = size * (1 + (option.lines.length - 1) * 1.1);
-        for (const point of anchor.points) {
-          const x = camera.ox + point[0] * camera.scale, y = camera.oy + point[1] * camera.scale;
+        candidates: for (const point of anchor.points) for (const [dx, dy] of offsets) {
+          const radius = world.grid.radius || 25;
+          const x = camera.ox + (point[0] + dx * radius) * camera.scale, y = camera.oy + (point[1] + dy * radius) * camera.scale;
           if (x < -option.width || y < -height || x > viewportWidth + option.width || y > viewportHeight + height) continue;
-          const padding = outline + 2;
+          const padding = outline + 1;
           const box = {left: x - option.width / 2 - padding, right: x + option.width / 2 + padding,
             top: y - height / 2 - padding, bottom: y + height / 2 + padding};
           if (occupied.some(other => overlaps(box, other))) continue;
           chosen = {x, y, size, spacing, outline, lines: option.lines, box};
-          break;
+          break candidates;
         }
         if (chosen) break;
       }
