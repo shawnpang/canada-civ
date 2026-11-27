@@ -19,6 +19,7 @@ import * as labels from './render/labels.js';
 const modules = [i18n, hash, search, almanac, share, yields, city, province, banners, advisors, lenses, legend, layers, lensRender];
 
 const canvas = document.querySelector('#map');
+canvas.tabIndex = 0;
 const ctx = canvas.getContext('2d');
 let w, scale, ox, oy, drag = null, dragStart = null;
 const initialLang = new URLSearchParams(location.hash.slice(1)).get('lang');
@@ -38,8 +39,8 @@ const drawMinimap = setupMinimap({
 });
 
 const words = {
-  en: ['A living atlas of the land', 'DRAG TO EXPLORE  ·  SCROLL TO ZOOM', 'Surveying the land…', 'Explore the map', 'Drag to pan, scroll or use + and − to zoom. Press R to toggle resources. Click, drag, or use the arrow keys on the overview map to navigate. This is a schematic atlas, not a legal boundary map. Terrain uses 2020 land cover and MRDEM elevation. Data: Statistics Canada Open Licence; Open Government Licence – Canada; NOAA; Natural Earth.'],
-  fr: ['Un atlas vivant du territoire', 'GLISSEZ POUR EXPLORER  ·  DÉFILEZ POUR ZOOMER', 'Arpentage du territoire…', 'Explorer la carte', 'Glissez pour déplacer la carte; utilisez la molette ou + et − pour zoomer. Appuyez sur R pour afficher ou masquer les ressources. Cliquez, glissez ou utilisez les flèches sur la carte générale pour naviguer. Cette carte schématique ne représente pas les limites légales. Relief MRDEM et couverture terrestre 2020. Données : Licence ouverte de Statistique Canada; Licence du gouvernement ouvert – Canada; NOAA; Natural Earth.']
+  en: ['A living atlas of the land', 'DRAG TO EXPLORE  ·  SCROLL TO ZOOM', 'Surveying the land…', 'Explore the map', 'Drag, use WASD or the arrow keys to pan; scroll or use + and − to zoom. Press L or Shift+L to cycle lenses, R to toggle resources, / or Ctrl/⌘K to search, ? for help, and Esc to close the topmost surface. Click, drag, or use the arrow keys on the overview map to navigate. This is a schematic atlas, not a legal boundary map. Terrain uses 2020 land cover and MRDEM elevation. Data: Statistics Canada Open Licence; Open Government Licence – Canada; NOAA; Natural Earth.'],
+  fr: ['Un atlas vivant du territoire', 'GLISSEZ POUR EXPLORER  ·  DÉFILEZ POUR ZOOMER', 'Arpentage du territoire…', 'Explorer la carte', 'Glissez ou utilisez WASD ou les flèches pour déplacer la carte; utilisez la molette ou + et − pour zoomer. Appuyez sur L ou Maj+L pour parcourir les couches de données, sur R pour afficher ou masquer les ressources, sur / ou Ctrl/⌘K pour rechercher, sur ? pour l’aide et sur Échap pour fermer le panneau au premier plan. Cliquez, glissez ou utilisez les flèches sur la carte générale pour naviguer. Cette carte schématique ne représente pas les limites légales. Relief MRDEM et couverture terrestre 2020. Données : Licence ouverte de Statistique Canada; Licence du gouvernement ouvert – Canada; NOAA; Natural Earth.']
 };
 
 function translate() {
@@ -239,6 +240,19 @@ window.addEventListener('keydown', event => {
     openHelp();
     return;
   }
+  if (w && !editing && !event.ctrlKey && !event.metaKey && !event.altKey) {
+    const directions = {w: [0, -1], a: [-1, 0], s: [0, 1], d: [1, 0], ArrowUp: [0, -1], ArrowLeft: [-1, 0], ArrowDown: [0, 1], ArrowRight: [1, 0]};
+    const direction = directions[event.key] || directions[event.key.toLowerCase()];
+    // The overview map has its own arrow navigation and camera step.
+    if (direction && !(event.target.id === 'minimap' && event.key.startsWith('Arrow'))) {
+      event.preventDefault();
+      ox -= direction[0] * 60;
+      oy -= direction[1] * 60;
+      draw();
+      scheduleSave();
+      return;
+    }
+  }
   if (event.key !== 'Escape') return;
   const searchInput = document.querySelector('#search-root .search-input');
   const visible = selector => document.querySelector(selector + ':not([hidden])');
@@ -248,8 +262,8 @@ window.addEventListener('keydown', event => {
   else if (visible('.almanac-overlay')) close = () => document.querySelector('.almanac-overlay .almanac-close')?.click();
   else if (visible('.adv-panel')) close = () => document.querySelector('.adv-close')?.click();
   else if (document.activeElement === searchInput) close = () => { searchInput.value = ''; searchInput.blur(); };
-  else if (document.querySelector('.lens-picker[open]')) close = () => { document.querySelector('.lens-picker').open = false; };
-  else if (document.querySelector('.map-layer-menu[open]')) close = () => { document.querySelector('.map-layer-menu').open = false; };
+  else if (document.querySelector('.lens-picker[open]')) close = () => { const picker = document.querySelector('.lens-picker'); picker.open = false; picker.querySelector('summary')?.focus(); };
+  else if (document.querySelector('.map-layer-menu[open]')) close = () => { const menu = document.querySelector('.map-layer-menu'); menu.open = false; menu.querySelector('summary')?.focus(); };
   else if (visible('.yield-report')) close = () => document.querySelector('.yield-report .yield-report-close')?.click();
   else if (visible('.cc-panel')) close = () => document.querySelector('.cc-panel:not([hidden]) .cc-panel-close')?.click();
   if (close) { event.preventDefault(); event.stopImmediatePropagation(); close(); }
