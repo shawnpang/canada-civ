@@ -2,7 +2,8 @@
 #yield-bar { position: absolute; z-index: 5; top: 44px; left: 0; right: 0; display: flex; align-items: stretch; gap: 2px; min-height: 48px; padding: 3px 12px; overflow-x: auto; scrollbar-width: thin; background: linear-gradient(#213747f5, #101d29f5); border-bottom: 1px solid #a48c5b; box-shadow: 0 3px 8px #0008; }
 .yield-chip { display: flex; flex: 0 0 auto; align-items: center; gap: 6px; padding: 4px 9px; background: transparent; border: 1px solid transparent; box-shadow: none; white-space: nowrap; }
 .yield-chip:hover, .yield-chip[aria-expanded="true"] { background: #5d502b99; border-color: #b59b62; }
-.yield-icon { color: #d9be77; font-size: 18px; }
+.yield-icon { flex: 0 0 auto; color: var(--yield-color, #d9be77); font: bold 21px/1 Georgia, serif; text-shadow: 0 1px 2px #000, 0 0 5px currentColor; }
+.yield-text { display: block; text-align: left; }
 .yield-label { display: block; color: #bdb392; font: 9px Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
 .yield-value { display: block; color: #f2e7c9; font: bold 13px Georgia, serif; font-variant-numeric: tabular-nums; }
 .yield-turn { align-self: center; margin-left: auto; padding: 0 8px; color: #d2c49e; font: 11px Georgia, serif; white-space: nowrap; }
@@ -52,7 +53,6 @@
   .city-roster { top: 93px; left: 8px; }
 }
 .yield-chip[aria-pressed="true"] { background: #5d502b99; border-color: #b59b62; }
-.yield-icon { color: var(--yield-color, #d9be77); }
 .yield-report-title small { color: #d2b66e; font: 10px Arial, sans-serif; letter-spacing: .14em; }
 .yield-report-total { color: #f2dfb0; font-weight: bold; }
 .yield-report-empty { color: #c0b593; font: 12px Arial, sans-serif; }
@@ -66,6 +66,12 @@
 .yield-label { display: none; }
 .yield-value { font-size: 12px; }
 .yield-turn { font-size: 10px; }
+/* Labels stack without increasing row height. Below this width the header
+   needs the space for every value and the complete vintage. */
+@media (min-width: 1800px) {
+  .yield-label { display: block; font-size: 8px; line-height: 1.1; letter-spacing: .03em; }
+  .yield-value { line-height: 1.15; }
+}
 @media (min-width: 1600px) {
   #yield-bar { top: 0; left: 158px; right: 535px; height: 44px; padding: 0 5px; background: transparent; border: 0; box-shadow: none; }
   .yield-chip { padding: 2px 5px; }

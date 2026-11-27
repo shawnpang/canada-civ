@@ -96,7 +96,11 @@ function render() {
   const open = menu?.open || false;
   const notesOpen = [...root.querySelectorAll('.map-layer-notes')].map(el => el.open);
   root.replaceChildren();
-  const resource = element('button', 'map-layer-resource', '◇  ' + words.resources);
+  const resource = element('button', 'map-layer-resource');
+  const resourceIcon = element('span', 'toolbar-icon', '◆');
+  resourceIcon.setAttribute('aria-hidden', 'true');
+  resource.append(resourceIcon, element('span', 'toolbar-label', words.resources));
+  resource.setAttribute('aria-label', words.resources);
   resource.type = 'button';
   resource.disabled = !available('resources');
   resource.title = available('resources') ? words.shortcut : words.missing;
@@ -104,7 +108,11 @@ function render() {
   resource.addEventListener('click', () => toggle('resources'));
   menu = element('details', 'map-layer-menu');
   menu.open = open;
-  const summary = element('summary', 'map-layer-trigger', '▦  ' + words.map + ' ');
+  const summary = element('summary', 'map-layer-trigger');
+  const mapIcon = element('span', 'toolbar-icon', '▦');
+  mapIcon.setAttribute('aria-hidden', 'true');
+  summary.append(mapIcon, element('span', 'toolbar-label', words.map));
+  summary.setAttribute('aria-label', `${words.map}: ${enabled.size}`);
   summary.append(element('span', 'map-layer-count', String(enabled.size)));
   menu.append(summary);
   const panel = element('div', 'map-layer-panel');
