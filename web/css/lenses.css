@@ -77,3 +77,14 @@
 @media (min-width: 1100px) and (max-width: 1400px) {
   body:has(.cc-panel:not([hidden])) .lens-dock > .lens-choice:nth-child(n+3) { display: none; }
 }
+
+/* The city key stays compact until opened, alongside any active lens. */
+#legend-root { pointer-events: none; }
+.lens-legend, .city-type-legend { pointer-events: auto; }
+.city-type-legend-container { display: flex; justify-content: flex-end; margin-top: 5px; }
+.city-type-legend { max-width: 100%; color: #f3e5bd; border: 1px solid #b49a63; background: #172a37f2; box-shadow: 0 3px 15px #0009; font: 12px/1.35 Arial, sans-serif; }
+.city-type-legend__trigger { padding: 6px 10px; cursor: pointer; color: #f0d58c; }
+.city-type-legend__trigger:focus-visible { outline: 2px solid #fff1bd; outline-offset: -2px; }
+.city-type-legend__list { display: grid; gap: 5px; margin: 0; padding: 2px 10px 10px; list-style: none; }
+.city-type-legend__item { display: flex; align-items: center; gap: 8px; }
+.city-type-legend__swatch { display: inline-grid; flex: 0 0 25px; height: 20px; place-items: center; border: 1px solid #e6d5a4; border-radius: 10px; color: #fff8e4; font: bold 9px Arial, sans-serif; text-shadow: 0 1px 2px #000; }

@@ -1,10 +1,14 @@
 import {clearLens, getActiveLens, getBrush, setBrush, subscribe} from './lenses.js';
 import {lensPosition, lensColor, lensValue} from '../render/lenses.js';
 import {renderCategoricalLegend} from '../render/categorical-lens.js';
+import {typeStyle} from './banners.js';
 
 const BIN_COUNT = 32;
 let context;
 let root;
+let lensRoot;
+let cityTypeRoot;
+let districts;
 let currentLens;
 let histogram;
 let selection;
@@ -74,24 +78,61 @@ function setPositions(a, b) {
   }
 }
 
+// Only published badge categories are represented; a null badge is distinct
+// from a sector category and uses the same default styling as the banner.
+export function cityTypeEntries(payload, lang) {
+  const records = Object.values(payload?.cities || {});
+  const badges = new Set(records.map(record => record?.badge).filter(Boolean));
+  const entries = (payload?.types || [])
+    .filter(type => badges.has(type.id))
+    .map(type => ({id: type.id, name: text(type.name, lang)}));
+  if (records.some(record => record?.badge == null)) {
+    entries.push({id: null, name: lang === 'fr' ? 'Type de ville indisponible' : 'City type unavailable'});
+  }
+  return entries;
+}
+
+function renderCityTypes() {
+  if (!cityTypeRoot || !districts) return;
+  const open = cityTypeRoot.firstElementChild?.open || false;
+  const entries = cityTypeEntries(districts, context.getLang?.() || 'en');
+  cityTypeRoot.replaceChildren();
+  if (!entries.length) return;
+  const details = element('details', 'city-type-legend');
+  details.open = open;
+  details.append(element('summary', 'city-type-legend__trigger', label('City types', 'Types de ville')));
+  const list = element('ul', 'city-type-legend__list');
+  for (const entry of entries) {
+    const item = element('li', 'city-type-legend__item');
+    const style = typeStyle(entry.id);
+    const swatch = element('span', 'city-type-legend__swatch', style.icon);
+    swatch.style.background = style.color;
+    swatch.setAttribute('aria-hidden', 'true');
+    item.append(swatch, element('span', '', entry.name));
+    list.append(item);
+  }
+  details.append(list);
+  cityTypeRoot.append(details);
+}
+
 function render() {
-  if (!root || !context) return;
+  if (!lensRoot || !context) return;
   const lens = getActiveLens();
   currentLens = lens;
   histogram = selection = lowInput = highInput = lowLabel = highLabel = bounds = null;
   if (!lens) {
-    const outgoing = root.firstElementChild;
+    const outgoing = lensRoot.firstElementChild;
     if (outgoing) {
       outgoing.style.pointerEvents = 'none';
       const duration = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 200;
       outgoing.animate([{opacity: 1}, {opacity: 0}], {duration, fill: 'forwards'}).finished
         .then(() => outgoing.remove(), () => outgoing.remove());
     } else {
-      root.replaceChildren();
+      lensRoot.replaceChildren();
     }
     return;
   }
-  root.replaceChildren();
+  lensRoot.replaceChildren();
 
   const lang = context.getLang?.() || 'en';
   const panel = element('section', 'lens-legend');
@@ -207,13 +248,21 @@ function render() {
   }
   const note = text(lens.note, lang);
   if (note) panel.append(element('p', 'lens-legend__note', note));
-  root.append(panel);
+  lensRoot.append(panel);
   updateSelection();
 }
 
 export async function init(ctx) {
   context = ctx;
   root = document.querySelector('#legend-root');
+  lensRoot = element('div', 'lens-legend-container');
+  cityTypeRoot = element('div', 'city-type-legend-container');
+  root.replaceChildren(lensRoot, cityTypeRoot);
+  try {
+    const response = await fetch('data/districts.json');
+    if (response.ok) districts = await response.json();
+  } catch { /* A missing optional payload simply leaves the key unavailable. */ }
+  renderCityTypes();
   subscribe(() => {
     if (getActiveLens() !== currentLens) render();
     else updateSelection();
@@ -223,5 +272,6 @@ export async function init(ctx) {
 
 export function onLang(ctx) {
   context = ctx;
+  renderCityTypes();
   render();
 }
