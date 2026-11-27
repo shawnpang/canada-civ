@@ -14,6 +14,27 @@ const copy = {
 };
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const list = payload => Array.isArray(payload) ? payload : (payload?.cities || []);
+const finite = value => typeof value === 'number' && Number.isFinite(value);
+const gdpPerPerson = area => finite(area.gdp) && finite(area.population) && area.population > 0
+  ? area.gdp / area.population : null;
+// Rank cities and provinces separately, excluding missing values. Ties share a
+// rank, with the next rank reflecting the number of areas ahead of it.
+function rankMeasures(areas) {
+  for (const [key, valueOf] of [['gdp_per_person', gdpPerPerson], ['growth', area => area.growth]]) {
+    for (const area of areas) {
+      area.ranks ||= {};
+      delete area.ranks[key];
+      if (key === 'gdp_per_person') delete area.ranks.gdp_per_capita;
+    }
+    const available = areas.map(area => ({area, value: valueOf(area)}))
+      .filter(entry => finite(entry.value)).sort((a, b) => b.value - a.value);
+    let rank = 0;
+    available.forEach((entry, index) => {
+      if (index === 0 || entry.value !== available[index - 1].value) rank = index + 1;
+      entry.area.ranks[key] = rank;
+    });
+  }
+}
 const selected = () => new URLSearchParams(location.hash.slice(1)).get('city');
 const langOf = ctx => ctx.getLang() === 'fr' ? 'fr' : 'en';
 // Official fixture abbreviations and postal abbreviations both map to PRUID.
@@ -99,7 +120,7 @@ function render(ctx) {
   lazy(ctx);
   const lang = langOf(ctx), t = copy[lang], x = extra[lang], ranks = city.ranks || {}, yields = city.yields || {};
   const gold = city.gdp;
-  const perPerson = typeof gold === 'number' && Number.isFinite(gold) && typeof city.population === 'number' && Number.isFinite(city.population) && city.population > 0 ? gold / city.population : null;
+  const perPerson = gdpPerPerson(city);
   const kind = city.kind === 'capital' ? t.capital : city.kind === 'ca' ? t.ca : t.cma;
   const provinces = Array.isArray(city.provinces) ? provinceNames(city, ctx, lang) : '';
   const district = districts?.cities?.[id];
@@ -138,6 +159,8 @@ function render(ctx) {
   if (canvas) drawDistrictPlaques(canvas.getContext('2d'), districts, id, {x: 200, y: 15, lang});
 }
 export async function init(ctx) {
+  rankMeasures(list(ctx.cities));
+  rankMeasures(Array.isArray(ctx.provinces) ? ctx.provinces : (ctx.provinces?.provinces || []));
   root = document.createElement('section');
   root.className = 'cc-panel cc-city-panel'; root.hidden = true;
   document.querySelector('#panel-root').append(root);
