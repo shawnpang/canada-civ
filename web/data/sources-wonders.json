@@ -22,7 +22,8 @@
         "sha256": "0a7fc7a6e5c1cf3b3a0a0c3b80d92468b71aad8a78228175331067bebe1c0e45",
         "bytes": 6391
       }
-    ]
+    ],
+    "product_id": "1e2bd6b2-d6c7-415b-8c95-f5f6b2459759"
   },
   {
     "id": "parks_canada_locations",
@@ -40,7 +41,9 @@
         "sha256": "ed44c53422609bb2dc0535a32f53fc7cc54968bd4e609a2f8fe02008f9e98441",
         "bytes": 644926
       }
-    ]
+    ],
+    "product_id": "https://parks.canada.ca/",
+    "description": "Parks Canada public location directory used for schematic attendance-unit points. This source is a website directory, not a numbered data product; product_id is the official page URL."
   },
   {
     "id": "nrcan_cgn",
@@ -50,6 +53,16 @@
     "license": "Open Government Licence – Canada",
     "vintage": "retrieved 2026-11-27",
     "used_for": "Curated landmark coordinates and names; individual record URLs are on the items",
-    "files": []
+    "files": [
+      {
+        "file": "data/raw/wonders/cgn-dataset.html",
+        "url": "https://open.canada.ca/data/en/dataset/e27c6eba-3c5d-4051-9db2-082dc6411c2c",
+        "retrieved": "2026-11-27",
+        "sha256": "25d7eac9e4c762e2835e42577e560fa210ae430ad2c8cab0fa83c69203281d5e",
+        "bytes": 89784
+      }
+    ],
+    "product_id": "e27c6eba-3c5d-4051-9db2-082dc6411c2c",
+    "description": "Canadian Geographical Names Database (open dataset e27c6eba-3c5d-4051-9db2-082dc6411c2c). Landmark entries also cite individual official name records on each item via source_url."
   }
 ]
