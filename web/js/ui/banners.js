@@ -128,13 +128,34 @@ function tracePill(g, left, top, width, height, radius) {
   g.closePath();
 }
 
-// The colour is decorative; the initial and the close-zoom plaque both come
-// from the published city classification, not an inferred yield.
-function typeColour(id) {
-  const colours = ['#617e61', '#a96f4f', '#697d96', '#92719a', '#ad8a43', '#668a86'];
-  let hash = 0;
-  for (const char of String(id)) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
-  return colours[hash % colours.length];
+// Fixed visual keys for the published NAICS categories. The monograms are
+// language-independent symbols; their translated names are in the legend.
+const TYPE_STYLES = Object.freeze({
+  agriculture: {color: '#648440', icon: 'AG'},
+  mining: {color: '#9b613d', icon: 'MI'},
+  utilities: {color: '#b48b2c', icon: 'UT'},
+  construction: {color: '#a76b35', icon: 'CO'},
+  manufacturing: {color: '#a64e43', icon: 'MF'},
+  wholesale: {color: '#8a7544', icon: 'WH'},
+  retail: {color: '#aa6272', icon: 'RT'},
+  transport: {color: '#527c87', icon: 'TR'},
+  information: {color: '#6a72a0', icon: 'IN'},
+  finance: {color: '#987943', icon: 'FI'},
+  real_estate: {color: '#9b755b', icon: 'RE'},
+  professional: {color: '#587d99', icon: 'PR'},
+  management: {color: '#77659a', icon: 'MG'},
+  administration: {color: '#698578', icon: 'AD'},
+  education: {color: '#587caa', icon: 'ED'},
+  health: {color: '#a95d68', icon: 'HE'},
+  arts: {color: '#976a9c', icon: 'AR'},
+  hospitality: {color: '#b2754b', icon: 'HO'},
+  other_services: {color: '#7b8573', icon: 'OS'},
+  public_administration: {color: '#426d91', icon: 'PA'}
+});
+const DEFAULT_TYPE_STYLE = Object.freeze({color: '#58635d', icon: ''});
+
+export function typeStyle(id) {
+  return Object.hasOwn(TYPE_STYLES, id) ? TYPE_STYLES[id] : DEFAULT_TYPE_STYLE;
 }
 
 function highlightFootprint(ctx, city, camera) {
@@ -299,23 +320,26 @@ export function onRedraw(ctx) {
     const {city, x, y, left, top, right, bottom, name, nameWidth, chipWidth, population, badgeId, badgeName, emblemWidth} = box;
     const active = city === focused;
     g.globalAlpha = focused && !active ? .72 : 1;
-    if (y - bottom > 9) {
-      g.beginPath(); g.moveTo(x, bottom); g.lineTo(x, y - 2);
-      g.strokeStyle = 'rgba(230, 201, 143, .85)'; g.lineWidth = 1; g.stroke();
-    }
+    const style = typeStyle(badgeId);
+    const pillBottom = bottom - 5;
+    // A clamped banner can be offset from its real coordinate. Connect the
+    // nearest point of the pill to the coordinate instead of moving the city.
+    const anchorX = Math.max(left + 8, Math.min(right - 8, x));
+    g.beginPath(); g.moveTo(anchorX, pillBottom); g.lineTo(x, y);
+    g.strokeStyle = '#e4c381'; g.lineWidth = 1.5; g.stroke();
     g.shadowColor = 'rgba(0,0,0,.65)';
     g.shadowBlur = 4;
     g.shadowOffsetY = 2;
-    g.beginPath(); g.moveTo(x - 5, bottom - 7); g.lineTo(x, bottom);
-    g.lineTo(x + 5, bottom - 7); g.closePath();
-    g.fillStyle = active ? '#76572d' : '#202a2b'; g.fill();
+    g.beginPath(); g.moveTo(anchorX - 5, pillBottom - 1); g.lineTo(anchorX, pillBottom + 5);
+    g.lineTo(anchorX + 5, pillBottom - 1); g.closePath();
+    g.fillStyle = style.color; g.fill();
     g.strokeStyle = active ? '#ffe3a0' : '#c5a15d'; g.lineWidth = active ? 2 : 1; g.stroke();
     tracePill(g, left, top, right - left, bottom - top - 5, 9);
     g.fill(); g.stroke();
     g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
     if (population) {
       tracePill(g, left + 2, top + 2, chipWidth - 2, 19, 7);
-      g.fillStyle = active ? '#8b9b54' : '#627b4b'; g.fill();
+      g.fillStyle = 'rgba(18, 25, 25, .4)'; g.fill();
       g.fillStyle = '#fff2c8';
       g.fillText(population, left + chipWidth / 2 + 1, top + 12);
     }
@@ -324,10 +348,10 @@ export function onRedraw(ctx) {
     if (emblemWidth) {
       const bx = right - emblemWidth / 2 - 2, by = top + 11.5;
       g.beginPath(); g.arc(bx, by, 7, 0, Math.PI * 2);
-      g.fillStyle = typeColour(badgeId); g.fill();
+      g.fillStyle = 'rgba(18, 25, 25, .36)'; g.fill();
       g.strokeStyle = '#d9c18a'; g.lineWidth = .8; g.stroke();
-      g.fillStyle = '#fff4d5'; g.font = 'bold 9px Georgia, serif';
-      g.fillText(Array.from(badgeName)[0].toLocaleUpperCase(ctx.getLang() === 'fr' ? 'fr-CA' : 'en-CA'), bx, by + .5);
+      g.fillStyle = '#fff4d5'; g.font = 'bold 8px Georgia, serif';
+      g.fillText(style.icon, bx, by + .5);
       g.font = 'bold 11px Georgia, serif';
     }
     // At city scale there is room for the published type plaque; its own
