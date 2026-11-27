@@ -19,6 +19,7 @@ import * as legend from './ui/legend.js';
 import * as layers from './ui/layers.js';
 import * as lensRender from './render/lenses.js';
 import * as labels from './render/labels.js';
+import {drawBorders} from './render/borders.js';
 
 const modules = [i18n, hash, timeslider, search, almanac, share, yields, city, town, province, banners, advisors, lenses, legend, layers, lensRender];
 
@@ -116,6 +117,7 @@ function draw() {
   paintCityTiles(ctx, w, cityTileView, cityTileOpts);
   const ctxObj = api();
   if (lensRender.onRedraw) lensRender.onRedraw(ctxObj);
+  drawBorders(ctx, w, {width: W, height: H, scale, ox, oy});
   labels.onRedraw(ctxObj);
   if (layers.onRedraw) layers.onRedraw(ctxObj);
   if (banners.onRedraw) banners.onRedraw(ctxObj);

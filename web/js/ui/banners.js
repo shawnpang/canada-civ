@@ -354,7 +354,7 @@ export function onRedraw(ctx) {
       g.strokeStyle = '#d9c18a'; g.lineWidth = .8; g.stroke();
       g.fillStyle = '#fff4d5'; g.font = 'bold 8px Georgia, serif';
       g.fillText(style.icon, bx, by + .5);
-      g.font = 'bold 11px Georgia, serif';
+      g.font = box.font || 'bold 11px Georgia, serif';
     }
     // At city scale there is room for the published type plaque; its own
     // bounds participate in hit testing, just like the banner itself.

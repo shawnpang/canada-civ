@@ -1,10 +1,10 @@
 // Cartographic water treatment derived only from the world grid's water flags.
 // The paths are cached in map kilometres so they stay anchored while panning.
-import {lodFor, MID, NEAR} from './art/lod.js';
+import {lodFor, FAR, MID, NEAR} from './art/lod.js';
+import {landFill} from './art/palette.js';
 const R = 25, DX = Math.sqrt(3) * R;
 // Keep terrain's canvas background and the grid-edge fade in sync.
 const DEEP_OCEAN = '#1b4967';
-const LAND = ['#81936d','#839b63','#526f4d','#718c60','#a1a47b','#b4a979','#a4a575','#bea96b','#849b79','#aaa487','#aaa998','#e0e7df'];
 const geometry = new WeakMap();
 function kind(w, i) { return w.water[i] === 3 ? 1 : w.water[i] ? 0 : -1; }
 function neighbours(row, col) {
@@ -23,7 +23,7 @@ function triangle(path, a, b, c) {
   path.moveTo(a[0],a[1]); path.lineTo(b[0],b[1]); path.lineTo(c[0],c[1]); path.closePath();
 }
 function landColor(w, i) {
-  return w.owner[i] === -2 ? '#758873' : LAND[w.cover[i]] || LAND[0];
+  return w.owner[i] === -2 ? '#89847c' : landFill(w.cover[i], FAR);
 }
 
 function makeGeometry(w) {
