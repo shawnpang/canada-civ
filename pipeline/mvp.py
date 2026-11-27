@@ -280,5 +280,23 @@ def build():
  sources.extend(annual_catalogue())
  from pipeline.merge_disasters import merge as merge_disasters
  lenses,sources=merge_disasters(world,lenses,sources)
+ from pipeline.election2025 import RAW as ELECTION_RAW, merge as merge_election2025
+ if (ELECTION_RAW / 'results.csv').exists() and (ELECTION_RAW / 'boundaries.zip').exists():
+  lenses,sources=merge_election2025(world,lenses,sources)
+ else:
+  election=OUT/'election2025.json'
+  if election.exists():
+   payload=json.loads(election.read_text())
+   if payload.get('lens'):
+    lenses['lenses']=[row for row in lenses['lenses'] if row.get('id')!='election2025']+[payload['lens']]
+  election_sources=OUT/'sources-election2025.json'
+  if election_sources.exists():
+   extra=json.loads(election_sources.read_text())
+   sources=[row for row in sources if row.get('id') not in {item.get('id') for item in extra}]+extra
+ for name in ('sources-csd-explorer.json','sources-crops.json'):
+  extra_path=OUT/name
+  if extra_path.exists():
+   extra=json.loads(extra_path.read_text())
+   sources=[row for row in sources if row.get('id') not in {item.get('id') for item in extra}]+extra
  write('lenses.json',lenses);write('sources.json',sources)
  print('Built MVP atlas data and source catalogue')

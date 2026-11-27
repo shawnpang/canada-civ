@@ -1,4 +1,5 @@
 import {getActiveLens, getBrush} from '../ui/lenses.js';
+import {categoricalColor} from './categorical-lens.js';
 
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const SQRT3 = Math.sqrt(3);
@@ -93,7 +94,7 @@ export function onRedraw(app) {
       if (!(world.owner[index] >= 0) || world.water?.[index]) continue;
       // Canadian land without an observation gets a neutral treatment so it
       // cannot be mistaken for the low end of the published colour ramp.
-      const colour = Number.isFinite(value) ? lensColor(lens, value) : null;
+      const colour = lens.type === 'categorical' ? categoricalColor(lens, value) : (Number.isFinite(value) ? lensColor(lens, value) : null);
       const x = ox + (col + shift) * dx;
       hexPath(context, x, y, r + 0.2);
       // A translucent overlay retains terrain features; the brush dims cells

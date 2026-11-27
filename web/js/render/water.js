@@ -1,11 +1,9 @@
 // Cartographic water treatment derived only from the world grid's water flags.
 // The paths are cached in map kilometres so they stay anchored while panning.
+import {lodFor, MID, NEAR} from './art/lod.js';
 const R = 25, DX = Math.sqrt(3) * R;
-const LAND = ['#81936d','#829b60','#496d4c','#66885b','#a0a276','#b7a96f','#a4a575','#c1ae6e','#829b78','#aaa487','#a9a895','#dce3d7'];
+const LAND = ['#81936d','#839b63','#526f4d','#718c60','#a1a47b','#b4a979','#a4a575','#bea96b','#849b79','#aaa487','#aaa998','#e0e7df'];
 const geometry = new WeakMap();
-const FAR = 0, MID = 1, NEAR = 2, CLOSE = 3;
-// Kept local until the terrain stream's shared art/lod.js is available.
-function lodFor(r) { return r < 10 ? FAR : r < 22 ? MID : r < 44 ? NEAR : CLOSE; }
 function kind(w, i) { return w.water[i] === 3 ? 1 : w.water[i] ? 0 : -1; }
 function neighbours(row, col) {
   const s = row & 1;

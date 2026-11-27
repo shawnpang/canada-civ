@@ -317,8 +317,9 @@ function renderExplorer(body) {
 function render() {
   if (!root) return;
   launch.textContent = `♛ ${t('open')}`; launch.setAttribute('aria-expanded',String(Boolean(active)));
-  panel.hidden = !active; panel.replaceChildren();
+  panel.hidden = !active;
   if (!active) return;
+  panel.replaceChildren();
   panel.setAttribute('aria-label',t('open')); panel.append(nav());
   const body = node('div','adv-body'); panel.append(body);
   if (active === 'council') renderCouncil(body);

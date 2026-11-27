@@ -1,5 +1,6 @@
 import {clearLens, getActiveLens, getBrush, setBrush, subscribe} from './lenses.js';
 import {lensPosition, lensColor, lensValue} from '../render/lenses.js';
+import {renderCategoricalLegend} from '../render/categorical-lens.js';
 
 const BIN_COUNT = 32;
 let context;
@@ -78,8 +79,19 @@ function render() {
   const lens = getActiveLens();
   currentLens = lens;
   histogram = selection = lowInput = highInput = lowLabel = highLabel = bounds = null;
+  if (!lens) {
+    const outgoing = root.firstElementChild;
+    if (outgoing) {
+      outgoing.style.pointerEvents = 'none';
+      const duration = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 200;
+      outgoing.animate([{opacity: 1}, {opacity: 0}], {duration, fill: 'forwards'}).finished
+        .then(() => outgoing.remove(), () => outgoing.remove());
+    } else {
+      root.replaceChildren();
+    }
+    return;
+  }
   root.replaceChildren();
-  if (!lens) return;
 
   const lang = context.getLang?.() || 'en';
   const panel = element('section', 'lens-legend');
@@ -108,7 +120,9 @@ function render() {
       if (owners[i] >= 0 && !context.world?.water?.[i] && typeof value === 'number' && Number.isFinite(value)) values.push(value);
     }
   }
-  if (!values.length || !Array.isArray(lens.domain) || lens.domain.length < 2 ||
+  if (renderCategoricalLegend(panel, lens, lang)) {
+    // A categorical key has no continuous scale or brush.
+  } else if (!values.length || !Array.isArray(lens.domain) || lens.domain.length < 2 ||
       !lens.domain.every(Number.isFinite) || lens.domain[1] < lens.domain[0]) {
     panel.append(element('p', 'lens-legend__empty', label('No data available for this lens.', 'Aucune donnée disponible pour cette couche.')));
   } else {
@@ -184,8 +198,8 @@ function render() {
   const missing = element('div', 'lens-legend__missing');
   missing.append(element('span', 'lens-legend__missing-swatch'), document.createTextNode(label('No data', 'Aucune donnée')));
   panel.append(missing);
-  if (context.lenses?.vintage) {
-    const vintage = String(context.lenses.vintage);
+  if (lens.vintage || context.lenses?.vintage) {
+    const vintage = text(lens.vintage || context.lenses.vintage, lang);
     // The catalogue vintage is a shared English string; translate its known
     // components without assuming that all lenses have the same source year.
     const localized = lang === 'fr' ? vintage.replace('Census', 'Recensement').replace('land cover', 'couverture terrestre') : vintage;

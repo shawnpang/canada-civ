@@ -1,4 +1,5 @@
 import {getActiveLens} from '../ui/lenses.js';
+import {drawCropResources} from './resources_crops.js';
 
 // Optional layers use the payload's projected kilometre coordinates directly.
 // The renderer never infers missing positions or synthesizes network links.
@@ -113,7 +114,10 @@ export function drawLayers(app, payloads, enabled) {
     if (enabled.has('rail')) drawNetwork(g, infrastructure.rail, 'rail', camera, viewport);
     g.restore();
   }
-  if (enabled.has('resources')) drawPoints(g, resources.items, 'resources', camera, viewport, types);
+  if (enabled.has('resources')) {
+    drawCropResources(app, resources, app.world);
+    drawPoints(g, resources.items, 'resources', camera, viewport, types);
+  }
   for (const group of ['ports', 'airports', 'military']) {
     if (enabled.has(group)) drawPoints(g, infrastructure[group], group, camera, viewport, types);
   }

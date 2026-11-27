@@ -4,6 +4,20 @@ Each development stage is a commit on `main`. Finished milestones also get a tag
 
 ## Unreleased
 
+Fidelity pass toward usaciv visual quality (target tag `v1.1` after a second audit). Work so far, on `v11-integrate`:
+
+- Original terrain renderer with LOD bands, a sprite cache, world-anchored prairie patchwork, denser forest clumps, overlapping mountain massifs, and Arctic snow/ice texture.
+- Midpoint shoreline treatment with shallows and a surf rim; lake interiors are darker than the rim.
+- Schematic city tiles and district plaques (positions labelled as schematic).
+- Larger tracked province typography; compact “P.E.I.” / “Î.-P.-É.” at national zoom with a water callout; full NEW BRUNSWICK at mid-east zoom.
+- Offscreen static map cache (~160 px margin) for short pans.
+- Compact City View figures (full official values in titles), tighter typography, short panel transitions, and a slightly shorter mobile header.
+- Schematic crop symbols from Statistics Canada Census of Agriculture 2021 table 32-10-0309-01 (hectares by census division; suppressed values stay null).
+- Optional `election2025` lens from Elections Canada official voting results (Table 11) and 2025 federal riding boundaries, joined by majority overlap; 55 land hexes without a majority stay blank. Attribution required; commercial redistribution of that dataset needs Elections Canada permission.
+- Advisors Explorer columns from Statistics Canada table 98-10-0002-01.
+
+Independent checks recorded in `/workspace/canada-civ-runs/verification.md`.
+
 ## 2026-11-27 — v1.0
 
 - Date: 2026-11-27 (Asia/Singapore)

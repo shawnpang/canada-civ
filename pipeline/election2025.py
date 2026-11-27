@@ -231,7 +231,7 @@ def generate(world, offline=True):
         raise ValueError('official results and geometries have different riding codes')
     payload = build(world, results, features)
     source = {'id': 'elections_canada_2025', 'title': '45th General Election: Official Voting Results, Table 11; Electoral Geography Boundary Files (45th General Election), Federal Electoral Districts SHP',
-              'publisher': 'Elections Canada', 'vintage': '2025-04-28',
+              'publisher': 'Elections Canada', 'product_id': 'OVR GE45 Table 11; Federal Electoral Districts 2025 SHP', 'vintage': '2025-04-28',
               'homepage': 'https://www.elections.ca/content.aspx?dir=rep/off/45gedata&document=summary&lang=e&section=res',
               'description': 'Official electoral district results and 2025 federal electoral district boundaries.',
               'used_for': 'Federal election 2025 lens',

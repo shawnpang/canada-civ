@@ -197,7 +197,10 @@ export function layoutBanners(ctx) {
     const badgeName = typeof badgeType?.name === 'string' ? badgeType.name :
       (badgeType?.name?.[ctx.getLang()] || badgeType?.name?.en);
     const emblemWidth = badgeName ? 20 : 0;
-    const width = chipWidth + nameWidth + emblemWidth, left = x - width / 2, height = 23;
+    const width = chipWidth + nameWidth + emblemWidth, height = 23;
+    const left = x >= 0 && x <= innerWidth && width <= innerWidth
+      ? Math.max(0, Math.min(innerWidth - width, x - width / 2))
+      : x - width / 2;
     const showBadge = !!badgeName && (city === focused || zoom >= 2.5);
     g.font = 'bold 10px Georgia, serif';
     const badgeWidth = showBadge ? Math.ceil(g.measureText(badgeName).width) + 18 : 0;
@@ -258,7 +261,6 @@ export function onRedraw(ctx) {
   if (!camera || !Number.isFinite(camera.scale) || camera.scale <= 0) return;
   const selected = new URLSearchParams(location.hash.slice(1)).get('city');
   const focused = cities(ctx).find(city => String(city.id) === selected);
-  if (focused) highlightFootprint(ctx, focused, camera);
   const placed = layoutBanners(ctx);
   const g = ctx.ctx;
   const fit = Math.min(innerWidth / (ctx.world.width + 200), (innerHeight - 95) / (ctx.world.height + 200));

@@ -95,7 +95,7 @@ const extra = {
   fr: {citizens: 'Citoyens', districts: 'Quartiers', resources: 'Ressources', compare: 'Comparer', perPerson: 'PIB par personne', growth: 'Croissance', badge: 'Type de ville', unavailable: 'Indisponible', noDistricts: 'Aucun secteur ne satisfait au seuil publié.', sites: 'Sites de ressources cartographiés à moins de 50 km du repère de la ville', noSites: 'Aucun site de ressources cartographié à moins de 50 km du repère de la ville.', series: 'Estimations de la population', seriesNote: 'Estimations au 1er juillet selon la géographie de 2021; 2025 provisoire. Les estimations ne sont pas des chiffres du recensement.', land: 'Couverture terrestre', landProvince: 'Couverture de la province ou du territoire : part moyenne des hexagones terrestres cartographiés, et non une mesure de la ville.', landCity: 'Couverture terrestre de la ville', ratioNote: 'Le PIB par personne divise le PIB de 2022 aux prix de base par l’estimation de la population de juillet 2025. Le PIB utilise souvent la géographie des RMR de 2011; les millésimes et les limites diffèrent.', loading: 'Chargement…', failure: 'Données indisponibles.', peerNote: 'Villes les plus proches selon la population; estimations officielles de juillet 2025.', rankMissing: 'Aucun rang', forest:'Forêt', crop:'Terres cultivées', pasture:'Pâturages', grass:'Prairies', shrub:'Arbustes', wetland:'Milieux humides', developed:'Terrains aménagés', barren:'Terres dénudées', ice:'Neige et glace'}
 };
 function lazy(ctx) {
-  if (!districtRequest) districtRequest = fetch('data/districts.json').then(r => { if (!r.ok) throw Error(); return r.json(); }).then(data => { districts = data; render(ctx); }).catch(() => { districts = false; render(ctx); });
+  if (!districtRequest) districtRequest = fetch('data/districts.json').then(r => { if (!r.ok) throw Error(); return r.json(); }).then(data => { districts = data; render(ctx); ctx.redraw?.(); }).catch(() => { districts = false; render(ctx); ctx.redraw?.(); });
   if (!resourceRequest) resourceRequest = fetch('data/resources.json').then(r => { if (!r.ok) throw Error(); return r.json(); }).then(data => { resources = data; if (activeTab === 'resources') render(ctx); }).catch(() => { resources = false; if (activeTab === 'resources') render(ctx); });
 }
 function seriesMarkup(city, lang) {
@@ -153,7 +153,7 @@ function render(ctx) {
   if (activeTab === 'workforce') body = `<div class="cc-stat-grid">${stat(t.employed,format(city.employed,lang),ranks.employed,lang)}${stat(t.unemployment,format(city.unemployment,lang,'percent'),ranks.unemployment,lang)}</div><section class="cc-panel-section"><h3>${esc(t.jobs)}</h3>${jobs.length ? `<ul class="cc-jobs-list">${jobRows}</ul>` : `<p class="cc-panel-note">${esc(t.noJobs)}</p>`}</section><p class="cc-panel-note">${esc(t.jobNote)}</p><p class="cc-panel-note">${esc(t.unempNote)}</p>`;
   if (activeTab === 'districts') {
     const ds = district?.districts;
-    body = `<section class="cc-panel-section"><h3>${esc(x.districts)}</h3>${districts === null ? `<p>${esc(x.loading)}</p>` : !Array.isArray(ds) ? `<p>${esc(x.unavailable)}</p>` : ds.length ? `<canvas class="city-district-plaques" width="400" height="${ds.length * 30 + 10}" aria-label="${esc(ds.map(d => local(districts.types.find(type => type.id === d.type)?.name,lang)).join(', '))}"></canvas>` : `<p>${esc(x.noDistricts)}</p>`}<p class="cc-panel-note">${esc(local(districts?.rules,lang))}</p></section>`;
+    body = `<section class="cc-panel-section"><h3>${esc(x.districts)}</h3>${districts === null ? `<p>${esc(x.loading)}</p>` : !Array.isArray(ds) ? `<p>${esc(x.unavailable)}</p>` : ds.length ? `<canvas class="city-district-plaques" width="400" height="${ds.length * 30 + 10}" aria-label="${esc(ds.map(d => local(districts.types.find(type => type.id === d.type)?.name,lang)).join(', '))}"></canvas>` : `<p>${esc(x.noDistricts)}</p>`}<p class="cc-panel-note">${esc(lang === 'fr' ? 'Les positions des quartiers sont schématiques.' : 'District positions are schematic.')}</p><p class="cc-panel-note">${esc(local(districts?.rules,lang))}</p></section>`;
   }
   if (activeTab === 'resources') {
     const sites = resources?.items?.filter(item => String(item.city) === id || (Number.isFinite(item.x) && Number.isFinite(item.y) && Number.isFinite(city.x) && Number.isFinite(city.y) && Math.hypot(item.x - city.x, item.y - city.y) <= 50)) || [];
@@ -169,7 +169,7 @@ function render(ctx) {
   root.innerHTML = `<div class="cc-panel-header"><div><span class="cc-panel-kicker">${esc(t.city)} · ${esc(kind)}</span><h2>${esc(local(city.name,lang))}</h2><p>${esc(provinces)}${city.capital ? ` · ${esc(t.capitalBadge)}` : ''}</p><span class="city-type-badge">${esc(x.badge)}: ${esc(badge)}</span></div><button type="button" class="cc-panel-close" aria-label="${esc(t.close)}">×</button><div class="cc-stat-grid city-head-stats">${stat(`${t.population} · ${year ?? '—'}`,formatHeader(city.population,lang),null,lang,format(city.population,lang))}${stat(`${t.gold}${city.gdp_year ? ` · ${city.gdp_year}` : ''}`,formatHeader(gold,lang,'cad'),null,lang,format(gold,lang,'cad'))}${stat(`${x.growth} · ${years}`,format(city.growth,lang,'percent'),null,lang)}${stat(x.perPerson,formatHeader(perPerson,lang,'cad'),null,lang,format(perPerson,lang,'cad'))}</div><p class="cc-panel-note">${esc(x.ratioNote)} ${esc(geographyNote)}</p><div class="city-medals">${medals}</div></div><div class="cc-panel-tabs" role="tablist">${tabs.map(tab => `<button type="button" class="cc-panel-tab" role="tab" data-tab="${tab}" aria-selected="${activeTab === tab}">${esc(x[tab] || t[tab])}</button>`).join('')}</div><div class="cc-panel-body">${body}</div>`;
   root.hidden = false;
   root.querySelector('.cc-panel-close').onclick = () => changeSelection(null);
-  root.querySelectorAll('[data-tab]').forEach(button => button.addEventListener('click', () => { activeTab = button.dataset.tab; render(ctx); }));
+  root.querySelectorAll('[data-tab]').forEach(button => button.addEventListener('click', () => { activeTab = button.dataset.tab; render(ctx); ctx.redraw?.(); }));
   const mount = root.querySelector('[data-citizens]');
   if (mount) renderCitizens(mount, {cityId: city.id, lang});
   const canvas = root.querySelector('.city-district-plaques');
@@ -185,7 +185,7 @@ export async function init(ctx) {
     const id = event.detail?.id;
     if (id != null && list(ctx.cities).some(city => String(city.id) === String(id))) changeSelection(String(id));
   });
-  document.addEventListener('canadaciv:panel-open', event => { if (event.detail?.source !== 'city' && root) root.hidden = true; });
+  document.addEventListener('canadaciv:panel-open', event => { if (event.detail?.source !== 'city' && root) { root.hidden = true; ctx.redraw?.(); } });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !event.defaultPrevented && root && !root.hidden && selected()) { event.preventDefault(); changeSelection(null); }
   });
@@ -195,3 +195,7 @@ export function onLang(ctx) { render(ctx); }
 export function onHash(ctx) { render(ctx); }
 export function onRedraw() {}
 export function onClick() {}
+
+export function getCityMapState() {
+  return {visible: !!root && !root.hidden, tab: activeTab, districts};
+}

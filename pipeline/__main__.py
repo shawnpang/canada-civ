@@ -88,6 +88,10 @@ def main():
             fetch_annual(args.offline)
             from pipeline.merge_disasters import fetch as fetch_disasters
             fetch_disasters(args.offline)
+            from pipeline.election2025 import fetch as fetch_election2025
+            fetch_election2025(args.offline)
+            from pipeline.crops import fetch as fetch_crops
+            fetch_crops(args.offline)
         elif args.command == 'process':
             from pipeline.mvp import process as process_atlas
             process(); process_atlas()
@@ -110,7 +114,9 @@ def main():
             from pipeline.mvp_check import check as validate_atlas
             from pipeline.mvp_annual import fetch as fetch_annual
             from pipeline.merge_disasters import fetch as fetch_disasters
-            fetch(args.offline); fetch_atlas(args.offline); fetch_annual(args.offline); fetch_disasters(args.offline); process(); process_atlas(); build_atlas()
+            from pipeline.election2025 import fetch as fetch_election2025
+            from pipeline.crops import fetch as fetch_crops
+            fetch(args.offline); fetch_atlas(args.offline); fetch_annual(args.offline); fetch_disasters(args.offline); fetch_election2025(args.offline); fetch_crops(args.offline); process(); process_atlas(); build_atlas()
             world_status = validate()
             atlas_status = validate_atlas(WEB / 'data')
             return int(bool(world_status or atlas_status))

@@ -1,5 +1,6 @@
 import {paintMapTerrain} from './terrain.js';
 import {createMapCache} from './render/mapcache.js';
+import {paintCityTiles} from './render/citytiles.js';
 import {setupMinimap} from './minimap.js';
 import * as i18n from './ui/i18n.js';
 import * as hash from './ui/hash.js';
@@ -102,6 +103,15 @@ function draw() {
   const key = JSON.stringify([view.lens, view.layers, view.city, view.province, timeslider.getYear(), lang]);
   mapCache.draw(ctx, {world: w, width: W, height: H, scale, ox, oy, pixelRatio: devicePixelRatio, key},
     (target, camera) => paintMapTerrain(target, w, camera));
+  const cityMap = city.getCityMapState?.() || {visible: false, tab: null, districts: null};
+  paintCityTiles(ctx, w, {width: W, height: H, scale, ox, oy}, {
+    cities: data.cities,
+    towns: data.towns,
+    selectedCityId: cityMap.visible ? new URLSearchParams(location.hash.slice(1)).get('city') : null,
+    districts: cityMap.districts,
+    showDistricts: cityMap.visible && cityMap.tab === 'districts',
+    lang
+  });
   const ctxObj = api();
   if (lensRender.onRedraw) lensRender.onRedraw(ctxObj);
   labels.onRedraw(ctxObj);

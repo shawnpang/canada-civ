@@ -2,6 +2,7 @@
 // cell; they are not mapped trees, field boundaries, or mountain summits.
 import {FAR, MID, NEAR, CLOSE, lodFor, hexPath} from './render/art/lod.js';
 import {getSprite, drawSprite, seedRand} from './render/art/sprites.js';
+import {paintWater} from './render/water.js';
 
 const LAND = ['#81936d','#839b63','#526f4d','#718c60','#a1a47b','#b4a979','#a4a575','#bea96b','#849b79','#aaa487','#aaa998','#e0e7df'];
 const SQRT3 = Math.sqrt(3);
@@ -276,6 +277,7 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
     }
   }
   // Water stream integration belongs here: after land and before shore stamps.
+  paintWater(ctx, w, {width, height, scale, ox, oy});
   if(lod!==FAR)for(const cell of cells){
     const {i,x,y,wx,wy,corners,shore}=cell,cover=w.cover[i],rel=w.relief[i];
     const pct=w.pct||{};

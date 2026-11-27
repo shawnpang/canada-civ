@@ -139,7 +139,19 @@ def validate(data):
         require(lens.get('source') in source_ids, f'lens {label}: unknown source')
         values = lens.get('values')
         if require(isinstance(values, list) and len(values) == size, f'lens {label}: wrong array length'):
-            require(all(v is None or _number(v) for v in values), f'lens {label}: invalid value')
+            if lens.get('type') == 'categorical':
+                categories = lens.get('categories')
+                valid = isinstance(categories, list) and bool(categories) and all(
+                    isinstance(c, dict) and isinstance(c.get('value'), str) and c['value']
+                    and _bilingual(c.get('name')) and isinstance(c.get('color'), str)
+                    and len(c['color']) == 7 and c['color'].startswith('#')
+                    and all(ch in '0123456789abcdefABCDEF' for ch in c['color'][1:])
+                    for c in categories)
+                keys = [c['value'] for c in categories] if valid else []
+                require(valid and len(keys) == len(set(keys)), f'lens {label}: invalid categories')
+                require(all(v is None or (isinstance(v, str) and v in keys) for v in values), f'lens {label}: invalid value')
+            else:
+                require(all(v is None or _number(v) for v in values), f'lens {label}: invalid value')
             require(all(v is None for v, o in zip(values, owner) if o < 0), f'lens {label}: non-Canadian cells must be null')
             if lens.get('format') == 'pct':
                 require(all(v is None or (_number(v) and 0 <= v <= 1) for v in values), f'lens {label}: percentages must be fractions')

@@ -33,3 +33,10 @@ under the Open Government Licence – Canada
 Statistics Canada Open Licence
 (https://www.statcan.gc.ca/en/reference/licence). Both require attribution.
 See docs/DATA-SOURCES.md for the source list, URLs, and required credit.
+
+Elections Canada official voting results and federal electoral district
+boundaries are used for the optional 2025 election lens, with attribution.
+Elections Canada permits non-commercial reproduction with attribution and
+requires permission for commercial redistribution
+(https://www.elections.ca/content.aspx?document=index&lang=e&section=pri).
+That dataset is not covered by this repository's MIT License.
