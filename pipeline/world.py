@@ -13,7 +13,7 @@ def build():
  ids=['statcan_boundaries_2021','nrcan_mrdem','nrcan_landcover_2020','etopo','natural_earth','atlas_rivers','atlas_lakes']
  sources=[]
  for id in ids:
-  item=json.loads((ROOT/'data/raw'/id/'manifest.json').read_text()); item.setdefault('title',item['product_id']); item.setdefault('publisher',{'nrcan_mrdem':'Natural Resources Canada','nrcan_landcover_2020':'Natural Resources Canada','etopo':'NOAA','natural_earth':'Natural Earth'}.get(id,'Statistics Canada')); item.setdefault('homepage',item['files'][0]['url']); item.setdefault('used_for',{'nrcan_mrdem':'Elevation and relief','nrcan_landcover_2020':'Land cover','etopo':'Bathymetry','natural_earth':'Foreign land and lakes'}.get(id,'Boundaries')); sources.append(item)
+  item=json.loads((ROOT/'data/raw'/id/'manifest.json').read_text()); item.setdefault('title',item['product_id']); item.setdefault('publisher',{'nrcan_mrdem':'Natural Resources Canada','nrcan_landcover_2020':'Natural Resources Canada','etopo':'NOAA','natural_earth':'Natural Earth','atlas_rivers':'Natural Resources Canada','atlas_lakes':'Natural Resources Canada'}.get(id,'Statistics Canada')); item.setdefault('homepage',item['files'][0]['url']); item.setdefault('used_for',{'nrcan_mrdem':'Elevation and relief','nrcan_landcover_2020':'Land cover','etopo':'Bathymetry','natural_earth':'Foreign land and lakes','atlas_rivers':'Generalized river lines','atlas_lakes':'Lake classification including international lakes'}.get(id,'Boundaries')); sources.append(item)
  (dest/'sources.json').write_text(json.dumps(sources,ensure_ascii=False,separators=(',',':')))
  print('Built world.json and sources.json')
 

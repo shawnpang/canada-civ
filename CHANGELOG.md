@@ -4,6 +4,14 @@ Each development stage is a commit on `main`. Finished milestones also get a tag
 
 ## Unreleased
 
+### Milestone 0 — visual fidelity pass (WIP)
+
+- Date: 2026-11-27 (Asia/Singapore)
+- Commit: _pending_
+- Tag: none yet
+
+Ocean now fills the canvas, the header is compact so labels stay visible, a minimap was added, and terrain marks (forests, crops, mountains, shading) are richer. Elevation sampling was rebuilt from a 16× MRDEM overview after a 64× overview was found to smooth mountain variation; published relief thresholds are unchanged. Residual gaps versus the reference atlas (simpler procedural marks, coarse hex coasts) are recorded in `docs/spike-notes.md`.
+
 ### Milestone 0 — terrain spike (WIP)
 
 - Date: 2026-11-27 (Asia/Singapore)
