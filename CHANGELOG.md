@@ -4,14 +4,27 @@ Each development stage is a commit on `main`. Finished milestones also get a tag
 
 ## Unreleased
 
-### Later — visual polish (deferred)
+Residual gaps after Milestone 3, recorded rather than invented or over-polished:
 
-Residual art gaps accepted with Milestone 0, to be tightened after MVP/v1 feature work rather than blocking the atlas:
+- Terrain marks, mountains, and coasts are closer to usaciv than in Milestone 2, but still simpler: mountains are more regular, fields are less densely painted, and roads/rail are a layer toggle rather than always-on map art
+- Prince Edward Island and New Brunswick names can be tight or missing at the national landing zoom
+- The bottom toolbar can clip the time-slider label when City View is open; the mobile yield strip can clip the last yield
+- The Advisors council list slightly clips Explorer at 1440×900
+- A full `pipeline` rebuild of `lenses.json` / `sources.json` does not yet re-merge the disasters lens automatically
+- Optional CSD Explorer columns, crop resources, and an elections lens were not added (no separate citable open series was wired)
 
-- Procedural terrain marks are simpler and more repetitive than the reference atlas
-- Coastlines, lakes, and borders remain coarse hex approximations
+## 2026-11-27 — Milestone 3 accepted
+
+- Date: 2026-11-27 (Asia/Singapore)
+- Tag: `m3` (this commit)
+- Integration branch: `m3-integrate`
+
+Milestone 3 without the Indigenous lands overlay, plus a fidelity pass. Census agglomeration towns, a Canadian Disaster Database point-marker lens, a population-only time slider, NW-lit terrain marks, label collision handling, ranks computed from official payloads, header and Compare-tab fixes, mobile chrome, a bilingual loading screen, filled Advisors and Explorer, Share PNG 1600×900, and WASD keyboard parity. `pipeline check` and 80 unit tests pass (one disaster-source reproduction test skipped: the official extract is not cached in this environment). Screenshots: `/workspace/canada-civ-runs/screens/m3-*.png`.
+
+Independent checks: all 109 town July 2025 populations match table 17-10-0148-01, including the three interprovincial CAs at their combined totals; Toronto GDP per person ranks 2nd and growth 23rd among cities with official figures; national and Ontario GDP on the Treasurer dashboard match the previously verified tables. GDP history was not invented. Town coordinates use GeoSuite representative points; the official package blocked automated retrieval, so the build used a documented MountainMath mirror.
 
 ## 2026-11-27 — Milestone 2 accepted
+
 
 - Date: 2026-11-27 (Asia/Singapore)
 - Tag: `m2` (this commit)

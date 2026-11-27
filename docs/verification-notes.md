@@ -20,3 +20,14 @@ Population estimates, Census counts, Census unemployment, and GDP use different 
 ## Milestone 2 additions
 
 Census economy fields wired in Milestone 2 (employed, characteristic 2225; median tenant shelter costs, 1480; rent burden, 1478) were independently checked against the Census Profile SDMX CSV API on 2026-11-27. Toronto CMA employed 2,903,480, shelter cost $1,540, and rent burden 40.5%, and the Canada totals, all match. Unemployment is unchanged (2021 Census characteristic 2230). GDP per person shown in City View is official 2022 GDP divided by the July 2025 population estimate, with both vintages labelled; it is not a single official StatCan ratio series. Retrieval notes: `/workspace/canada-civ-runs/verification.md`.
+
+## Milestone 3 additions
+
+Checked on 2026-11-27 (Asia/Singapore) against the official 17-10-0148-01 CSV already retrieved for Milestone 1 (`/tmp/statcan-check/17100148-eng.zip`) and against the shipped official payloads:
+
+- All 109 census agglomeration towns match the July 1, 2025 CA estimates (Total gender, All ages). The three interprovincial CAs — Lloydminster 39,806, Campbellton 15,554, Hawkesbury 13,134 — match the combined “Alberta/Saskatchewan”, “New Brunswick/Quebec”, and “Ontario/Quebec” rows, not the provincial parts.
+- Toronto City View: population 7,108,874 (rank 1), GDP 522,379,000,000 CAD (rank 1), GDP per person 73,483 (rank 2 of 41 cities with official GDP), 2021–2025 growth 9.8% (rank 23 of 44). Iqaluit has no GDP-per-person rank. Regina is first in GDP per person at 78,650. These ranks are computed from official GDP and population; they are not a published StatCan ranking table.
+- With the time slider on 2021, Toronto’s displayed population becomes 6,472,951 from `pop_series`, while GDP and 2025 ranks stay labelled as such.
+- Treasurer dashboard: Canada GDP 2,674,953,000,000 CAD (2022) and Ontario 903,203,100,000 CAD (2021) match the Milestone 1 table checks.
+- The disasters lens was not re-fetched in this pass (the official CDD extract is not cached here). Values were checked for length (17,956) and for nulls on non-Canadian cells; event counts were not independently re-tabulated from the spreadsheet.
+- Town map coordinates are GeoSuite 2021 representative points for the most populous member CSD. The official GeoSuite package blocked automated retrieval; the included extract came from a documented third-party mirror (MountainMath) and is described in the Almanac and `sources-towns.json`.
