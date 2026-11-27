@@ -9,6 +9,18 @@ let launch;
 let activePage = 'about';
 let previousFocus;
 
+// The current nation payload has definitions but no source fields. These IDs
+// are the actual inputs recorded in the catalogue for each measure.
+const yieldSources = {
+  population: ['statcan_annual_population_17100005', 'statcan_annual_population_17100148', 'statcan_annual_population_17100155'],
+  food: ['statcan_labour_98100594'],
+  production: ['statcan_labour_98100594'],
+  gold: ['statcan_gdp_cma', 'statcan_gdp_pt_industry'],
+  science: ['statcan_labour_98100594'],
+  culture: ['statcan_labour_98100594'],
+  unemployment: ['statcan_census_2021_profile']
+};
+
 const copy = {
   en: {
     open: 'Almanac', close: 'Close Almanac', about: 'About', yields: 'Yields',
@@ -125,6 +137,11 @@ function renderAbout() {
   const p = element('p');
   link(p, 'usaciv', 'https://karpathy.ai/usaciv/');
   content.append(p);
+  const licences = element('p');
+  link(licences, text('ogl'), 'https://open.canada.ca/en/open-government-licence-canada');
+  licences.append(document.createTextNode(' · '));
+  link(licences, text('statcan'), 'https://www.statcan.gc.ca/en/reference/licence');
+  content.append(licences);
 }
 function renderYields() {
   paragraph(content, text('missing'));
@@ -135,8 +152,9 @@ function renderYields() {
     paragraph(section, text(`${key}Meaning`));
     const description = local(definition?.description);
     if (description && description !== text(`${key}Meaning`)) paragraph(section, description);
-    metadata(section, text('vintage'), local(key === 'gold' ? context.nation?.gdp_vintage : context.nation?.vintage));
-    sourceReference(section, definition?.source);
+    if (key === 'population') paragraph(section, local(context.nation?.population_note));
+    const sources = definition?.source ? [definition.source] : yieldSources[key];
+    for (const id of sources) sourceReference(section, id);
   }
 }
 function renderLenses() {
@@ -154,6 +172,9 @@ function renderLenses() {
 function renderTerrain() {
   paragraph(content, text('terrainText'));
   paragraph(content, text('missing'));
+  for (const id of ['statcan_boundaries_2021', 'nrcan_mrdem', 'nrcan_landcover_2020', 'etopo', 'natural_earth', 'atlas_rivers', 'atlas_lakes']) {
+    if (sourceById(id)) sourceReference(content, id);
+  }
 }
 function renderSources() {
   paragraph(content, text('licencesIntro'));

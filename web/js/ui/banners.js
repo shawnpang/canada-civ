@@ -102,38 +102,66 @@ export function onRedraw(ctx) {
   const all = cities(ctx);
   const focused = all.find(city => String(city.id) === selected);
   if (focused) highlightFootprint(ctx, focused, camera);
-  // Draw the selected city last so its banner remains visible among neighbours.
-  const ordered = [...all.filter(city => city !== focused), ...(focused ? [focused] : [])];
+  // At a national view many CMA centres are only a few pixels apart. Place the
+  // selected city first, then larger cities, and reveal neighbours as one zooms.
+  // The anchor remains the supplied map coordinate; no geographic positions are
+  // fabricated to make labels fit.
+  const ordered = [...all].sort((a, b) => {
+    if (a === focused) return -1;
+    if (b === focused) return 1;
+    return (Number.isFinite(b.population) ? b.population : -1) -
+      (Number.isFinite(a.population) ? a.population : -1) || String(a.id).localeCompare(String(b.id));
+  });
   const g = ctx.ctx;
   g.save();
-  g.font = 'bold 12px Georgia, serif';
+  g.font = 'bold 11px Georgia, serif';
   g.textAlign = 'center';
   g.textBaseline = 'middle';
+  const placed = [];
+  const locale = ctx.getLang() === 'fr' ? 'fr-CA' : 'en-CA';
+  const compact = new Intl.NumberFormat(locale, {notation: 'compact', maximumFractionDigits: 1});
   for (const city of ordered) {
     const pos = position(city, ctx.world);
     if (!pos) continue;
     const x = camera.ox + pos[0] * camera.scale, y = camera.oy + pos[1] * camera.scale;
     const name = label(city, ctx.getLang());
-    const width = Math.max(72, Math.ceil(g.measureText(name).width) + 30);
-    const left = x - width / 2, top = y - 32, height = 23;
-    if (left > innerWidth || left + width < 0 || top > innerHeight || y < 0) continue;
+    const population = Number.isFinite(city.population) ? compact.format(city.population) : null;
+    const chipWidth = population ? Math.max(36, Math.ceil(g.measureText(population).width) + 12) : 0;
+    const nameWidth = Math.max(56, Math.ceil(g.measureText(name).width) + 20);
+    const width = chipWidth + nameWidth, left = x - width / 2, top = y - 30, height = 21;
+    const box = {city, left, top, right: left + width, bottom: top + height + 5, x, y, name, nameWidth, chipWidth, population};
+    if (box.left > innerWidth || box.right < 0 || box.top > innerHeight || box.bottom < 0) continue;
+    if (placed.some(other => box.left < other.right + 4 && box.right + 4 > other.left &&
+        box.top < other.bottom + 3 && box.bottom + 3 > other.top)) continue;
+    placed.push(box);
+  }
+  // Paint the selected banner last and use the same rectangles for hit tests.
+  for (const box of placed.reverse()) {
+    const {city, x, left, top, right, bottom, name, nameWidth, chipWidth, population} = box;
     const active = city === focused;
     g.globalAlpha = focused && !active ? .72 : 1;
     g.shadowColor = 'rgba(0,0,0,.65)';
     g.shadowBlur = 4;
     g.shadowOffsetY = 2;
     g.beginPath();
-    g.moveTo(left + 5, top); g.lineTo(left + width - 5, top);
-    g.lineTo(left + width, top + 5); g.lineTo(left + width, top + height - 4);
-    g.lineTo(left + width - 5, top + height); g.lineTo(x + 4, top + height);
-    g.lineTo(x, top + height + 5); g.lineTo(x - 4, top + height);
-    g.lineTo(left + 5, top + height); g.lineTo(left, top + height - 4);
-    g.lineTo(left, top + 5); g.closePath();
-    g.fillStyle = active ? '#76572d' : '#3b3126'; g.fill();
+    g.moveTo(left + 4, top); g.lineTo(right - 4, top);
+    g.lineTo(right, top + 4); g.lineTo(right, bottom - 9);
+    g.lineTo(right - 4, bottom - 5); g.lineTo(x + 4, bottom - 5);
+    g.lineTo(x, bottom); g.lineTo(x - 4, bottom - 5);
+    g.lineTo(left + 4, bottom - 5); g.lineTo(left, bottom - 9);
+    g.lineTo(left, top + 4); g.closePath();
+    g.fillStyle = active ? '#76572d' : '#202a2b'; g.fill();
     g.strokeStyle = active ? '#ffe3a0' : '#c5a15d'; g.lineWidth = active ? 2 : 1; g.stroke();
     g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
-    g.fillStyle = '#fff0c9'; g.fillText(name, x, top + height / 2 + .5);
-    hitBoxes.push({city, left, top, right: left + width, bottom: top + height + 5});
+    if (population) {
+      g.fillStyle = active ? '#8b9b54' : '#627b4b';
+      g.fillRect(left + 2, top + 2, chipWidth - 2, 17);
+      g.fillStyle = '#fff2c8';
+      g.fillText(population, left + chipWidth / 2, top + 11);
+    }
+    g.fillStyle = '#fff0c9';
+    g.fillText(name, left + chipWidth + nameWidth / 2, top + 11);
+    hitBoxes.push(box);
   }
   g.restore();
 }

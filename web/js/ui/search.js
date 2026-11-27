@@ -11,9 +11,11 @@ const normalize = value => String(value ?? '').normalize('NFD').replace(/[\u0300
 const displayName = item => item.name?.[context.getLang()] || item.name?.en || item.name?.fr || '';
 
 function items() {
+  const cities = Array.isArray(context.cities) ? context.cities : context.cities?.cities || [];
+  const provinces = Array.isArray(context.provinces) ? context.provinces : context.provinces?.provinces || context.world?.provinces || [];
   return [
-    ...(Array.isArray(context.cities) ? context.cities : []).map(place => ({kind: 'city', place})),
-    ...(Array.isArray(context.provinces) ? context.provinces : context.world?.provinces || []).map(place => ({kind: 'province', place}))
+    ...cities.map(place => ({kind: 'city', place})),
+    ...provinces.map(place => ({kind: 'province', place}))
   ];
 }
 
@@ -112,7 +114,18 @@ function flyTo(point, kind) {
   cancelAnimationFrame(animation);
   const start = context.getCamera();
   const targetScale = Math.min(3, Math.max(start.scale, kind === 'city' ? 0.65 : 0.25));
-  const target = {scale: targetScale, ox: innerWidth / 2 - point.x * targetScale, oy: innerHeight / 2 - point.y * targetScale};
+  // The selection opens a side panel or mobile bottom sheet synchronously.
+  // Centre the place in the remaining map area so its banner is not hidden.
+  const panel = document.querySelector('.cc-panel:not([hidden])');
+  const bounds = panel?.getBoundingClientRect();
+  let right = innerWidth, bottom = innerHeight;
+  if (bounds && bounds.width > innerWidth * 0.75) bottom = Math.max(0, bounds.top);
+  else if (bounds) right = Math.max(0, bounds.left);
+  const chromeBottom = Math.max(0, document.querySelector('#search-root')?.getBoundingClientRect().bottom || 0,
+    document.querySelector('#yield-bar')?.getBoundingClientRect().bottom || 0);
+  const targetX = right / 2;
+  const targetY = bottom > chromeBottom ? (chromeBottom + bottom) / 2 : innerHeight / 2;
+  const target = {scale: targetScale, ox: targetX - point.x * targetScale, oy: targetY - point.y * targetScale};
   const duration = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 0 : 350;
   const started = performance.now();
   const frame = now => {

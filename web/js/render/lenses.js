@@ -90,19 +90,17 @@ export function onRedraw(app) {
     const lastCol = Math.min(cols - 1, Math.ceil((width + r - ox) / dx - shift));
     for (let col = firstCol; col <= lastCol; col++) {
       const index = row * cols + col, value = lens.values[index];
-      if (!(world.owner[index] >= 0) || world.water?.[index] || !Number.isFinite(value)) continue;
-      const colour = lensColor(lens, value);
-      if (!colour) continue;
+      if (!(world.owner[index] >= 0) || world.water?.[index]) continue;
+      // Canadian land without an observation gets a neutral treatment so it
+      // cannot be mistaken for the low end of the published colour ramp.
+      const colour = Number.isFinite(value) ? lensColor(lens, value) : null;
       const x = ox + (col + shift) * dx;
       hexPath(context, x, y, r + 0.2);
       // A translucent overlay retains terrain features; the brush dims cells
       // outside the chosen range without changing the underlying data.
-      if (brush && (value < brush[0] || value > brush[1])) {
-        context.fillStyle = 'rgba(10, 19, 24, 0.72)';
-      } else {
-        context.fillStyle = colour;
-      }
-      context.globalAlpha = brush && (value < brush[0] || value > brush[1]) ? 1 : 0.67;
+      const outside = brush && Number.isFinite(value) && (value < brush[0] || value > brush[1]);
+      context.fillStyle = outside ? '#111c22' : (colour || '#46535a');
+      context.globalAlpha = outside ? 0.8 : (colour ? 0.82 : 0.68);
       context.fill();
     }
   }

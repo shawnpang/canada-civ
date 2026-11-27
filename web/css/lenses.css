@@ -8,15 +8,23 @@
 .lens-picker summary::-webkit-details-marker { display: none; }
 .lens-picker summary::after { content: ' ▴'; color: #e1c680; }
 .lens-picker summary:focus-visible { outline: 2px solid #fff1bd; outline-offset: 2px; }
-.lens-picker-menu { position: absolute; right: 0; bottom: calc(100% + 8px); width: min(290px, calc(100vw - 24px)); max-height: min(65vh, 480px); overflow-y: auto; padding: 12px; border: 1px solid #b49a63; background: #182b38f7; box-shadow: 0 5px 18px #000b; }
-.lens-picker-menu h3 { margin: 10px 0 5px; color: #d0b879; font: 11px Arial, sans-serif; text-transform: uppercase; letter-spacing: .1em; }
+.lens-picker-menu { position: absolute; right: 0; bottom: calc(100% + 8px); width: min(420px, calc(100vw - 24px)); max-height: min(65vh, 480px); overflow-y: auto; padding: 12px; border: 1px solid #b49a63; background: #182b38f7; box-shadow: 0 5px 18px #000b; }
+.lens-picker-title { margin: 0 0 8px; padding-bottom: 8px; border-bottom: 1px solid #a48c5b66; color: #d0b879; font: 11px Georgia, serif; text-transform: uppercase; letter-spacing: .1em; }
+.lens-picker-menu section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; }
+.lens-picker-menu h3 { grid-column: 1 / -1; margin: 10px 0 5px; color: #d0b879; font: 11px Arial, sans-serif; text-transform: uppercase; letter-spacing: .1em; }
 .lens-picker-menu section:first-child h3 { margin-top: 0; }
-.lens-picker-menu .lens-choice { display: block; width: 100%; text-align: left; white-space: normal; margin: 3px 0; }
-#legend-root { position: absolute; right: 62px; bottom: 91px; z-index: 2; width: min(320px, calc(100vw - 24px)); }
+.lens-picker-menu .lens-choice { display: block; width: 100%; text-align: left; white-space: normal; margin: 0; }
+#legend-root { position: absolute; right: 62px; bottom: 91px; z-index: 2; width: min(320px, calc(100vw - 24px)); max-height: calc(100vh - 140px); overflow-y: auto; }
 .lens-legend { padding: 13px 15px; color: #f3e5bd; border: 1px solid #b49a63; background: #172a37f2; box-shadow: 0 3px 15px #0009; }
+.lens-legend__header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .lens-legend__heading { margin: 0 0 4px; font-size: 16px; font-weight: normal; }
+.lens-legend__close { width: 24px; height: 24px; padding: 0; border-radius: 50%; font: 16px/1 Arial, sans-serif; }
+.lens-legend__description { margin: 5px 0; color: #d5c79e; font: 12px/1.4 Arial, sans-serif; }
 .lens-legend__unit, .lens-legend__note, .lens-legend__empty, .lens-legend__scale, .lens-legend__brush-controls { font: 12px/1.4 Arial, sans-serif; }
 .lens-legend__unit { color: #d5c79e; }
+.lens-legend__missing, .lens-legend__vintage { margin-top: 6px; color: #d5c79e; font: 11px/1.4 Arial, sans-serif; }
+.lens-legend__missing { display: flex; align-items: center; gap: 6px; }
+.lens-legend__missing-swatch { width: 12px; height: 12px; background: #46535a; border: 1px solid #a7a9a0; }
 .lens-legend__note, .lens-legend__empty { margin: 8px 0 0; color: #d2c8ac; }
 .lens-legend__histogram { position: relative; display: flex; align-items: end; gap: 1px; height: 64px; margin-top: 10px; cursor: crosshair; touch-action: none; border-bottom: 1px solid #cfbb83; }
 .lens-legend__bar { flex: 1; min-width: 0; height: var(--bar-height); }

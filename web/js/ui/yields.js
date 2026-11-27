@@ -36,6 +36,20 @@ function format(value, key) {
   const number = new Intl.NumberFormat(locale, {maximumFractionDigits: 0}).format(value);
   return key === 'gold' ? `${number} CAD` : number;
 }
+function compact(value, key) {
+  if (value === null || key === 'unemployment') return format(value, key);
+  const locale = lang() === 'fr' ? 'fr-CA' : 'en-CA';
+  const number = new Intl.NumberFormat(locale, {notation: 'compact', maximumFractionDigits: 1}).format(value);
+  return key === 'gold' ? `${number} CAD` : number;
+}
+function vintage() {
+  if (context.nation?.fixture) return tr('Fixture — official vintage pending', 'Données de démonstration — millésime officiel à venir');
+  const value = localized(context.nation?.vintage);
+  if (lang() === 'fr' && value === 'Population estimates July 2025; Census 2021 characteristics') {
+    return 'Estimations de population de juillet 2025; caractéristiques du Recensement de 2021';
+  }
+  return value || tr('Vintage unavailable', 'Millésime indisponible');
+}
 function element(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -57,14 +71,13 @@ function renderBar() {
     const icon = element('span', 'yield-icon', metric.icon);
     icon.setAttribute('aria-hidden', 'true');
     const label = element('span', 'yield-label', metric[lang()]);
-    const value = element('span', 'yield-value', format(valueFor(national, metric.key), metric.key));
+    const value = element('span', 'yield-value', compact(valueFor(national, metric.key), metric.key));
     button.append(icon, label, value);
     button.addEventListener('click', () => openReport(metric.key));
     bar.append(button);
   }
   const year = context.nation?.year;
-  const vintage = context.nation?.fixture ? tr('Fixture — official vintage pending', 'Données de démonstration — millésime officiel à venir') : (localized(context.nation?.vintage) || tr('Vintage unavailable', 'Millésime indisponible'));
-  const turn = element('span', 'yield-turn', `${tr('Turn', 'Tour')} ${year == null ? '—' : year} · ${vintage}`);
+  const turn = element('span', 'yield-turn', `${tr('Turn', 'Tour')} ${year == null ? '—' : year} · ${vintage()}`);
   bar.append(turn);
 }
 function leaderboard(title, items, key) {
@@ -110,17 +123,24 @@ function renderReport() {
   const definition = context.nation?.yields?.find(entry => entry.key === selected);
   const description = localized(definition?.description);
   if (description) report.append(element('p', 'yield-report-note', description));
-  const vintage = context.nation?.fixture ? tr('Fixture — official vintage pending', 'Données de démonstration — millésime officiel à venir') : (localized(context.nation?.vintage) || tr('Vintage unavailable', 'Millésime indisponible'));
-  report.append(element('p', 'yield-report-note', `${tr('Vintage', 'Millésime')} : ${vintage}`));
+  report.append(element('p', 'yield-report-note', `${tr('Vintage', 'Millésime')} : ${vintage()}`));
+  if (selected === 'population') {
+    const note = localized(context.nation?.population_note);
+    if (note) report.append(element('p', 'yield-report-note', note));
+  }
   if (selected === 'gold') {
-    const gdpVintage = localized(context.nation?.gdp_vintage);
+    let gdpVintage = localized(context.nation?.gdp_vintage);
+    if (lang() === 'fr' && gdpVintage === '2022, 36-10-0468-01 (CMA geography varies: see gdp_geography_vintage); provinces 2021, 36-10-0711-01') {
+      gdpVintage = '2022, 36-10-0468-01 (le millésime géographique des RMR varie); provinces : 2021, 36-10-0711-01';
+    }
     report.append(element('p', 'yield-report-note', tr(
       'GDP is in current Canadian dollars at basic prices, where work takes place.',
       'Le PIB est exprimé en dollars canadiens courants aux prix de base, selon le lieu de travail.'
     ) + (gdpVintage ? ` ${gdpVintage}` : '')));
   }
   const columns = element('div', 'yield-report-columns');
-  columns.append(leaderboard(tr('Provinces & territories', 'Provinces et territoires'), context.provinces, selected));
+  columns.append(leaderboard(tr('Provinces & territories', 'Provinces et territoires'),
+    Array.isArray(context.provinces) ? context.provinces : context.provinces?.provinces, selected));
   columns.append(leaderboard(tr('Census metropolitan areas', 'Régions métropolitaines de recensement'),
     (Array.isArray(context.cities) ? context.cities : []).filter(city => city.kind === 'cma'), selected));
   report.append(columns);

@@ -34,3 +34,22 @@
   .almanac-overlay, .share-overlay { align-items: end; padding: 0; }
   .almanac-dialog, .share-dialog { width: 100%; max-height: 85vh; border-radius: 6px 6px 0 0; padding: 16px; }
 }
+
+/* Align the independent chrome roots with the shell header and yield strip. */
+header { z-index: 5; }
+.brand small, #vintage { display: none; }
+.header-right { position: absolute; right: 195px; }
+#search-root { top: 7px; left: auto; right: 310px; width: 210px; z-index: 6; }
+.search-input { padding: 6px 10px; font-size: 13px; }
+.almanac-launch, .share-trigger { top: 7px; z-index: 6; }
+.almanac-launch { right: 12px; }
+.share-trigger { right: 105px; }
+#dialog { z-index: 20; }
+@media (max-width: 900px) {
+  header { height: 42px; padding: 0 8px; }
+  .header-right { right: 8px; }
+  #search-root { top: 92px; left: 8px; right: auto; width: min(300px, calc(100vw - 165px)); }
+  .almanac-launch, .share-trigger { top: 92px; padding: 6px; font-size: 12px; }
+  .almanac-launch { right: 72px; }
+  .share-trigger { right: 8px; }
+}
