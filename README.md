@@ -10,7 +10,44 @@ This project is inspired by [usaciv](https://karpathy.ai/usaciv/) by [Andrej Kar
 
 ## Status
 
-**Milestone 3 accepted** (tag `m3`). The atlas now includes 109 census agglomeration towns (10,000-resident cutoff; territorial CAs kept; Whitehorse and Yellowknife stay in the city list), a Canadian Disaster Database lens, a population time slider over official July 1 estimates, painted relief and cover-scaled terrain marks, collision-aware province labels, GDP-per-person and growth ranks computed from official payloads, filled advisor dashboards and Explorer, a bilingual “Surveying the land…” loading screen, Share PNG export at 1600×900, and WASD keyboard parity. The Indigenous lands overlay is out of scope for now. Official figures were independently checked; see [docs/verification-notes.md](docs/verification-notes.md). Known residual gaps versus usaciv are listed in the changelog: terrain art is still simpler than the reference, some small-province names are tight at national zoom, a rebuild of `lenses.json` does not yet re-merge the disasters lens automatically, and town coordinates used a documented third-party GeoSuite mirror when the official package blocked automated retrieval. [docs/SPEC.md](docs/SPEC.md) remains the source of truth, and [docs/MILESTONES.md](docs/MILESTONES.md) is the ordered work plan.
+**v1.0** (tag `v1.0`). A bilingual, read-only hex atlas of all 13 provinces and territories, with official Statistics Canada and Natural Resources Canada figures, City and Town views, data lenses, Advisors, Explorer, a population time slider, and shareable links and PNG images. Inspired by usaciv; not affiliated with Karpathy or any game publisher. The Indigenous lands overlay remains out of scope. Official figures were independently checked; see [docs/verification-notes.md](docs/verification-notes.md). Remaining visual gaps versus usaciv are listed in [CHANGELOG.md](CHANGELOG.md). [docs/SPEC.md](docs/SPEC.md) is the source of truth.
+
+
+
+## Run locally
+
+You need [Python](https://www.python.org/) 3.11+ and [uv](https://docs.astral.sh/uv/). No Node bundler or database is required. The site is static files in `web/`.
+
+```bash
+git clone https://github.com/shawnpang/canada-civ.git
+cd canada-civ
+uv run python -m pipeline serve
+```
+
+Then open [http://127.0.0.1:8765/](http://127.0.0.1:8765/) in a browser. Optional flags: `--port 8000`.
+
+Useful checks:
+
+```bash
+uv run python -m pipeline check
+uv run python -m unittest discover -s tests
+```
+
+Rebuilding published JSON from official extracts is optional and needs the cached source files under `data/raw/` (that directory is gitignored). `uv run python -m pipeline fetch` downloads what the pipeline knows how to fetch; `uv run python -m pipeline build` and `all` rebuild the web catalogues and automatically re-merge the Canadian Disaster Database lens when the official extract is present.
+
+## Screenshots
+
+The national landing view, with painted terrain, default roads and rail, and official province names:
+
+![Canada Civ landing map](docs/images/canada-landing.png)
+
+Zoomed terrain in the Rockies and Prairies, with official land cover, relief, rivers, and Atlas of Canada roads and rail:
+
+![Canada Civ Rockies terrain](docs/images/canada-rockies.png)
+
+City View for Toronto, with official population, GDP, and ranks computed from those figures:
+
+![Canada Civ Toronto City View](docs/images/canada-city-toronto.png)
 
 ## What “done” looks like
 

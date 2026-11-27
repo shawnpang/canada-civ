@@ -7,12 +7,12 @@
 .adv-nav-button, .adv-close { flex: 0 0 auto; width: 27px; height: 27px; border: 1px solid #665d49; border-radius: 50%; color: #dfc991; background: #243444; cursor: pointer; }
 .adv-nav-button.is-active, .adv-nav-button:hover, .adv-nav-button:focus-visible { border-color: var(--accent, #dfbb6d); color: #fff0bd; box-shadow: 0 0 0 2px #b98f42; outline: none; }
 .adv-close { margin-left: auto; font-size: 19px; line-height: 20px; }
-.adv-body { flex: 1 1 auto; min-height: 0; overflow-y: scroll; padding: 17px 16px 30px; overscroll-behavior: contain; }
+.adv-body { flex: 1 1 auto; min-height: 0; overflow-y: scroll; padding: 17px 16px 56px; overscroll-behavior: contain; }
 .adv-kicker { color: #d0a95d; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; }
 .adv-heading { margin: 2px 0 5px; color: #efd99e; font: 22px/1.15 Georgia, serif; font-variant: small-caps; }
-.adv-intro, .adv-note { margin: 0 0 14px; color: #b4aa90; font-size: 12px; }
-.adv-council { display: grid; gap: 6px; }
-.adv-card { display: flex; align-items: center; gap: 11px; width: 100%; padding: 8px; text-align: left; border: 1px solid #655b47; border-radius: 4px; color: inherit; background: linear-gradient(100deg, #283442, #111c29); cursor: pointer; }
+.adv-intro, .adv-note { margin: 0 0 8px; color: #b4aa90; font-size: 12px; }
+.adv-council { display: grid; gap: 4px; }
+.adv-card { display: flex; align-items: center; gap: 11px; width: 100%; padding: 6px 8px; text-align: left; border: 1px solid #655b47; border-radius: 4px; color: inherit; background: linear-gradient(100deg, #283442, #111c29); cursor: pointer; }
 .adv-card:hover, .adv-card:focus-visible, .adv-rank:hover, .adv-rank:focus-visible { border-color: var(--accent, #d7b56b); background: #2e3940; outline: none; }
 .adv-medallion { display: inline-grid; place-items: center; flex: 0 0 auto; width: 31px; height: 31px; border-radius: 50%; border: 2px solid var(--accent, #d1b878); box-shadow: inset 0 0 0 2px #152231; color: #fff0be; background: #514b38; font: 19px Georgia, serif; }
 .adv-medallion-large { width: 54px; height: 54px; font-size: 30px; }

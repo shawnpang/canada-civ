@@ -31,3 +31,7 @@ Checked on 2026-11-27 (Asia/Singapore) against the official 17-10-0148-01 CSV al
 - Treasurer dashboard: Canada GDP 2,674,953,000,000 CAD (2022) and Ontario 903,203,100,000 CAD (2021) match the Milestone 1 table checks.
 - The disasters lens was not re-fetched in this pass (the official CDD extract is not cached here). Values were checked for length (17,956) and for nulls on non-Canadian cells; event counts were not independently re-tabulated from the spreadsheet.
 - Town map coordinates are GeoSuite 2021 representative points for the most populous member CSD. The official GeoSuite package blocked automated retrieval; the included extract came from a documented third-party mirror (MountainMath) and is described in the Almanac and `sources-towns.json`.
+
+## v1.0 additions
+
+On 2026-11-27 (Asia/Singapore) the official CDD extract was downloaded to the local `data/raw/cdd/` cache (gitignored). SHA-256 `1321a40003599b690e8970d422177582c67db1323dbf4cc6d5e02cbcc0eb0f2a` matches the published source record. A full retabulation reproduced the shipped `disasters.json` exactly: 1,490 extract rows, 1,103 mapped distinct event IDs in 442 Canadian land hexes. `uv run python -m unittest discover -s tests` ran 83 tests with no skips. `pipeline build` re-merges the disasters lens automatically.

@@ -138,10 +138,10 @@ header { z-index: 19; }
   /* The figures scroll as a strip while their vintage remains visible. */
   header { height: 190px; }
   header #yield-bar { top: 40px; height: 74px; flex-direction: column; align-items: stretch; gap: 0; padding: 0; overflow: visible; }
-  header .yield-strip { flex: 0 0 40px; min-width: 0; padding: 0 6px; overflow-x: auto; overflow-y: hidden; }
-  /* A flex item provides trailing scroll space even where scroll padding is
-     excluded from the overflow area. */
-  header .yield-strip::after { content: ''; flex: 0 0 12px; }
+  header .yield-strip { flex: 0 1 auto; min-width: 0; padding: 2px 8px 2px 6px; overflow-x: auto; overflow-y: hidden; flex-wrap: wrap; row-gap: 2px; }
+  header .yield-chip { font-size: 12px; }
+  /* Trailing space so a horizontal scroll still reveals the last chip if wrapping is not enough. */
+  header .yield-strip::after { content: ''; flex: 0 0 20px; }
   header .yield-turn { flex: 1 1 auto; align-self: stretch; max-width: none; padding: 2px 9px; font-size: 10px; line-height: 1.2; white-space: normal; }
   body header #search-root { top: 119px; left: 8px; right: 8px; width: auto; }
   body header .adv-launch, body header .share-trigger, body header .almanac-launch { top: 155px; }

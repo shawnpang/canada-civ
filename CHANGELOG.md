@@ -4,14 +4,15 @@ Each development stage is a commit on `main`. Finished milestones also get a tag
 
 ## Unreleased
 
-Residual gaps after Milestone 3, recorded rather than invented or over-polished:
+## 2026-11-27 — v1.0
 
-- Terrain marks, mountains, and coasts are closer to usaciv than in Milestone 2, but still simpler: mountains are more regular, fields are less densely painted, and roads/rail are a layer toggle rather than always-on map art
-- Prince Edward Island and New Brunswick names can be tight or missing at the national landing zoom
-- The bottom toolbar can clip the time-slider label when City View is open; the mobile yield strip can clip the last yield
-- The Advisors council list slightly clips Explorer at 1440×900
-- A full `pipeline` rebuild of `lenses.json` / `sources.json` does not yet re-merge the disasters lens automatically
-- Optional CSD Explorer columns, crop resources, and an elections lens were not added (no separate citable open series was wired)
+- Date: 2026-11-27 (Asia/Singapore)
+- Tag: `v1.0` (this commit)
+
+Final polish on Milestone 3. Mountains and fields are less regularly stamped; roads and rail default on as official Atlas of Canada map art, like usaciv, and fade under a data lens; New Brunswick is labelled at national zoom; the time-slider label stays readable when City View is open; the mobile yield strip wraps so the last yields stay visible; the Advisors council shows Explorer; `pipeline build` and `all` re-merge the disasters lens; the official CDD extract was cached and retabulated (1,103 mapped events in 442 land hexes) so the reproducibility test runs and passes. README now has a “Run locally” section and screenshots.
+
+Remaining gaps versus usaciv, recorded honestly: mountains and fields are still simpler and more schematic than the reference art; Prince Edward Island’s name can still be hard to read at national zoom in the browser (a layout simulation placed all 13 names, but Georgia metrics differ); town coordinates used a documented third-party GeoSuite mirror when the official package blocked automated retrieval; optional CSD Explorer columns, crop resources, and an elections lens were not added; unemployment remains the 2021 Census rate, labelled as such.
+
 
 ## 2026-11-27 — Milestone 3 accepted
 
