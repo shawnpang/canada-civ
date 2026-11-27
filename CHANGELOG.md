@@ -4,7 +4,13 @@ Each development stage is a commit on `main`. Finished milestones also get a tag
 
 ## Unreleased
 
-Fidelity pass toward usaciv visual quality (target tag `v1.1` after a second audit). Work so far, on `v11-integrate`:
+## 2026-11-27 — v1.1
+
+- Date: 2026-11-27 (Asia/Singapore)
+- Tag: `v1.1` (this commit)
+
+Fidelity pass toward usaciv visual quality. Two audit-and-fix loops on `v11-integrate`, then this tag.
+
 
 - Original terrain renderer with LOD bands, a sprite cache, world-anchored prairie patchwork, denser forest clumps, overlapping mountain massifs, and Arctic snow/ice texture.
 - Midpoint shoreline treatment with shallows and a surf rim; lake interiors are darker than the rim.
