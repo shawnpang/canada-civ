@@ -1,3 +1,5 @@
+import {getActiveLens} from '../ui/lenses.js';
+
 // Optional layers use the payload's projected kilometre coordinates directly.
 // The renderer never infers missing positions or synthesizes network links.
 const lineBounds = new WeakMap();
@@ -37,7 +39,8 @@ function drawNetwork(g, features, group, camera, viewport) {
   }
   if (!list.length) return;
   visibleLines.push(...list);
-  // A contrasting casing keeps both networks legible over land and lenses.
+  // Fine casings and different line patterns distinguish the two networks
+  // without making them compete with city banners or the terrain.
   for (const casing of [true, false]) {
     g.beginPath();
     for (const {points} of list) {
@@ -45,9 +48,9 @@ function drawNetwork(g, features, group, camera, viewport) {
       for (let i = 1; i < points.length; i++) g.lineTo(ox + points[i][0] * scale, oy + points[i][1] * scale);
     }
     g.lineJoin = 'round'; g.lineCap = 'round';
-    g.lineWidth = casing ? 3 : 1.35;
-    g.strokeStyle = casing ? 'rgba(37, 33, 27, .8)' : (group === 'roads' ? '#d9bf82' : '#d8d4c5');
-    g.setLineDash(!casing && group === 'rail' ? [5, 3] : []);
+    g.lineWidth = casing ? (group === 'roads' ? 3.4 : 2.8) : (group === 'roads' ? 1.9 : 1.2);
+    g.strokeStyle = casing ? 'rgba(48, 40, 29, .82)' : (group === 'roads' ? '#e4cf9a' : '#d4c8a7');
+    g.setLineDash(!casing && group === 'rail' ? [3, 3] : []);
     g.stroke();
   }
   g.setLineDash([]);
@@ -100,8 +103,16 @@ export function drawLayers(app, payloads, enabled) {
   const resources = payloads?.resources || {};
   const types = new Map((Array.isArray(resources.types) ? resources.types : []).map(type => [type.id, type]));
   g.save();
-  if (enabled.has('roads')) drawNetwork(g, infrastructure.roads, 'roads', camera, viewport);
-  if (enabled.has('rail')) drawNetwork(g, infrastructure.rail, 'rail', camera, viewport);
+  // Fade the generalized networks in as the map reaches a useful scale, and
+  // recede them further when a data lens colours the land.
+  const networkOpacity = Math.max(0, Math.min(1, (camera.scale - .12) / .28)) * (getActiveLens() ? .3 : 1);
+  if (networkOpacity > .01) {
+    g.save();
+    g.globalAlpha *= networkOpacity;
+    if (enabled.has('roads')) drawNetwork(g, infrastructure.roads, 'roads', camera, viewport);
+    if (enabled.has('rail')) drawNetwork(g, infrastructure.rail, 'rail', camera, viewport);
+    g.restore();
+  }
   if (enabled.has('resources')) drawPoints(g, resources.items, 'resources', camera, viewport, types);
   for (const group of ['ports', 'airports', 'military']) {
     if (enabled.has(group)) drawPoints(g, infrastructure[group], group, camera, viewport, types);
