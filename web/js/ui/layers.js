@@ -1,6 +1,4 @@
-/** Workstream module stub. Replace the body; keep the exported names. */
+// Map-layer geometry is a Milestone 2 payload, not present in the MVP
+// context. Do not offer toggles until the corresponding data and renderers
+// exist; the lens picker and legend are independent of optional layers.
 export async function init(ctx) {}
-export function onRedraw(ctx) {}
-export function onLang(ctx) {}
-export function onHash(ctx) {}
-export function onClick(ctx, mapEvent) {}
