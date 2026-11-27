@@ -1,0 +1,3028 @@
+{
+  "version": 1,
+  "selection": {
+    "cutoff": 10000,
+    "en": "2021 census agglomerations with at least 10,000 residents in the July 1, 2025 estimate, or the 2021 Census count if unavailable; all territorial CAs are included. Whitehorse (990) and Yellowknife (995) already appear as capitals in cities.json and are not duplicated.",
+    "fr": "Agglomérations de recensement de 2021 comptant au moins 10 000 habitants selon les estimations du 1er juillet 2025, ou selon le Recensement de 2021 si elles ne sont pas disponibles; toutes les agglomérations territoriales sont incluses. Whitehorse (990) et Yellowknife (995) figurent déjà parmi les capitales dans cities.json et ne sont pas dupliquées."
+  },
+  "coordinate_method": {
+    "en": "The 2021 GeoSuite representative point of the most populous 2021 member census subdivision anchors each CA; it is not a CA centroid. The map cell is the nearest land hex in that subdivision’s province or territory.",
+    "fr": "Le point représentatif GéoSuite 2021 de la subdivision de recensement membre la plus peuplée en 2021 sert de repère à chaque agglomération; ce point ne représente pas son centroïde. La cellule est l’hexagone terrestre le plus proche dans la province ou le territoire de cette subdivision."
+  },
+  "sources": [
+    {
+      "id": "statcan_ade_ca",
+      "title": {
+        "en": "Population estimates, July 1, by census metropolitan area and census agglomeration, 2021 boundaries",
+        "fr": "Estimations de la population au 1er juillet, selon la région métropolitaine de recensement et l’agglomération de recensement, limites de 2021"
+      },
+      "publisher": "Statistics Canada / Statistique Canada",
+      "vintage": {
+        "en": "July 1, 2025 preliminary postcensal estimates; 2021 boundaries; released January 14, 2026",
+        "fr": "estimations postcensitaires provisoires du 1er juillet 2025; limites de 2021; diffusion le 14 janvier 2026"
+      },
+      "table": "17-10-0148-01",
+      "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710014801",
+      "download_url": "https://www150.statcan.gc.ca/n1/tbl/csv/17100148-eng.zip",
+      "retrieved": "2026-11-27",
+      "sha256": "7b007a0ff50bb1bad6a041093c3c71502c095f2516d20c961d9c26ed55b327d5"
+    },
+    {
+      "id": "statcan_census_ca",
+      "title": {
+        "en": "Population and dwelling counts: Canada, provinces and territories, census metropolitan areas and census agglomerations",
+        "fr": "Chiffres de population et des logements : Canada, provinces et territoires, régions métropolitaines de recensement et agglomérations de recensement"
+      },
+      "publisher": "Statistics Canada / Statistique Canada",
+      "vintage": {
+        "en": "2021 Census",
+        "fr": "Recensement de 2021"
+      },
+      "table": "98-10-0005-01",
+      "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810000501",
+      "files": [
+        {
+          "url": "https://www150.statcan.gc.ca/n1/tbl/csv/98100005-eng.zip",
+          "retrieved": "2026-11-27",
+          "sha256": "d289e3647cdddede1b61beb08931fd975caa311bc2f690c1dc96e7724d4ceac7"
+        },
+        {
+          "url": "https://www150.statcan.gc.ca/n1/tbl/csv/98100005-fra.zip",
+          "retrieved": "2026-11-27",
+          "sha256": "f6f012d08411af3c7bac1874e71690a2bce3468cb3554ce916e0253d4a3f1e01"
+        }
+      ]
+    },
+    {
+      "id": "statcan_geosuite_csd",
+      "title": {
+        "en": "2021 Census GeoSuite, census subdivisions",
+        "fr": "GéoSuite du Recensement de 2021, subdivisions de recensement"
+      },
+      "publisher": "Statistics Canada / Statistique Canada",
+      "vintage": {
+        "en": "2021 Census geography",
+        "fr": "Géographie du Recensement de 2021"
+      },
+      "url": "https://www150.statcan.gc.ca/n1/en/catalogue/92-150-x",
+      "official_download_url": "https://www12.statcan.gc.ca/census-recensement/2021/geo/aip-pia/geosuite/files-fichiers/2021_92-150-X_eng.zip",
+      "mirror_url": "https://data.mountainmath.ca/census/geo_suite/2021/CSD.parquet",
+      "retrieved": "2026-11-27",
+      "mirror_sha256": "d07c33ba8db8da59ca4bc7659372eb01c4495d18a7f727349a5eeada5ca6fc57",
+      "included_extract": "pipeline/ca_towns_geosuite.csv",
+      "extract_sha256": "7afe7b1c1335830445229c8f28215b18c76df3dc676fe360c33866d672bf08de",
+      "notes": {
+        "en": "The official package blocked automated retrieval. The included CSV is an extract of the independently rehosted GeoSuite CSD table, retaining all 428 CSDs belonging to 2021 CAs and the fields needed for this build. A CA uses its most populous member CSD with an available point; ties use the smallest CSDUID. All 111 CAs matched a CSD point. The representative point is for that CSD, not for the whole CA.",
+        "fr": "Le téléchargement automatisé du fichier officiel a été bloqué. Le CSV inclus est un extrait de la table SDR de GéoSuite hébergée par un tiers : il conserve les 428 SDR appartenant aux agglomérations de 2021 et les champs nécessaires à la production. Chaque agglomération utilise le point disponible de sa SDR membre la plus peuplée; en cas d’égalité, le plus petit SDRIDU est retenu. Les 111 agglomérations ont une SDR correspondante avec un point. Le point représente cette SDR et non l’agglomération entière."
+      }
+    }
+  ],
+  "towns": [
+    {
+      "id": "556",
+      "kind": "ca",
+      "name": {
+        "en": "Chatham-Kent",
+        "fr": "Chatham-Kent"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3533.525,
+      "y": 4693.857,
+      "cell": 16831,
+      "anchor": {
+        "csduid": "3536020",
+        "name": "Chatham-Kent",
+        "latitude": 42.402593,
+        "longitude": -82.133094
+      },
+      "population": 112977,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 104316,
+        "2025": 112977
+      }
+    },
+    {
+      "id": "225",
+      "kind": "ca",
+      "name": {
+        "en": "Cape Breton",
+        "fr": "Cape Breton"
+      },
+      "provinces": [
+        "NS"
+      ],
+      "x": 5091.157,
+      "y": 3743.615,
+      "cell": 13517,
+      "anchor": {
+        "csduid": "1217030",
+        "name": "Cape Breton",
+        "latitude": 46.004322,
+        "longitude": -60.230747
+      },
+      "population": 111889,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 98318,
+        "2025": 111889
+      }
+    },
+    {
+      "id": "562",
+      "kind": "ca",
+      "name": {
+        "en": "Sarnia",
+        "fr": "Sarnia"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3507.532,
+      "y": 4625.915,
+      "cell": 16697,
+      "anchor": {
+        "csduid": "3538030",
+        "name": "Sarnia",
+        "latitude": 43.024379,
+        "longitude": -82.316171
+      },
+      "population": 108986,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 97592,
+        "2025": 108986
+      }
+    },
+    {
+      "id": "970",
+      "kind": "ca",
+      "name": {
+        "en": "Prince George",
+        "fr": "Prince George"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 790.688,
+      "y": 2993.923,
+      "cell": 10738,
+      "anchor": {
+        "csduid": "5953023",
+        "name": "Prince George",
+        "latitude": 53.92445,
+        "longitude": -122.775329
+      },
+      "population": 100127,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 89490,
+        "2025": 100127
+      }
+    },
+    {
+      "id": "105",
+      "kind": "ca",
+      "name": {
+        "en": "Charlottetown",
+        "fr": "Charlottetown"
+      },
+      "provinces": [
+        "PE"
+      ],
+      "x": 4875.757,
+      "y": 3821.263,
+      "cell": 13780,
+      "anchor": {
+        "csduid": "1102075",
+        "name": "Charlottetown",
+        "latitude": 46.26534,
+        "longitude": -63.134468
+      },
+      "population": 96516,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 78858,
+        "2025": 96516
+      }
+    },
+    {
+      "id": "450",
+      "kind": "ca",
+      "name": {
+        "en": "Granby",
+        "fr": "Granby"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4208.162,
+      "y": 4189.358,
+      "cell": 15105,
+      "anchor": {
+        "csduid": "2447017",
+        "name": "Granby",
+        "latitude": 45.400779,
+        "longitude": -72.746068
+      },
+      "population": 95867,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 90833,
+        "2025": 95867
+      }
+    },
+    {
+      "id": "590",
+      "kind": "ca",
+      "name": {
+        "en": "Sault Ste. Marie",
+        "fr": "Sault Ste. Marie"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3288.047,
+      "y": 4254.367,
+      "cell": 15218,
+      "anchor": {
+        "csduid": "3557061",
+        "name": "Sault Ste. Marie",
+        "latitude": 46.536412,
+        "longitude": -84.399605
+      },
+      "population": 88307,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 76731,
+        "2025": 88307
+      }
+    },
+    {
+      "id": "530",
+      "kind": "ca",
+      "name": {
+        "en": "Kawartha Lakes",
+        "fr": "Kawartha Lakes"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3761.155,
+      "y": 4408.088,
+      "cell": 15899,
+      "anchor": {
+        "csduid": "3516010",
+        "name": "Kawartha Lakes",
+        "latitude": 44.516039,
+        "longitude": -78.819795
+      },
+      "population": 85223,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 79247,
+        "2025": 85223
+      }
+    },
+    {
+      "id": "575",
+      "kind": "ca",
+      "name": {
+        "en": "North Bay",
+        "fr": "North Bay"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3675.43,
+      "y": 4214.171,
+      "cell": 15093,
+      "anchor": {
+        "csduid": "3548044",
+        "name": "North Bay",
+        "latitude": 46.351319,
+        "longitude": -79.390695
+      },
+      "population": 84834,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 71736,
+        "2025": 84834
+      }
+    },
+    {
+      "id": "860",
+      "kind": "ca",
+      "name": {
+        "en": "Wood Buffalo",
+        "fr": "Wood Buffalo"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1564.306,
+      "y": 2916.493,
+      "cell": 10488,
+      "anchor": {
+        "csduid": "4816037",
+        "name": "Wood Buffalo",
+        "latitude": 57.345914,
+        "longitude": -111.69406
+      },
+      "population": 83376,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 73837,
+        "2025": 83376
+      }
+    },
+    {
+      "id": "805",
+      "kind": "ca",
+      "name": {
+        "en": "Medicine Hat",
+        "fr": "Medicine Hat"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1386.38,
+      "y": 3699.414,
+      "cell": 13164,
+      "anchor": {
+        "csduid": "4801006",
+        "name": "Medicine Hat",
+        "latitude": 50.045649,
+        "longitude": -110.702119
+      },
+      "population": 82880,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 76376,
+        "2025": 82880
+      }
+    },
+    {
+      "id": "547",
+      "kind": "ca",
+      "name": {
+        "en": "Norfolk",
+        "fr": "Norfolk"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3672.993,
+      "y": 4632.508,
+      "cell": 16566,
+      "anchor": {
+        "csduid": "3528052",
+        "name": "Norfolk County",
+        "latitude": 42.729049,
+        "longitude": -80.38645
+      },
+      "population": 75773,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 67490,
+        "2025": 75773
+      }
+    },
+    {
+      "id": "918",
+      "kind": "ca",
+      "name": {
+        "en": "Vernon",
+        "fr": "Vernon"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 818.788,
+      "y": 3460.573,
+      "cell": 12347,
+      "anchor": {
+        "csduid": "5937014",
+        "name": "Vernon",
+        "latitude": 50.23598,
+        "longitude": -119.354852
+      },
+      "population": 73500,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 67086,
+        "2025": 73500
+      }
+    },
+    {
+      "id": "850",
+      "kind": "ca",
+      "name": {
+        "en": "Grande Prairie",
+        "fr": "Grande Prairie"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1077.178,
+      "y": 2982.443,
+      "cell": 10745,
+      "anchor": {
+        "csduid": "4819012",
+        "name": "Grande Prairie",
+        "latitude": 55.17026,
+        "longitude": -118.804741
+      },
+      "population": 72120,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 64141,
+        "2025": 72120
+      }
+    },
+    {
+      "id": "943",
+      "kind": "ca",
+      "name": {
+        "en": "Courtenay",
+        "fr": "Courtenay"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 434.765,
+      "y": 3328.796,
+      "cell": 11935,
+      "anchor": {
+        "csduid": "5926010",
+        "name": "Courtenay",
+        "latitude": 49.703234,
+        "longitude": -124.976392
+      },
+      "population": 70323,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 63282,
+        "2025": 70323
+      }
+    },
+    {
+      "id": "501",
+      "kind": "ca",
+      "name": {
+        "en": "Cornwall",
+        "fr": "Cornwall"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 4067.0,
+      "y": 4274.07,
+      "cell": 15369,
+      "anchor": {
+        "csduid": "3501012",
+        "name": "Cornwall",
+        "latitude": 45.032294,
+        "longitude": -74.741242
+      },
+      "population": 68503,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 61415,
+        "2025": 68503
+      }
+    },
+    {
+      "id": "452",
+      "kind": "ca",
+      "name": {
+        "en": "Saint-Hyacinthe",
+        "fr": "Saint-Hyacinthe"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4185.646,
+      "y": 4168.48,
+      "cell": 14970,
+      "anchor": {
+        "csduid": "2454048",
+        "name": "Saint-Hyacinthe",
+        "latitude": 45.636459,
+        "longitude": -72.939817
+      },
+      "population": 63565,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 59980,
+        "2025": 63565
+      }
+    },
+    {
+      "id": "610",
+      "kind": "ca",
+      "name": {
+        "en": "Brandon",
+        "fr": "Brandon"
+      },
+      "provinces": [
+        "MB"
+      ],
+      "x": 2134.668,
+      "y": 3883.985,
+      "cell": 13985,
+      "anchor": {
+        "csduid": "4607062",
+        "name": "Brandon",
+        "latitude": 49.833096,
+        "longitude": -99.919847
+      },
+      "population": 62723,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 54268,
+        "2025": 62723
+      }
+    },
+    {
+      "id": "404",
+      "kind": "ca",
+      "name": {
+        "en": "Rimouski",
+        "fr": "Rimouski"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4397.922,
+      "y": 3765.423,
+      "cell": 13635,
+      "anchor": {
+        "csduid": "2410043",
+        "name": "Rimouski",
+        "latitude": 48.421639,
+        "longitude": -68.607775
+      },
+      "population": 56959,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 53944,
+        "2025": 56959
+      }
+    },
+    {
+      "id": "456",
+      "kind": "ca",
+      "name": {
+        "en": "Joliette",
+        "fr": "Joliette"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4136.52,
+      "y": 4139.033,
+      "cell": 14969,
+      "anchor": {
+        "csduid": "2461025",
+        "name": "Joliette",
+        "latitude": 46.012918,
+        "longitude": -73.42862
+      },
+      "population": 56044,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 52706,
+        "2025": 56044
+      }
+    },
+    {
+      "id": "440",
+      "kind": "ca",
+      "name": {
+        "en": "Victoriaville",
+        "fr": "Victoriaville"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4244.062,
+      "y": 4099.706,
+      "cell": 14704,
+      "anchor": {
+        "csduid": "2439062",
+        "name": "Victoriaville",
+        "latitude": 46.062997,
+        "longitude": -71.969442
+      },
+      "population": 55053,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 52936,
+        "2025": 55053
+      }
+    },
+    {
+      "id": "544",
+      "kind": "ca",
+      "name": {
+        "en": "Woodstock",
+        "fr": "Woodstock"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3636.767,
+      "y": 4591.437,
+      "cell": 16432,
+      "anchor": {
+        "csduid": "3532042",
+        "name": "Woodstock",
+        "latitude": 43.139137,
+        "longitude": -80.724768
+      },
+      "population": 53801,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 46705,
+        "2025": 53801
+      }
+    },
+    {
+      "id": "444",
+      "kind": "ca",
+      "name": {
+        "en": "Shawinigan",
+        "fr": "Shawinigan"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4143.305,
+      "y": 4045.808,
+      "cell": 14568,
+      "anchor": {
+        "csduid": "2436033",
+        "name": "Shawinigan",
+        "latitude": 46.789674,
+        "longitude": -72.998407
+      },
+      "population": 51734,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 49620,
+        "2025": 51734
+      }
+    },
+    {
+      "id": "215",
+      "kind": "ca",
+      "name": {
+        "en": "Truro",
+        "fr": "Truro"
+      },
+      "provinces": [
+        "NS"
+      ],
+      "x": 4902.954,
+      "y": 3899.118,
+      "cell": 14049,
+      "anchor": {
+        "csduid": "1210008",
+        "name": "Colchester, Subd. B",
+        "latitude": 45.537834,
+        "longitude": -63.254504
+      },
+      "population": 51166,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 46157,
+        "2025": 51166
+      }
+    },
+    {
+      "id": "937",
+      "kind": "ca",
+      "name": {
+        "en": "Duncan",
+        "fr": "Duncan"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 468.807,
+      "y": 3457.198,
+      "cell": 12339,
+      "anchor": {
+        "csduid": "5919008",
+        "name": "North Cowichan",
+        "latitude": 48.84456,
+        "longitude": -123.704669
+      },
+      "population": 51122,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 47582,
+        "2025": 51122
+      }
+    },
+    {
+      "id": "913",
+      "kind": "ca",
+      "name": {
+        "en": "Penticton",
+        "fr": "Penticton"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 770.107,
+      "y": 3528.415,
+      "cell": 12614,
+      "anchor": {
+        "csduid": "5907041",
+        "name": "Penticton",
+        "latitude": 49.496146,
+        "longitude": -119.573233
+      },
+      "population": 49807,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 47380,
+        "2025": 49807
+      }
+    },
+    {
+      "id": "745",
+      "kind": "ca",
+      "name": {
+        "en": "Prince Albert",
+        "fr": "Prince Albert"
+      },
+      "provinces": [
+        "SK"
+      ],
+      "x": 1803.841,
+      "y": 3450.446,
+      "cell": 12370,
+      "anchor": {
+        "csduid": "4715066",
+        "name": "Prince Albert",
+        "latitude": 53.195392,
+        "longitude": -105.739644
+      },
+      "population": 48655,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 45718,
+        "2025": 48655
+      }
+    },
+    {
+      "id": "465",
+      "kind": "ca",
+      "name": {
+        "en": "Salaberry-de-Valleyfield",
+        "fr": "Salaberry-de-Valleyfield"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4110.916,
+      "y": 4234.123,
+      "cell": 15236,
+      "anchor": {
+        "csduid": "2470052",
+        "name": "Salaberry-de-Valleyfield",
+        "latitude": 45.267267,
+        "longitude": -74.077126
+      },
+      "population": 46892,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 42787,
+        "2025": 46892
+      }
+    },
+    {
+      "id": "586",
+      "kind": "ca",
+      "name": {
+        "en": "Timmins",
+        "fr": "Timmins"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3490.684,
+      "y": 4005.249,
+      "cell": 14418,
+      "anchor": {
+        "csduid": "3556027",
+        "name": "Timmins",
+        "latitude": 48.485621,
+        "longitude": -81.287592
+      },
+      "population": 45983,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 41145,
+        "2025": 45983
+      }
+    },
+    {
+      "id": "944",
+      "kind": "ca",
+      "name": {
+        "en": "Campbell River",
+        "fr": "Campbell River"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 433.901,
+      "y": 3289.196,
+      "cell": 11802,
+      "anchor": {
+        "csduid": "5924034",
+        "name": "Campbell River",
+        "latitude": 50.008822,
+        "longitude": -125.262692
+      },
+      "population": 43999,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 40704,
+        "2025": 43999
+      }
+    },
+    {
+      "id": "454",
+      "kind": "ca",
+      "name": {
+        "en": "Sorel-Tracy",
+        "fr": "Sorel-Tracy"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4160.236,
+      "y": 4131.841,
+      "cell": 14836,
+      "anchor": {
+        "csduid": "2453052",
+        "name": "Sorel-Tracy",
+        "latitude": 46.013375,
+        "longitude": -73.112615
+      },
+      "population": 43478,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 41934,
+        "2025": 43478
+      }
+    },
+    {
+      "id": "485",
+      "kind": "ca",
+      "name": {
+        "en": "Rouyn-Noranda",
+        "fr": "Rouyn-Noranda"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 3672.882,
+      "y": 4011.658,
+      "cell": 14422,
+      "anchor": {
+        "csduid": "2486042",
+        "name": "Rouyn-Noranda",
+        "latitude": 48.128292,
+        "longitude": -78.895784
+      },
+      "population": 43281,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 42313,
+        "2025": 43281
+      }
+    },
+    {
+      "id": "840",
+      "kind": "ca",
+      "name": {
+        "en": "Lloydminster",
+        "fr": "Lloydminster"
+      },
+      "provinces": [
+        "SK",
+        "AB"
+      ],
+      "x": 1532.554,
+      "y": 3371.298,
+      "cell": 12095,
+      "anchor": {
+        "csduid": "4810039",
+        "name": "Lloydminster (Part)",
+        "latitude": 53.277916,
+        "longitude": -110.031924
+      },
+      "population": 39806,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 36508,
+        "2025": 39806
+      }
+    },
+    {
+      "id": "603",
+      "kind": "ca",
+      "name": {
+        "en": "Winkler",
+        "fr": "Winkler"
+      },
+      "provinces": [
+        "MB"
+      ],
+      "x": 2268.996,
+      "y": 3971.616,
+      "cell": 14256,
+      "anchor": {
+        "csduid": "4603050",
+        "name": "Winkler",
+        "latitude": 49.182527,
+        "longitude": -97.938564
+      },
+      "population": 37719,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 32655,
+        "2025": 37719
+      }
+    },
+    {
+      "id": "569",
+      "kind": "ca",
+      "name": {
+        "en": "Orillia",
+        "fr": "Orillia"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3714.919,
+      "y": 4409.821,
+      "cell": 15898,
+      "anchor": {
+        "csduid": "3543052",
+        "name": "Orillia",
+        "latitude": 44.582403,
+        "longitude": -79.383261
+      },
+      "population": 37477,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 33411,
+        "2025": 37477
+      }
+    },
+    {
+      "id": "715",
+      "kind": "ca",
+      "name": {
+        "en": "Moose Jaw",
+        "fr": "Moose Jaw"
+      },
+      "provinces": [
+        "SK"
+      ],
+      "x": 1751.055,
+      "y": 3755.175,
+      "cell": 13440,
+      "anchor": {
+        "csduid": "4707039",
+        "name": "Moose Jaw",
+        "latitude": 50.391097,
+        "longitude": -105.536061
+      },
+      "population": 37434,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 34872,
+        "2025": 37434
+      }
+    },
+    {
+      "id": "220",
+      "kind": "ca",
+      "name": {
+        "en": "New Glasgow",
+        "fr": "New Glasgow"
+      },
+      "provinces": [
+        "NS"
+      ],
+      "x": 4943.853,
+      "y": 3872.512,
+      "cell": 13916,
+      "anchor": {
+        "csduid": "1212014",
+        "name": "New Glasgow",
+        "latitude": 45.59053,
+        "longitude": -62.6432
+      },
+      "population": 36677,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 34397,
+        "2025": 36677
+      }
+    },
+    {
+      "id": "428",
+      "kind": "ca",
+      "name": {
+        "en": "Saint-Georges",
+        "fr": "Saint-Georges"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4338.401,
+      "y": 4064.213,
+      "cell": 14572,
+      "anchor": {
+        "csduid": "2429073",
+        "name": "Saint-Georges",
+        "latitude": 46.096061,
+        "longitude": -70.68313
+      },
+      "population": 36067,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 34833,
+        "2025": 36067
+      }
+    },
+    {
+      "id": "531",
+      "kind": "ca",
+      "name": {
+        "en": "Centre Wellington",
+        "fr": "Centre Wellington"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3652.852,
+      "y": 4521.758,
+      "cell": 16298,
+      "anchor": {
+        "csduid": "3523025",
+        "name": "Centre Wellington",
+        "latitude": 43.716167,
+        "longitude": -80.385638
+      },
+      "population": 35736,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 31093,
+        "2025": 35736
+      }
+    },
+    {
+      "id": "553",
+      "kind": "ca",
+      "name": {
+        "en": "Stratford",
+        "fr": "Stratford"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3610.83,
+      "y": 4569.404,
+      "cell": 16431,
+      "anchor": {
+        "csduid": "3531011",
+        "name": "Stratford",
+        "latitude": 43.368675,
+        "longitude": -80.985801
+      },
+      "population": 35702,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 33232,
+        "2025": 35702
+      }
+    },
+    {
+      "id": "566",
+      "kind": "ca",
+      "name": {
+        "en": "Owen Sound",
+        "fr": "Owen Sound"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3592.155,
+      "y": 4433.546,
+      "cell": 15895,
+      "anchor": {
+        "csduid": "3542059",
+        "name": "Owen Sound",
+        "latitude": 44.574917,
+        "longitude": -80.927453
+      },
+      "population": 35534,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 32712,
+        "2025": 35534
+      }
+    },
+    {
+      "id": "480",
+      "kind": "ca",
+      "name": {
+        "en": "Val-d'Or",
+        "fr": "Val-d'Or"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 3770.06,
+      "y": 4004.923,
+      "cell": 14425,
+      "anchor": {
+        "csduid": "2489008",
+        "name": "Val-d'Or",
+        "latitude": 48.002289,
+        "longitude": -77.607265
+      },
+      "population": 34862,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 34037,
+        "2025": 34862
+      }
+    },
+    {
+      "id": "512",
+      "kind": "ca",
+      "name": {
+        "en": "Brockville",
+        "fr": "Brockville"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 4005.04,
+      "y": 4341.347,
+      "cell": 15636,
+      "anchor": {
+        "csduid": "3507015",
+        "name": "Brockville",
+        "latitude": 44.599683,
+        "longitude": -75.700365
+      },
+      "population": 33946,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 31661,
+        "2025": 33946
+      }
+    },
+    {
+      "id": "328",
+      "kind": "ca",
+      "name": {
+        "en": "Bathurst",
+        "fr": "Bathurst"
+      },
+      "provinces": [
+        "NB"
+      ],
+      "x": 4638.554,
+      "y": 3763.22,
+      "cell": 13641,
+      "anchor": {
+        "csduid": "1315011",
+        "name": "Bathurst",
+        "latitude": 47.621845,
+        "longitude": -65.623255
+      },
+      "population": 33467,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 31387,
+        "2025": 33467
+      }
+    },
+    {
+      "id": "820",
+      "kind": "ca",
+      "name": {
+        "en": "Okotoks",
+        "fr": "Okotoks"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1191.389,
+      "y": 3554.95,
+      "cell": 12757,
+      "anchor": {
+        "csduid": "4806012",
+        "name": "Okotoks",
+        "latitude": 50.727099,
+        "longitude": -113.962615
+      },
+      "population": 32992,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 30405,
+        "2025": 32992
+      }
+    },
+    {
+      "id": "939",
+      "kind": "ca",
+      "name": {
+        "en": "Parksville",
+        "fr": "Parksville"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 454.51,
+      "y": 3388.223,
+      "cell": 12204,
+      "anchor": {
+        "csduid": "5921018",
+        "name": "Parksville",
+        "latitude": 49.325116,
+        "longitude": -124.333371
+      },
+      "population": 32525,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 31054,
+        "2025": 32525
+      }
+    },
+    {
+      "id": "015",
+      "kind": "ca",
+      "name": {
+        "en": "Corner Brook",
+        "fr": "Corner Brook"
+      },
+      "provinces": [
+        "NL"
+      ],
+      "x": 5078.195,
+      "y": 3375.157,
+      "cell": 12177,
+      "anchor": {
+        "csduid": "1005018",
+        "name": "Corner Brook",
+        "latitude": 48.927946,
+        "longitude": -57.987295
+      },
+      "population": 31880,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 29762,
+        "2025": 31880
+      }
+    },
+    {
+      "id": "405",
+      "kind": "ca",
+      "name": {
+        "en": "Rivière-du-Loup",
+        "fr": "Rivière-du-Loup"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4353.555,
+      "y": 3849.66,
+      "cell": 13769,
+      "anchor": {
+        "csduid": "2412072",
+        "name": "Rivière-du-Loup",
+        "latitude": 47.853964,
+        "longitude": -69.559598
+      },
+      "population": 30925,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 30025,
+        "2025": 30925
+      }
+    },
+    {
+      "id": "977",
+      "kind": "ca",
+      "name": {
+        "en": "Fort St. John",
+        "fr": "Fort St. John"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 1014.286,
+      "y": 2823.545,
+      "cell": 10073,
+      "anchor": {
+        "csduid": "5955034",
+        "name": "Fort St. John",
+        "latitude": 56.243783,
+        "longitude": -120.827116
+      },
+      "population": 30862,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 28729,
+        "2025": 30862
+      }
+    },
+    {
+      "id": "410",
+      "kind": "ca",
+      "name": {
+        "en": "Alma",
+        "fr": "Alma"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4177.232,
+      "y": 3823.132,
+      "cell": 13765,
+      "anchor": {
+        "csduid": "2493042",
+        "name": "Alma",
+        "latitude": 48.59708,
+        "longitude": -71.678055
+      },
+      "population": 30682,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 30331,
+        "2025": 30682
+      }
+    },
+    {
+      "id": "329",
+      "kind": "ca",
+      "name": {
+        "en": "Miramichi",
+        "fr": "Miramichi"
+      },
+      "provinces": [
+        "NB"
+      ],
+      "x": 4673.347,
+      "y": 3821.213,
+      "cell": 13776,
+      "anchor": {
+        "csduid": "1309050",
+        "name": "Miramichi",
+        "latitude": 47.022532,
+        "longitude": -65.510802
+      },
+      "population": 30218,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 27593,
+        "2025": 30218
+      }
+    },
+    {
+      "id": "571",
+      "kind": "ca",
+      "name": {
+        "en": "Midland",
+        "fr": "Midland"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3671.416,
+      "y": 4398.746,
+      "cell": 15897,
+      "anchor": {
+        "csduid": "3543074",
+        "name": "Midland",
+        "latitude": 44.751818,
+        "longitude": -79.885455
+      },
+      "population": 30087,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 27894,
+        "2025": 30087
+      }
+    },
+    {
+      "id": "934",
+      "kind": "ca",
+      "name": {
+        "en": "Squamish",
+        "fr": "Squamish"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 554.377,
+      "y": 3389.437,
+      "cell": 12073,
+      "anchor": {
+        "csduid": "5931006",
+        "name": "Squamish",
+        "latitude": 49.747567,
+        "longitude": -123.112552
+      },
+      "population": 29752,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 24232,
+        "2025": 29752
+      }
+    },
+    {
+      "id": "905",
+      "kind": "ca",
+      "name": {
+        "en": "Cranbrook",
+        "fr": "Cranbrook"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 1024.678,
+      "y": 3633.377,
+      "cell": 13021,
+      "anchor": {
+        "csduid": "5901022",
+        "name": "Cranbrook",
+        "latitude": 49.532312,
+        "longitude": -115.763104
+      },
+      "population": 29713,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 27040,
+        "2025": 29713
+      }
+    },
+    {
+      "id": "430",
+      "kind": "ca",
+      "name": {
+        "en": "Thetford Mines",
+        "fr": "Thetford Mines"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4293.28,
+      "y": 4078.384,
+      "cell": 14705,
+      "anchor": {
+        "csduid": "2431084",
+        "name": "Thetford Mines",
+        "latitude": 46.106133,
+        "longitude": -71.287209
+      },
+      "population": 29602,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 28287,
+        "2025": 29602
+      }
+    },
+    {
+      "id": "210",
+      "kind": "ca",
+      "name": {
+        "en": "Kentville",
+        "fr": "Kentville"
+      },
+      "provinces": [
+        "NS"
+      ],
+      "x": 4832.6,
+      "y": 3971.339,
+      "cell": 14316,
+      "anchor": {
+        "csduid": "1207016",
+        "name": "Kings, Subd. B",
+        "latitude": 45.224826,
+        "longitude": -64.441691
+      },
+      "population": 29559,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 26929,
+        "2025": 29559
+      }
+    },
+    {
+      "id": "565",
+      "kind": "ca",
+      "name": {
+        "en": "Wasaga Beach",
+        "fr": "Wasaga Beach"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3663.328,
+      "y": 4430.286,
+      "cell": 15897,
+      "anchor": {
+        "csduid": "3543064",
+        "name": "Wasaga Beach",
+        "latitude": 44.491497,
+        "longitude": -80.05618
+      },
+      "population": 29039,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 24862,
+        "2025": 29039
+      }
+    },
+    {
+      "id": "412",
+      "kind": "ca",
+      "name": {
+        "en": "Sept-Îles",
+        "fr": "Sept-Îles"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4494.042,
+      "y": 3514.107,
+      "cell": 12565,
+      "anchor": {
+        "csduid": "2497007",
+        "name": "Sept-Îles",
+        "latitude": 50.19286,
+        "longitude": -66.080346
+      },
+      "population": 27853,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 27729,
+        "2025": 27853
+      }
+    },
+    {
+      "id": "940",
+      "kind": "ca",
+      "name": {
+        "en": "Port Alberni",
+        "fr": "Port Alberni"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 420.5,
+      "y": 3379.092,
+      "cell": 12070,
+      "anchor": {
+        "csduid": "5923008",
+        "name": "Port Alberni",
+        "latitude": 49.24613,
+        "longitude": -124.802648
+      },
+      "population": 27672,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 25786,
+        "2025": 27672
+      }
+    },
+    {
+      "id": "567",
+      "kind": "ca",
+      "name": {
+        "en": "Collingwood",
+        "fr": "Collingwood"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3645.629,
+      "y": 4429.423,
+      "cell": 15897,
+      "anchor": {
+        "csduid": "3543031",
+        "name": "Collingwood",
+        "latitude": 44.527559,
+        "longitude": -80.268801
+      },
+      "population": 27266,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 24811,
+        "2025": 27266
+      }
+    },
+    {
+      "id": "406",
+      "kind": "ca",
+      "name": {
+        "en": "Baie-Comeau",
+        "fr": "Baie-Comeau"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4396.938,
+      "y": 3667.493,
+      "cell": 13233,
+      "anchor": {
+        "csduid": "2496020",
+        "name": "Baie-Comeau",
+        "latitude": 49.245526,
+        "longitude": -68.139025
+      },
+      "population": 26446,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 26643,
+        "2025": 26446
+      }
+    },
+    {
+      "id": "563",
+      "kind": "ca",
+      "name": {
+        "en": "Essa",
+        "fr": "Essa"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3688.878,
+      "y": 4451.103,
+      "cell": 16031,
+      "anchor": {
+        "csduid": "3543021",
+        "name": "Essa",
+        "latitude": 44.269091,
+        "longitude": -79.7953
+      },
+      "population": 25868,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 22970,
+        "2025": 25868
+      }
+    },
+    {
+      "id": "950",
+      "kind": "ca",
+      "name": {
+        "en": "Williams Lake",
+        "fr": "Williams Lake"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 737.119,
+      "y": 3188.219,
+      "cell": 11407,
+      "anchor": {
+        "csduid": "5941009",
+        "name": "Williams Lake",
+        "latitude": 52.129413,
+        "longitude": -122.134895
+      },
+      "population": 25061,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 23608,
+        "2025": 25061
+      }
+    },
+    {
+      "id": "335",
+      "kind": "ca",
+      "name": {
+        "en": "Edmundston",
+        "fr": "Edmundston"
+      },
+      "provinces": [
+        "NB"
+      ],
+      "x": 4459.998,
+      "y": 3866.502,
+      "cell": 13905,
+      "anchor": {
+        "csduid": "1313027",
+        "name": "Edmundston",
+        "latitude": 47.377215,
+        "longitude": -68.320631
+      },
+      "population": 24655,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 22144,
+        "2025": 24655
+      }
+    },
+    {
+      "id": "515",
+      "kind": "ca",
+      "name": {
+        "en": "Pembroke",
+        "fr": "Pembroke"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3862.189,
+      "y": 4235.27,
+      "cell": 15231,
+      "anchor": {
+        "csduid": "3547064",
+        "name": "Pembroke",
+        "latitude": 45.815501,
+        "longitude": -77.11707
+      },
+      "population": 24465,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 23814,
+        "2025": 24465
+      }
+    },
+    {
+      "id": "952",
+      "kind": "ca",
+      "name": {
+        "en": "Quesnel",
+        "fr": "Quesnel"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 760.268,
+      "y": 3094.203,
+      "cell": 11139,
+      "anchor": {
+        "csduid": "5941013",
+        "name": "Quesnel",
+        "latitude": 52.985685,
+        "longitude": -122.474403
+      },
+      "population": 24222,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 23113,
+        "2025": 24222
+      }
+    },
+    {
+      "id": "965",
+      "kind": "ca",
+      "name": {
+        "en": "Terrace",
+        "fr": "Terrace"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 500.06,
+      "y": 2755.643,
+      "cell": 9793,
+      "anchor": {
+        "csduid": "5949011",
+        "name": "Terrace",
+        "latitude": 54.456245,
+        "longitude": -128.563082
+      },
+      "population": 21934,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 19606,
+        "2025": 21934
+      }
+    },
+    {
+      "id": "710",
+      "kind": "ca",
+      "name": {
+        "en": "Yorkton",
+        "fr": "Yorkton"
+      },
+      "provinces": [
+        "SK"
+      ],
+      "x": 1979.552,
+      "y": 3706.369,
+      "cell": 13311,
+      "anchor": {
+        "csduid": "4709012",
+        "name": "Yorkton",
+        "latitude": 51.216996,
+        "longitude": -102.46417
+      },
+      "population": 21562,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 19859,
+        "2025": 21562
+      }
+    },
+    {
+      "id": "920",
+      "kind": "ca",
+      "name": {
+        "en": "Salmon Arm",
+        "fr": "Salmon Arm"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 849.296,
+      "y": 3416.781,
+      "cell": 12213,
+      "anchor": {
+        "csduid": "5939032",
+        "name": "Salmon Arm",
+        "latitude": 50.710834,
+        "longitude": -119.221476
+      },
+      "population": 21216,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 19705,
+        "2025": 21216
+      }
+    },
+    {
+      "id": "467",
+      "kind": "ca",
+      "name": {
+        "en": "Sainte-Agathe-des-Monts",
+        "fr": "Sainte-Agathe-des-Monts"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4068.875,
+      "y": 4151.75,
+      "cell": 14967,
+      "anchor": {
+        "csduid": "2478032",
+        "name": "Sainte-Agathe-des-Monts",
+        "latitude": 46.072264,
+        "longitude": -74.30272
+      },
+      "population": 21208,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 19892,
+        "2025": 21208
+      }
+    },
+    {
+      "id": "527",
+      "kind": "ca",
+      "name": {
+        "en": "Cobourg",
+        "fr": "Cobourg"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3826.21,
+      "y": 4458.402,
+      "cell": 15900,
+      "anchor": {
+        "csduid": "3514021",
+        "name": "Cobourg",
+        "latitude": 43.962746,
+        "longitude": -78.168602
+      },
+      "population": 21028,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 20519,
+        "2025": 21028
+      }
+    },
+    {
+      "id": "110",
+      "kind": "ca",
+      "name": {
+        "en": "Summerside",
+        "fr": "Summerside"
+      },
+      "provinces": [
+        "PE"
+      ],
+      "x": 4822.955,
+      "y": 3828.565,
+      "cell": 13780,
+      "anchor": {
+        "csduid": "1103025",
+        "name": "Summerside",
+        "latitude": 46.409641,
+        "longitude": -63.786695
+      },
+      "population": 21017,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 18157,
+        "2025": 21017
+      }
+    },
+    {
+      "id": "516",
+      "kind": "ca",
+      "name": {
+        "en": "Petawawa",
+        "fr": "Petawawa"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3845.749,
+      "y": 4229.582,
+      "cell": 15230,
+      "anchor": {
+        "csduid": "3547076",
+        "name": "Petawawa",
+        "latitude": 45.898003,
+        "longitude": -77.303922
+      },
+      "population": 20890,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 18160,
+        "2025": 20890
+      }
+    },
+    {
+      "id": "735",
+      "kind": "ca",
+      "name": {
+        "en": "North Battleford",
+        "fr": "North Battleford"
+      },
+      "provinces": [
+        "SK"
+      ],
+      "x": 1629.22,
+      "y": 3456.168,
+      "cell": 12366,
+      "anchor": {
+        "csduid": "4716029",
+        "name": "North Battleford",
+        "latitude": 52.76952,
+        "longitude": -108.280657
+      },
+      "population": 20772,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 19374,
+        "2025": 20772
+      }
+    },
+    {
+      "id": "546",
+      "kind": "ca",
+      "name": {
+        "en": "Tillsonburg",
+        "fr": "Tillsonburg"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3641.616,
+      "y": 4623.185,
+      "cell": 16566,
+      "anchor": {
+        "csduid": "3532004",
+        "name": "Tillsonburg",
+        "latitude": 42.857893,
+        "longitude": -80.733787
+      },
+      "population": 20575,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 18615,
+        "2025": 20575
+      }
+    },
+    {
+      "id": "720",
+      "kind": "ca",
+      "name": {
+        "en": "Swift Current",
+        "fr": "Swift Current"
+      },
+      "provinces": [
+        "SK"
+      ],
+      "x": 1592.762,
+      "y": 3729.099,
+      "cell": 13302,
+      "anchor": {
+        "csduid": "4708004",
+        "name": "Swift Current",
+        "latitude": 50.290566,
+        "longitude": -107.79558
+      },
+      "population": 20312,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 18745,
+        "2025": 20312
+      }
+    },
+    {
+      "id": "975",
+      "kind": "ca",
+      "name": {
+        "en": "Dawson Creek",
+        "fr": "Dawson Creek"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 1023.923,
+      "y": 2887.359,
+      "cell": 10341,
+      "anchor": {
+        "csduid": "5955014",
+        "name": "Dawson Creek",
+        "latitude": 55.755171,
+        "longitude": -120.229959
+      },
+      "population": 20264,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 17878,
+        "2025": 20264
+      }
+    },
+    {
+      "id": "907",
+      "kind": "ca",
+      "name": {
+        "en": "Nelson",
+        "fr": "Nelson"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 920.944,
+      "y": 3595.587,
+      "cell": 12885,
+      "anchor": {
+        "csduid": "5903015",
+        "name": "Nelson",
+        "latitude": 49.494181,
+        "longitude": -117.28955
+      },
+      "population": 20182,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 19119,
+        "2025": 20182
+      }
+    },
+    {
+      "id": "605",
+      "kind": "ca",
+      "name": {
+        "en": "Steinbach",
+        "fr": "Steinbach"
+      },
+      "provinces": [
+        "MB"
+      ],
+      "x": 2362.289,
+      "y": 3940.835,
+      "cell": 14124,
+      "anchor": {
+        "csduid": "4602044",
+        "name": "Steinbach",
+        "latitude": 49.530547,
+        "longitude": -96.69364
+      },
+      "population": 20081,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 17806,
+        "2025": 20081
+      }
+    },
+    {
+      "id": "833",
+      "kind": "ca",
+      "name": {
+        "en": "Camrose",
+        "fr": "Camrose"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1347.537,
+      "y": 3343.664,
+      "cell": 11957,
+      "anchor": {
+        "csduid": "4810011",
+        "name": "Camrose",
+        "latitude": 53.007365,
+        "longitude": -112.831516
+      },
+      "population": 20071,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 18772,
+        "2025": 20071
+      }
+    },
+    {
+      "id": "945",
+      "kind": "ca",
+      "name": {
+        "en": "Powell River",
+        "fr": "Powell River"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 470.488,
+      "y": 3328.849,
+      "cell": 11937,
+      "anchor": {
+        "csduid": "5927008",
+        "name": "Powell River",
+        "latitude": 49.862081,
+        "longitude": -124.543584
+      },
+      "population": 18966,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 17825,
+        "2025": 18966
+      }
+    },
+    {
+      "id": "831",
+      "kind": "ca",
+      "name": {
+        "en": "Sylvan Lake",
+        "fr": "Sylvan Lake"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1241.096,
+      "y": 3388.241,
+      "cell": 12089,
+      "anchor": {
+        "csduid": "4808012",
+        "name": "Sylvan Lake",
+        "latitude": 52.302095,
+        "longitude": -114.111169
+      },
+      "population": 18953,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 16514,
+        "2025": 18953
+      }
+    },
+    {
+      "id": "481",
+      "kind": "ca",
+      "name": {
+        "en": "Amos",
+        "fr": "Amos"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 3725.94,
+      "y": 3946.262,
+      "cell": 14156,
+      "anchor": {
+        "csduid": "2488055",
+        "name": "Amos",
+        "latitude": 48.602325,
+        "longitude": -78.013068
+      },
+      "population": 18862,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 18873,
+        "2025": 18862
+      }
+    },
+    {
+      "id": "403",
+      "kind": "ca",
+      "name": {
+        "en": "Matane",
+        "fr": "Matane"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4452.577,
+      "y": 3693.603,
+      "cell": 13368,
+      "anchor": {
+        "csduid": "2408053",
+        "name": "Matane",
+        "latitude": 48.84277,
+        "longitude": -67.563129
+      },
+      "population": 18724,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 18474,
+        "2025": 18724
+      }
+    },
+    {
+      "id": "528",
+      "kind": "ca",
+      "name": {
+        "en": "Port Hope",
+        "fr": "Port Hope"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3809.182,
+      "y": 4457.806,
+      "cell": 16033,
+      "anchor": {
+        "csduid": "3514020",
+        "name": "Port Hope",
+        "latitude": 43.999673,
+        "longitude": -78.369899
+      },
+      "population": 18565,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 17294,
+        "2025": 18565
+      }
+    },
+    {
+      "id": "828",
+      "kind": "ca",
+      "name": {
+        "en": "Canmore",
+        "fr": "Canmore"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1115.773,
+      "y": 3488.91,
+      "cell": 12487,
+      "anchor": {
+        "csduid": "4815023",
+        "name": "Canmore",
+        "latitude": 51.047187,
+        "longitude": -115.307179
+      },
+      "population": 17897,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 15990,
+        "2025": 17897
+      }
+    },
+    {
+      "id": "437",
+      "kind": "ca",
+      "name": {
+        "en": "Cowansville",
+        "fr": "Cowansville"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4213.492,
+      "y": 4210.71,
+      "cell": 15105,
+      "anchor": {
+        "csduid": "2446080",
+        "name": "Cowansville",
+        "latitude": 45.206184,
+        "longitude": -72.761488
+      },
+      "population": 17011,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 15234,
+        "2025": 17011
+      }
+    },
+    {
+      "id": "806",
+      "kind": "ca",
+      "name": {
+        "en": "Brooks",
+        "fr": "Brooks"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1323.357,
+      "y": 3618.746,
+      "cell": 13028,
+      "anchor": {
+        "csduid": "4802034",
+        "name": "Brooks",
+        "latitude": 50.569449,
+        "longitude": -111.89222
+      },
+      "population": 16698,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 14924,
+        "2025": 16698
+      }
+    },
+    {
+      "id": "936",
+      "kind": "ca",
+      "name": {
+        "en": "Ladysmith",
+        "fr": "Ladysmith"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 469.416,
+      "y": 3440.544,
+      "cell": 12339,
+      "anchor": {
+        "csduid": "5919021",
+        "name": "Ladysmith",
+        "latitude": 48.978467,
+        "longitude": -123.806552
+      },
+      "population": 16679,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 15501,
+        "2025": 16679
+      }
+    },
+    {
+      "id": "826",
+      "kind": "ca",
+      "name": {
+        "en": "Strathmore",
+        "fr": "Strathmore"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1240.426,
+      "y": 3534.849,
+      "cell": 12625,
+      "anchor": {
+        "csduid": "4805018",
+        "name": "Strathmore",
+        "latitude": 51.047705,
+        "longitude": -113.398503
+      },
+      "population": 15589,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 14339,
+        "2025": 15589
+      }
+    },
+    {
+      "id": "330",
+      "kind": "ca",
+      "name": {
+        "en": "Campbellton",
+        "fr": "Campbellton"
+      },
+      "provinces": [
+        "NB",
+        "QC"
+      ],
+      "x": 4550.486,
+      "y": 3754.692,
+      "cell": 13639,
+      "anchor": {
+        "csduid": "1314014",
+        "name": "Campbellton",
+        "latitude": 48.002266,
+        "longitude": -66.654513
+      },
+      "population": 15554,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 13330,
+        "2025": 15554
+      }
+    },
+    {
+      "id": "821",
+      "kind": "ca",
+      "name": {
+        "en": "High River",
+        "fr": "High River"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1192.041,
+      "y": 3571.911,
+      "cell": 12757,
+      "anchor": {
+        "csduid": "4806006",
+        "name": "High River",
+        "latitude": 50.584823,
+        "longitude": -113.871905
+      },
+      "population": 15514,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 14324,
+        "2025": 15514
+      }
+    },
+    {
+      "id": "598",
+      "kind": "ca",
+      "name": {
+        "en": "Kenora",
+        "fr": "Kenora"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 2525.713,
+      "y": 3918.063,
+      "cell": 13994,
+      "anchor": {
+        "csduid": "3560010",
+        "name": "Kenora",
+        "latitude": 49.82123,
+        "longitude": -94.44573
+      },
+      "population": 15370,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 14967,
+        "2025": 15370
+      }
+    },
+    {
+      "id": "468",
+      "kind": "ca",
+      "name": {
+        "en": "Lachute",
+        "fr": "Lachute"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4081.456,
+      "y": 4195.405,
+      "cell": 15102,
+      "anchor": {
+        "csduid": "2476020",
+        "name": "Lachute",
+        "latitude": 45.668891,
+        "longitude": -74.300163
+      },
+      "population": 15364,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 14100,
+        "2025": 15364
+      }
+    },
+    {
+      "id": "411",
+      "kind": "ca",
+      "name": {
+        "en": "Dolbeau-Mistassini",
+        "fr": "Dolbeau-Mistassini"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4131.63,
+      "y": 3812.353,
+      "cell": 13763,
+      "anchor": {
+        "csduid": "2492022",
+        "name": "Dolbeau-Mistassini",
+        "latitude": 48.815366,
+        "longitude": -72.221771
+      },
+      "population": 15213,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 15306,
+        "2025": 15213
+      }
+    },
+    {
+      "id": "910",
+      "kind": "ca",
+      "name": {
+        "en": "Trail",
+        "fr": "Trail"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 874.076,
+      "y": 3625.179,
+      "cell": 13018,
+      "anchor": {
+        "csduid": "5905014",
+        "name": "Trail",
+        "latitude": 49.083667,
+        "longitude": -117.723075
+      },
+      "population": 15149,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 14268,
+        "2025": 15149
+      }
+    },
+    {
+      "id": "533",
+      "kind": "ca",
+      "name": {
+        "en": "Ingersoll",
+        "fr": "Ingersoll"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3625.742,
+      "y": 4605.833,
+      "cell": 16565,
+      "anchor": {
+        "csduid": "3532018",
+        "name": "Ingersoll",
+        "latitude": 43.031604,
+        "longitude": -80.884381
+      },
+      "population": 15042,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 13693,
+        "2025": 15042
+      }
+    },
+    {
+      "id": "010",
+      "kind": "ca",
+      "name": {
+        "en": "Grand Falls-Windsor",
+        "fr": "Grand Falls-Windsor"
+      },
+      "provinces": [
+        "NL"
+      ],
+      "x": 5218.599,
+      "y": 3282.695,
+      "cell": 11778,
+      "anchor": {
+        "csduid": "1006017",
+        "name": "Grand Falls-Windsor",
+        "latitude": 48.975836,
+        "longitude": -55.693431
+      },
+      "population": 14549,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 13853,
+        "2025": 14549
+      }
+    },
+    {
+      "id": "011",
+      "kind": "ca",
+      "name": {
+        "en": "Gander",
+        "fr": "Gander"
+      },
+      "provinces": [
+        "NL"
+      ],
+      "x": 5286.642,
+      "y": 3239.891,
+      "cell": 11646,
+      "anchor": {
+        "csduid": "1006009",
+        "name": "Gander",
+        "latitude": 48.964402,
+        "longitude": -54.595738
+      },
+      "population": 14389,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 13414,
+        "2025": 14389
+      }
+    },
+    {
+      "id": "955",
+      "kind": "ca",
+      "name": {
+        "en": "Prince Rupert",
+        "fr": "Prince Rupert"
+      },
+      "provinces": [
+        "BC"
+      ],
+      "x": 399.218,
+      "y": 2708.587,
+      "cell": 9791,
+      "anchor": {
+        "csduid": "5947012",
+        "name": "Prince Rupert",
+        "latitude": 54.300302,
+        "longitude": -130.285345
+      },
+      "population": 14052,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 13442,
+        "2025": 14052
+      }
+    },
+    {
+      "id": "423",
+      "kind": "ca",
+      "name": {
+        "en": "Sainte-Marie",
+        "fr": "Sainte-Marie"
+      },
+      "provinces": [
+        "QC"
+      ],
+      "x": 4302.159,
+      "y": 4035.72,
+      "cell": 14571,
+      "anchor": {
+        "csduid": "2426030",
+        "name": "Sainte-Marie",
+        "latitude": 46.440377,
+        "longitude": -71.004179
+      },
+      "population": 13933,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 13134,
+        "2025": 13933
+      }
+    },
+    {
+      "id": "607",
+      "kind": "ca",
+      "name": {
+        "en": "Portage la Prairie",
+        "fr": "Portage la Prairie"
+      },
+      "provinces": [
+        "MB"
+      ],
+      "x": 2252.461,
+      "y": 3882.101,
+      "cell": 13988,
+      "anchor": {
+        "csduid": "4609029",
+        "name": "Portage la Prairie",
+        "latitude": 49.970637,
+        "longitude": -98.28821
+      },
+      "population": 13921,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 13270,
+        "2025": 13921
+      }
+    },
+    {
+      "id": "832",
+      "kind": "ca",
+      "name": {
+        "en": "Lacombe",
+        "fr": "Lacombe"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1271.687,
+      "y": 3379.456,
+      "cell": 12089,
+      "anchor": {
+        "csduid": "4808031",
+        "name": "Lacombe",
+        "latitude": 52.471759,
+        "longitude": -113.727933
+      },
+      "population": 13657,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 13396,
+        "2025": 13657
+      }
+    },
+    {
+      "id": "750",
+      "kind": "ca",
+      "name": {
+        "en": "Estevan",
+        "fr": "Estevan"
+      },
+      "provinces": [
+        "SK"
+      ],
+      "x": 1903.948,
+      "y": 3926.503,
+      "cell": 14113,
+      "anchor": {
+        "csduid": "4701024",
+        "name": "Estevan",
+        "latitude": 49.14219,
+        "longitude": -102.985953
+      },
+      "population": 13266,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 12798,
+        "2025": 13266
+      }
+    },
+    {
+      "id": "502",
+      "kind": "ca",
+      "name": {
+        "en": "Hawkesbury",
+        "fr": "Hawkesbury"
+      },
+      "provinces": [
+        "QC",
+        "ON"
+      ],
+      "x": 4059.594,
+      "y": 4208.572,
+      "cell": 15235,
+      "anchor": {
+        "csduid": "3502008",
+        "name": "Hawkesbury",
+        "latitude": 45.608871,
+        "longitude": -74.611297
+      },
+      "population": 13134,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 12010,
+        "2025": 13134
+      }
+    },
+    {
+      "id": "755",
+      "kind": "ca",
+      "name": {
+        "en": "Weyburn",
+        "fr": "Weyburn"
+      },
+      "provinces": [
+        "SK"
+      ],
+      "x": 1852.908,
+      "y": 3858.093,
+      "cell": 13844,
+      "anchor": {
+        "csduid": "4702047",
+        "name": "Weyburn",
+        "latitude": 49.665112,
+        "longitude": -103.849197
+      },
+      "population": 13100,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 12247,
+        "2025": 13100
+      }
+    },
+    {
+      "id": "640",
+      "kind": "ca",
+      "name": {
+        "en": "Thompson",
+        "fr": "Thompson"
+      },
+      "provinces": [
+        "MB"
+      ],
+      "x": 2343.219,
+      "y": 3252.871,
+      "cell": 11712,
+      "anchor": {
+        "csduid": "4622026",
+        "name": "Thompson",
+        "latitude": 55.751746,
+        "longitude": -97.851122
+      },
+      "population": 13065,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 13035,
+        "2025": 13065
+      }
+    },
+    {
+      "id": "865",
+      "kind": "ca",
+      "name": {
+        "en": "Wetaskiwin",
+        "fr": "Wetaskiwin"
+      },
+      "provinces": [
+        "AB"
+      ],
+      "x": 1312.141,
+      "y": 3335.504,
+      "cell": 11956,
+      "anchor": {
+        "csduid": "4811002",
+        "name": "Wetaskiwin",
+        "latitude": 52.971926,
+        "longitude": -113.37671
+      },
+      "population": 13032,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 12594,
+        "2025": 13032
+      }
+    },
+    {
+      "id": "582",
+      "kind": "ca",
+      "name": {
+        "en": "Elliot Lake",
+        "fr": "Elliot Lake"
+      },
+      "provinces": [
+        "ON"
+      ],
+      "x": 3426.948,
+      "y": 4251.389,
+      "cell": 15221,
+      "anchor": {
+        "csduid": "3557041",
+        "name": "Elliot Lake",
+        "latitude": 46.4007,
+        "longitude": -82.620426
+      },
+      "population": 11901,
+      "population_vintage": "2025",
+      "population_source": "statcan_ade_ca",
+      "pop_series": {
+        "2021": 11372,
+        "2025": 11901
+      }
+    }
+  ]
+}

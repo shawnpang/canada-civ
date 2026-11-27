@@ -1,0 +1,46 @@
+{
+  "attribution": {
+    "en": "Source: Statistics Canada, 2021 Census and population estimates. Contains information licensed under the Statistics Canada Open Licence.",
+    "fr": "Source : Statistique Canada, Recensement de 2021 et estimations démographiques. Contient de l'information utilisée sous la Licence ouverte de Statistique Canada."
+  },
+  "license": "https://www.statcan.gc.ca/en/reference/licence",
+  "sources": [
+    {
+      "id": "statcan_ade_ca",
+      "title": {"en": "Population estimates, July 1, by census metropolitan area and census agglomeration, 2021 boundaries", "fr": "Estimations de la population au 1er juillet, selon la région métropolitaine de recensement et l’agglomération de recensement, limites de 2021"},
+      "publisher": "Statistics Canada / Statistique Canada",
+      "vintage": {"en": "July 1, 2025 preliminary postcensal estimates; 2021 boundaries; released January 14, 2026", "fr": "estimations postcensitaires provisoires du 1er juillet 2025; limites de 2021; diffusion le 14 janvier 2026"},
+      "table": "17-10-0148-01",
+      "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710014801",
+      "download_url": "https://www150.statcan.gc.ca/n1/tbl/csv/17100148-eng.zip",
+      "retrieved": "2026-11-27",
+      "sha256": "7b007a0ff50bb1bad6a041093c3c71502c095f2516d20c961d9c26ed55b327d5"
+    },
+    {
+      "id": "statcan_census_ca",
+      "title": {"en": "Population and dwelling counts: Canada, provinces and territories, census metropolitan areas and census agglomerations", "fr": "Chiffres de population et des logements : Canada, provinces et territoires, régions métropolitaines de recensement et agglomérations de recensement"},
+      "publisher": "Statistics Canada / Statistique Canada",
+      "vintage": {"en": "2021 Census", "fr": "Recensement de 2021"},
+      "table": "98-10-0005-01",
+      "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810000501",
+      "files": [
+        {"url": "https://www150.statcan.gc.ca/n1/tbl/csv/98100005-eng.zip", "retrieved": "2026-11-27", "sha256": "d289e3647cdddede1b61beb08931fd975caa311bc2f690c1dc96e7724d4ceac7"},
+        {"url": "https://www150.statcan.gc.ca/n1/tbl/csv/98100005-fra.zip", "retrieved": "2026-11-27", "sha256": "f6f012d08411af3c7bac1874e71690a2bce3468cb3554ce916e0253d4a3f1e01"}
+      ]
+    },
+    {
+      "id": "statcan_geosuite_csd",
+      "title": {"en": "2021 Census GeoSuite, census subdivisions", "fr": "GéoSuite du Recensement de 2021, subdivisions de recensement"},
+      "publisher": "Statistics Canada / Statistique Canada",
+      "vintage": {"en": "2021 Census geography", "fr": "Géographie du Recensement de 2021"},
+      "url": "https://www150.statcan.gc.ca/n1/en/catalogue/92-150-x",
+      "official_download_url": "https://www12.statcan.gc.ca/census-recensement/2021/geo/aip-pia/geosuite/files-fichiers/2021_92-150-X_eng.zip",
+      "mirror_url": "https://data.mountainmath.ca/census/geo_suite/2021/CSD.parquet",
+      "retrieved": "2026-11-27",
+      "mirror_sha256": "d07c33ba8db8da59ca4bc7659372eb01c4495d18a7f727349a5eeada5ca6fc57",
+      "included_extract": "pipeline/ca_towns_geosuite.csv",
+      "extract_sha256": "7afe7b1c1335830445229c8f28215b18c76df3dc676fe360c33866d672bf08de",
+      "notes": {"en": "The official package blocked automated retrieval. The included CSV is an extract of the independently rehosted GeoSuite CSD table, retaining all 428 CSDs belonging to 2021 CAs and the fields needed for this build. A CA uses its most populous member CSD with an available point; ties use the smallest CSDUID. All 111 CAs matched a CSD point. The representative point is for that CSD, not for the whole CA.", "fr": "Le téléchargement automatisé du fichier officiel a été bloqué. Le CSV inclus est un extrait de la table SDR de GéoSuite hébergée par un tiers : il conserve les 428 SDR appartenant aux agglomérations de 2021 et les champs nécessaires à la production. Chaque agglomération utilise le point disponible de sa SDR membre la plus peuplée; en cas d’égalité, le plus petit SDRIDU est retenu. Les 111 agglomérations ont une SDR correspondante avec un point. Le point représente cette SDR et non l’agglomération entière."}
+    }
+  ]
+}
