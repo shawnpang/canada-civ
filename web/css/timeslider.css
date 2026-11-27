@@ -1,0 +1,17 @@
+/* Population time control joins the existing map toolbar. */
+.time-slider { position: relative; flex: 0 0 auto; color: #f3e5bd; }
+.time-slider-trigger { display: flex; align-items: center; min-height: 30px; padding: 0 9px; border: 1px solid #a48c5b; border-radius: 3px; background: #243b48; cursor: pointer; font: 12px Arial, sans-serif; list-style: none; white-space: nowrap; }
+.time-slider-trigger::-webkit-details-marker { display: none; }
+.time-slider-trigger::after { content: ' ▾'; margin-left: 4px; }
+.time-slider[open] .time-slider-trigger::after { content: ' ▴'; }
+.time-slider-panel { position: absolute; right: 0; bottom: calc(100% + 6px); width: min(310px, calc(100vw - 24px)); padding: 12px; border: 1px solid #a48c5b; border-radius: 3px; background: #192d39; box-shadow: 0 4px 16px #0009; font: 12px/1.4 Arial, sans-serif; }
+.time-slider-label { display: inline-block; margin-right: 8px; }
+.time-slider-year { color: #f5dc91; font-weight: bold; }
+.time-slider-input { display: block; width: 100%; margin: 12px 0 0; accent-color: #d8bd79; }
+.time-slider-endpoints { display: flex; justify-content: space-between; color: #c9bd9d; }
+.time-slider-note { margin: 10px 0 0; color: #d0c4a3; }
+.time-slider-trigger:focus-visible, .time-slider-input:focus-visible { outline: 2px solid #fff1bd; outline-offset: 2px; }
+@media (max-width: 700px) {
+  #bottom-toolbar .time-slider-trigger { padding: 0 6px; }
+  .time-slider-panel { right: 0; }
+}
