@@ -56,20 +56,34 @@ function exposedCorners(w,row,col,rows,cols,isSame) {
   return ns.map((_,k)=>ns[(k+5)%6]>=0&&ns[k]>=0&&!isSame(ns[(k+5)%6])&&!isSame(ns[k]));
 }
 function mountain(ctx,x,y,r,rel,snow,seed,contrast) {
-  const h=r*(rel===3?1.04:.72+rand(seed,71)*.18);
-  const left=r*(.38+rand(seed,72)*.13),right=r*(.39+rand(seed,73)*.15);
-  const peak=x+r*(rand(seed,74)-.5)*.20, base=y+r*.25;
-  ctx.fillStyle='rgba(25,36,30,.24)';ctx.beginPath();ctx.ellipse(x+r*.08,base,r*.64,r*.13,0,0,Math.PI*2);ctx.fill();
+  const h=r*(.67+contrast*.24+(rel===3?.12:0)+rand(seed,71)*.23);
+  const left=r*(.34+rand(seed,72)*.20),right=r*(.35+rand(seed,73)*.22);
+  const peak=x+r*(rand(seed,74)-.5)*(.30+contrast*.16), base=y+r*.25;
+  const shoulder=peak-left*(.32+rand(seed,75)*.22), shoulderY=y-h*(.39+rand(seed,76)*.12);
+  ctx.fillStyle='rgba(25,36,30,.24)';ctx.beginPath();ctx.ellipse(x+r*.08,base,r*.61,r*.12,0,0,Math.PI*2);ctx.fill();
   // Northwest-facing facets catch the light; the opposite face is in shadow.
   const light=Math.round(142+contrast*24), dark=Math.round(66-contrast*13);
-  polygon(ctx,[x-left,base,peak-r*.18,y-h*.50,peak,y-h,peak-r*.07,base], `rgb(${light},${light+4},${light-4})`);
-  polygon(ctx,[peak,y-h,x+right,base,peak-r*.07,base], `rgb(${dark},${dark+11},${dark+9})`);
-  polygon(ctx,[x-left,base,peak-r*.19,y-h*.50,peak-r*.07,base], 'rgba(57,70,57,.28)');
+  polygon(ctx,[x-left,base,shoulder,shoulderY,peak,y-h,peak-r*.08,base], `rgb(${light},${light+4},${light-4})`);
+  polygon(ctx,[peak,y-h,x+right,base,peak-r*.08,base], `rgb(${dark},${dark+11},${dark+9})`);
+  polygon(ctx,[x-left,base,shoulder,shoulderY,peak-r*.08,base], 'rgba(57,70,57,.28)');
   ctx.strokeStyle='rgba(31,42,37,.32)';ctx.lineWidth=Math.max(.5,r*.025);
   ctx.beginPath();ctx.moveTo(peak,y-h*.89);ctx.lineTo(peak-r*.10,y-h*.42);ctx.lineTo(peak-r*.03,base-r*.07);ctx.stroke();
-  if(snow){
-    polygon(ctx,[peak-r*.16,y-h*.53,peak,y-h,peak+r*.19,y-h*.54,peak+r*.09,y-h*.46,peak+r*.02,y-h*.52,peak-r*.07,y-h*.39], '#e9eee7');
-    polygon(ctx,[peak,y-h,peak+r*.19,y-h*.54,peak+r*.09,y-h*.46,peak+r*.02,y-h*.52], '#b8c9c9');
+  if(snow>0){
+    const snowline=.76-snow*.27, sy=y-h*snowline, sw=r*(.10+snow*.13);
+    polygon(ctx,[peak-sw,sy,peak,y-h,peak+sw,sy,peak+sw*.48,sy+r*.08,peak,sy+r*.02,peak-sw*.43,sy+r*.12], '#e9eee7');
+    polygon(ctx,[peak,y-h,peak+sw,sy,peak+sw*.48,sy+r*.08,peak,sy+r*.02], '#b8c9c9');
+  }
+}
+function hills(ctx,x,y,r,seed,contrast) {
+  const count=2+Math.floor(rand(seed,110)*1.6+contrast*.4);
+  for(let j=0;j<count;j++){
+    const px=x+(j-(count-1)/2)*r*(.29+rand(seed,111)*.12+contrast*.04)+(rand(seed,112+j)-.5)*r*.16;
+    const py=y+r*(.16+(rand(seed,116+j)-.5)*.20);
+    const width=r*(.25+rand(seed,120+j)*.15), height=r*(.13+contrast*.08+rand(seed,124+j)*.13);
+    const lean=(rand(seed,128+j)-.5)*width*(.35+contrast*.20);
+    ctx.fillStyle='rgba(37,55,38,.20)';ctx.beginPath();ctx.ellipse(px+width*.08,py,width*1.1,height*.32,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#718562';ctx.beginPath();ctx.moveTo(px-width,py);ctx.quadraticCurveTo(px-width*.48,py-height*1.15,px+lean,py-height);ctx.quadraticCurveTo(px+width*.58,py-height*.8,px+width,py);ctx.closePath();ctx.fill();
+    ctx.strokeStyle='rgba(232,226,179,.45)';ctx.lineWidth=Math.max(.5,r*.035);ctx.beginPath();ctx.moveTo(px-width*.84,py-height*.08);ctx.quadraticCurveTo(px-width*.42,py-height*1.02,px+lean,py-height*.91);ctx.stroke();
   }
 }
 function tree(ctx,x,y,r,kind,variant) {
@@ -91,14 +105,19 @@ function markCount(share,maximum,i,salt) {
 }
 function groundMarks(ctx,x,y,r,cover,i,pct) {
   const share=key=>pct?.[key]?.[i];
-  const fields=markCount(share('crop'),r>12?8:5,i,200);
-  // Patch positions are decorative: a cover share does not locate individual fields.
+  const fields=markCount(share('crop'),r>12?22:13,i,200);
+  // These small plots suggest a mosaic; their positions are not measured fields.
+  const colors=['#c9b46c','#a3a55e','#d7c681','#b49e61','#8f9c5e','#c0a05e'];
   for(let j=0;j<fields;j++){
-    const px=x+(rand(i,201+j*3)-.5)*r*.95,py=y+(rand(i,202+j*3)-.5)*r*.68;
-    const fw=r*(.16+rand(i,203+j*3)*.14),fh=r*(.12+rand(i,230+j)*.10);
-    const colors=['#c9b46c','#a3a55e','#d7c681','#b49e61'];
-    ctx.fillStyle=colors[Math.floor(rand(i,240+j)*colors.length)];ctx.fillRect(px-fw/2,py-fh/2,fw,fh);
-    ctx.strokeStyle='rgba(80,80,45,.18)';ctx.lineWidth=Math.max(.4,r*.012);ctx.strokeRect(px-fw/2,py-fh/2,fw,fh);
+    const px=x+(rand(i,201+j*7)-.5)*r*1.16,py=y+(rand(i,202+j*7)-.5)*r*.83;
+    const fw=r*(.14+rand(i,203+j*7)*.19),fh=r*(.10+rand(i,204+j*7)*.15);
+    const skew=(rand(i,205+j*7)-.5)*r*.08;
+    polygon(ctx,[px-fw/2+skew,py-fh/2,px+fw/2+skew,py-fh/2,px+fw/2-skew,py+fh/2,px-fw/2-skew,py+fh/2],colors[Math.floor(rand(i,206+j*7)*colors.length)]);
+    if(r>12&&rand(i,207+j*7)>.35){
+      ctx.strokeStyle='rgba(76,83,46,.20)';ctx.lineWidth=Math.max(.4,r*.012);ctx.beginPath();
+      for(let k=1;k<4;k++){const yy=py-fh/2+fh*k/4, shift=skew*(1-k/2);ctx.moveTo(px-fw/2+shift,yy);ctx.lineTo(px+fw/2+shift,yy);}
+      ctx.stroke();
+    }
   }
   const reeds=markCount(share('wetland'),r>12?7:4,i,260);
   ctx.lineCap='round';ctx.lineWidth=Math.max(.6,r*.025);
@@ -227,19 +246,33 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
   if(R>=3.5)for(const [i,x,y] of cells){
     const cover=w.cover[i],rel=w.relief[i];
     if(R>5)groundMarks(ctx,x,y,R,cover,i,w.pct);
-    if(rel>=2){
-      const snowy=cover===11||(w.elev_max[i]!=null&&w.elev_max[i]>1800);
-      // Measured mean height only adjusts contrast, never the relief class.
-      const contrast=w.elev[i]==null?0:clamp(w.elev[i]/2500,0,1);
-      if(R>12)mountain(ctx,x-R*.30,y-R*.01,R*.65,rel,snowy,i+1,contrast);
-      mountain(ctx,x+R*.08,y+R*.08,R*.83,rel,snowy,i,contrast);
-      if(R>12)mountain(ctx,x+R*.40,y+R*.23,R*.48,2,snowy,i+2,contrast);
-    } else if(rel===1 && R>5){
-      const crest=(rand(i,100)-.5)*R*.14;
-      ctx.fillStyle='rgba(37,55,38,.20)';ctx.beginPath();ctx.ellipse(x+R*.06,y+R*.28,R*.55,R*.13,0,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle='#718562';ctx.beginPath();ctx.moveTo(x-R*.55,y+R*.24);ctx.quadraticCurveTo(x-R*.30,y-R*.22+crest,x-R*.06,y+R*.08);ctx.quadraticCurveTo(x+R*.22,y-R*.22-crest,x+R*.55,y+R*.24);ctx.closePath();ctx.fill();
-      ctx.strokeStyle='rgba(232,226,179,.45)';ctx.lineWidth=Math.max(.5,R*.035);ctx.beginPath();ctx.moveTo(x-R*.50,y+R*.19);ctx.quadraticCurveTo(x-R*.30,y-R*.18+crest,x-R*.13,y+R*.04);ctx.stroke();
+    const contrast=w.elev[i]==null?0:clamp(w.elev[i]/2500,0,1);
+    if(rel>=1){
+      // Keep decorative relief within the same (possibly rounded) land cell.
+      const row=Math.floor(i/cols), col=i%cols;
+      const corners=exposedCorners(w,row,col,rows,cols,j=>j>=0&&!w.water[j]);
+      ctx.save();
+      if(corners.some(Boolean))boundaryHex(ctx,x,y,R,corners);else hex(ctx,x,y,R);
+      ctx.clip();
     }
+    if(rel>=2){
+      // Snow is suggested only by observed ice cover or the cell's measured maximum.
+      const snowPotential=cover===11?1:w.elev_max[i]==null?0:clamp((w.elev_max[i]-1800)/1300,0,1);
+      const count=R>12?2+Math.floor(rand(i,80)*2.2+contrast*.8):1+Math.floor(rand(i,80)*1.5+contrast*.5);
+      const peaks=[];
+      for(let j=0;j<count;j++){
+        const px=x+(j-(count-1)/2)*R*(.20+rand(i,81)*.05+contrast*.02)+(rand(i,82+j)-.5)*R*.17;
+        const py=y+(rand(i,87+j)-.5)*R*.28;
+        const size=R*(.42+rand(i,92+j)*.19+contrast*.07);
+        const snow=snowPotential>0?clamp(snowPotential*(.65+rand(i,97+j)*.7),0,1):0;
+        peaks.push({px,py,size,snow,seed:i*5+j});
+      }
+      peaks.sort((a,b)=>a.py-b.py);
+      for(const p of peaks)mountain(ctx,p.px,p.py,p.size,rel,p.snow,p.seed,contrast);
+    } else if(rel===1 && R>5){
+      hills(ctx,x,y,R,i,contrast);
+    }
+    if(rel>=1)ctx.restore();
   }
   paintRivers(ctx,w,width,height,scale,ox,oy);
 }
