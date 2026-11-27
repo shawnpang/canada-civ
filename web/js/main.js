@@ -305,7 +305,7 @@ function canonicalizeProvince() {
   const code = codes[entry?.pruid];
   if (code && code !== value) {
     params.set('province', code);
-    history.replaceState(null, '', `#${params}`);
+    history.replaceState(null, '', `${location.pathname}${location.search}#${params}`);
   }
 }
 window.addEventListener('hashchange', () => { if (w) { canonicalizeProvince(); applyHash(); } });

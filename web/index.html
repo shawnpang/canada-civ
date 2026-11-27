@@ -4,6 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Canada Civ</title>
+  <script>
+    // When this atlas is mounted at https://shawnpang.xyz/canada-civ,
+    // relative CSS, module, and data URLs must resolve under that prefix.
+    // The root deployment at canada-civ.vercel.app is left unchanged.
+    (function () {
+      var prefix = "/canada-civ";
+      var path = location.pathname;
+      if (path !== prefix && path.indexOf(prefix + "/") !== 0) return;
+      var base = document.createElement("base");
+      base.href = prefix + "/";
+      document.head.insertBefore(base, document.head.firstChild);
+      if (path === prefix) {
+        history.replaceState(null, "", prefix + "/" + location.search + location.hash);
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/panels.css">
   <link rel="stylesheet" href="css/town.css">

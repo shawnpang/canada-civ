@@ -82,7 +82,7 @@ function changeSelection(id) {
   const p = new URLSearchParams(location.hash.slice(1));
   if (id) { p.set('city', id); p.delete('province'); }
   else p.delete('city');
-  history.pushState(null, '', '#' + p.toString());
+  history.pushState(null, '', `${location.pathname}${location.search}#${p}`);
   window.dispatchEvent(new HashChangeEvent('hashchange'));
 }
 function stat(label, value, rank, lang, exact = null) {

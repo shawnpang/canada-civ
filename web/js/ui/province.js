@@ -27,7 +27,7 @@ function updateHash(code) {
   const p = new URLSearchParams(location.hash.slice(1));
   p.delete('city');
   if (code) p.set('province', code); else p.delete('province');
-  history.pushState(null, '', '#' + p.toString());
+  history.pushState(null, '', `${location.pathname}${location.search}#${p}`);
   window.dispatchEvent(new HashChangeEvent('hashchange'));
 }
 function render(ctx) {

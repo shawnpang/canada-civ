@@ -12,6 +12,11 @@ This project is inspired by [usaciv](https://karpathy.ai/usaciv/) by [Andrej Kar
 
 **v1.0** (tag `v1.0`). A bilingual, read-only hex atlas of all 13 provinces and territories, with official Statistics Canada and Natural Resources Canada figures, City and Town views, data lenses, Advisors, Explorer, a population time slider, and shareable links and PNG images. Inspired by usaciv; not affiliated with Karpathy or any game publisher. The Indigenous lands overlay remains out of scope. Official figures were independently checked; see [docs/verification-notes.md](docs/verification-notes.md). Remaining visual gaps versus usaciv are listed in [CHANGELOG.md](CHANGELOG.md). [docs/SPEC.md](docs/SPEC.md) is the source of truth.
 
+## Live site
+
+The atlas is at [https://shawnpang.xyz/canada-civ](https://shawnpang.xyz/canada-civ). The same static build is also served at [https://canada-civ.vercel.app](https://canada-civ.vercel.app). Relative asset and data URLs work at both origins; under the `/canada-civ` path, a small script sets `<base href="/canada-civ/">` so CSS, modules, and `data/*.json` resolve correctly, including when the URL has no trailing slash. Share links use the address bar, so they keep whichever host you are on.
+
+
 
 
 ## Run locally

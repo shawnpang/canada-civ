@@ -2,6 +2,12 @@
 // history entries; camera writes replace the current entry.
 let applying = false;
 
+// Always include the current path so share links and <base href>
+// (used under /canada-civ on shawnpang.xyz) stay on this page.
+function viewUrl(hash) {
+  return `${location.pathname}${location.search}${hash ? `#${hash}` : ''}`;
+}
+
 export function getHash() {
   return Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
 }
@@ -14,7 +20,7 @@ export function setHashKeys(keys, {replace = false} = {}) {
   }
   const next = params.toString();
   if (next === location.hash.slice(1)) return;
-  history[replace ? 'replaceState' : 'pushState'](null, '', next ? `#${next}` : location.pathname + location.search);
+  history[replace ? 'replaceState' : 'pushState'](null, '', viewUrl(next));
   window.dispatchEvent(new Event('hashchange'));
 }
 
@@ -35,7 +41,7 @@ export function writeHash(ctx) {
   const languageChanged = previousLang !== ctx.getLang();
   params.set('lang', ctx.getLang());
   params.set('at', `${x.toFixed(1)},${y.toFixed(1)},${zoom.toFixed(4)}`);
-  history[languageChanged ? 'pushState' : 'replaceState'](null, '', `#${params}`);
+  history[languageChanged ? 'pushState' : 'replaceState'](null, '', viewUrl(params));
 }
 
 export function onHash(ctx) {
