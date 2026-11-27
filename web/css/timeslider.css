@@ -1,4 +1,13 @@
 /* Population time control joins the existing map toolbar. */
+/* Let controls flow onto another row when a side panel reduces their space. */
+#bottom-toolbar { flex-wrap: wrap; justify-content: flex-end; }
+#bottom-toolbar #lens-bar { min-width: 0; max-width: 100%; }
+#bottom-toolbar .lens-dock { flex-wrap: wrap; }
+@media (min-width: 901px) {
+  body:has(.cc-panel:not([hidden])) #bottom-toolbar {
+    max-width: calc(100vw - min(455px, 42vw) - 235px);
+  }
+}
 .time-slider { position: relative; flex: 0 0 auto; color: #f3e5bd; }
 .time-slider-trigger { display: flex; align-items: center; min-height: 30px; padding: 0 9px; border: 1px solid #a48c5b; border-radius: 3px; background: #243b48; cursor: pointer; font: 12px Arial, sans-serif; list-style: none; white-space: nowrap; }
 .time-slider-trigger::-webkit-details-marker { display: none; }
