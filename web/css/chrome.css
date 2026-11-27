@@ -1,0 +1,36 @@
+/* Shared atlas chrome. */
+#search-root { position: absolute; z-index: 5; top: 55px; left: 14px; width: min(330px, calc(100vw - 28px)); }
+.search-input { width: 100%; padding: 9px 12px; color: #f3e5bd; background: #192d39f2; border: 1px solid #a48c5b; border-radius: 3px; font: 14px Georgia, serif; box-shadow: 0 3px 12px #0008; }
+.search-input::placeholder { color: #c2b592; }
+.search-input:focus-visible, .share-url:focus-visible { outline: 2px solid #fff1bd; outline-offset: 2px; }
+.search-results { margin: 3px 0 0; padding: 4px; max-height: min(55vh, 420px); overflow: auto; background: #192d39; border: 1px solid #a48c5b; box-shadow: 0 5px 18px #0009; list-style: none; }
+.search-result { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 12px; padding: 9px; text-align: left; border: 0; box-shadow: none; background: transparent; }
+.search-result-type { color: #c4b993; font: 11px Arial, sans-serif; }
+.search-empty { padding: 12px; color: #d5c8a3; }
+.almanac-launch, .share-trigger { position: absolute; z-index: 5; top: 55px; }
+.almanac-launch { right: 108px; }
+.share-trigger { right: 14px; }
+.almanac-overlay, .share-overlay { position: fixed; z-index: 20; inset: 0; display: grid; place-items: center; padding: 18px; background: #07141dcc; }
+.almanac-overlay[hidden], .share-overlay[hidden], .search-results[hidden] { display: none; }
+.almanac-dialog, .share-dialog { width: min(760px, 100%); max-height: min(90vh, 850px); overflow: auto; padding: 22px; color: #f3e5bd; background: #1b2d39; border: 1px solid #c2a569; border-radius: 3px; box-shadow: 0 8px 32px #000b; line-height: 1.5; }
+.share-dialog { width: min(520px, 100%); }
+.almanac-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.almanac-header h2, .share-dialog h2 { margin: 0 0 12px; font-weight: normal; }
+.almanac-tabs, .share-actions { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+.almanac-tabs [aria-selected="true"], .almanac-tabs [aria-current="page"] { background: #69704e; }
+.almanac-content { overflow-wrap: anywhere; }
+.almanac-content a, .share-dialog a { color: #e8d18e; }
+.almanac-entry { border-top: 1px solid #aa8c4d66; padding: 10px 0; }
+.almanac-entry h3, .almanac-entry h4 { margin: 0 0 4px; }
+.almanac-entry p { margin: 4px 0; }
+.almanac-meta { color: #d0bf94; font: 12px/1.5 Arial, sans-serif; }
+.share-url { width: 100%; color: #f3e5bd; background: #101f2b; border: 1px solid #a48c5b; padding: 8px; }
+.share-status { min-height: 1.5em; color: #ded0a8; }
+@media (max-width: 600px) {
+  #search-root { top: 49px; width: min(220px, calc(100vw - 165px)); left: 8px; }
+  .almanac-launch, .share-trigger { top: 49px; padding: 6px; font-size: 12px; }
+  .almanac-launch { right: 72px; }
+  .share-trigger { right: 8px; }
+  .almanac-overlay, .share-overlay { align-items: end; padding: 0; }
+  .almanac-dialog, .share-dialog { width: 100%; max-height: 85vh; border-radius: 6px 6px 0 0; padding: 16px; }
+}
