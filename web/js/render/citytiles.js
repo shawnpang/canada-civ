@@ -48,8 +48,13 @@ function tileIndex(w, cities, towns) {
     }
   }
   for (const city of list(cities, 'cities')) {
-    if (!valid(w, city.cell)) continue;
-    tiles.set(city.cell, {seed: hash(`city:${city.id}:${city.cell}`), large: city.metro === true && Number.isFinite(city.population) && city.population >= 500000});
+    const large = city.metro === true && Number.isFinite(city.population) && city.population >= 500000;
+    const cells = [city.cell, ...(Array.isArray(city.footprint) ? city.footprint : [])];
+    for (const cell of cells) {
+      if (!valid(w, cell)) continue;
+      const previous = tiles.get(cell);
+      tiles.set(cell, {seed: hash(`city:${city.id}:${cell}`), large: !!(previous && previous.large) || large});
+    }
   }
   for (const town of list(towns, 'towns')) {
     if (valid(w, town.cell) && !tiles.has(town.cell)) tiles.set(town.cell, {seed: hash(`town:${town.id}:${town.cell}`), large: false});
@@ -101,7 +106,7 @@ function fabric(g, x, y, r, tile) {
   const lawn = g.createRadialGradient(x,y,r*.12,x,y,r*.98);
   lawn.addColorStop(0,'rgba(147,167,104,.74)'); lawn.addColorStop(.66,'rgba(143,162,104,.46)'); lawn.addColorStop(1,'rgba(143,162,104,0)');
   g.fillStyle = lawn; g.fillRect(x-r,y-r,r*2,r*2);
-  if (r < 22) {
+  if (r < 14) {
     for (let j=0;j<11;j++) {
       const px=x+(random(seed,j*3)-.5)*r*1.15, py=y+(random(seed,j*3+1)-.5)*r*1.15;
       g.fillStyle = j%3 ? '#d9c8a0' : '#8e6654';
@@ -137,7 +142,7 @@ function paintHighlight(g,w,view,city,r) {
   for(const i of footprint(w,city)) {
     const [x,y]=point(w,i,view);
     if(x < -r*2 || y < -r*2 || x > view.width+r*2 || y > view.height+r*2) continue;
-    hex(g,x,y,r*.96); g.fillStyle='rgba(245,222,133,.18)'; g.fill();
+    hex(g,x,y,r*.96); g.fillStyle='rgba(245,222,133,.28)'; g.fill();
     g.shadowColor='rgba(255,226,128,.65)'; g.shadowBlur=Math.min(12,r*.22);
     g.strokeStyle='rgba(255,229,155,.88)'; g.lineWidth=Math.max(1,Math.min(2.5,r*.035)); g.stroke();
     g.shadowBlur=0;
@@ -163,12 +168,13 @@ export function paintCityTiles(g, w, view, opts = {}) {
   if (!g || !w?.grid || !view || !Number.isFinite(view.scale) || view.scale <= 0 || !Number.isFinite(view.ox) || !Number.isFinite(view.oy)) return;
   const r=(w.grid.radius || 25)*view.scale;
   const city=list(opts.cities,'cities').find(c=>String(c.id)===String(opts.selectedCityId));
-  if (city) paintHighlight(g,w,view,city,r);
-  if (r < 10) return;
-  for(const [i,tile] of tileIndex(w,opts.cities,opts.towns)) {
-    const [x,y]=point(w,i,view);
-    if(x < -r*2 || y < -r*2 || x > view.width+r*2 || y > view.height+r*2) continue;
-    fabric(g,x,y,r,tile);
+  if (!opts.plaquesOnly && city) paintHighlight(g,w,view,city,r);
+  if (!opts.plaquesOnly && r >= 10) {
+    for(const [i,tile] of tileIndex(w,opts.cities,opts.towns)) {
+      const [x,y]=point(w,i,view);
+      if(x < -r*2 || y < -r*2 || x > view.width+r*2 || y > view.height+r*2) continue;
+      fabric(g,x,y,r,tile);
+    }
   }
   if (city && opts.showDistricts && opts.districts) plaques(g,w,view,city,opts.districts,opts.lang === 'fr' ? 'fr' : 'en');
 }

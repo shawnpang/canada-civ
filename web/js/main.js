@@ -104,19 +104,24 @@ function draw() {
   mapCache.draw(ctx, {world: w, width: W, height: H, scale, ox, oy, pixelRatio: devicePixelRatio, key},
     (target, camera) => paintMapTerrain(target, w, camera));
   const cityMap = city.getCityMapState?.() || {visible: false, tab: null, districts: null};
-  paintCityTiles(ctx, w, {width: W, height: H, scale, ox, oy}, {
+  const cityTileView = {width: W, height: H, scale, ox, oy};
+  const cityTileOpts = {
     cities: data.cities,
     towns: data.towns,
     selectedCityId: cityMap.visible ? new URLSearchParams(location.hash.slice(1)).get('city') : null,
     districts: cityMap.districts,
-    showDistricts: cityMap.visible && cityMap.tab === 'districts',
+    showDistricts: false,
     lang
-  });
+  };
+  paintCityTiles(ctx, w, cityTileView, cityTileOpts);
   const ctxObj = api();
   if (lensRender.onRedraw) lensRender.onRedraw(ctxObj);
   labels.onRedraw(ctxObj);
   if (layers.onRedraw) layers.onRedraw(ctxObj);
   if (banners.onRedraw) banners.onRedraw(ctxObj);
+  if (cityMap.visible && cityMap.tab === 'districts') {
+    paintCityTiles(ctx, w, cityTileView, {...cityTileOpts, showDistricts: true, plaquesOnly: true});
+  }
   for (const m of modules) {
     if (m !== lensRender && m !== layers && m !== banners && m.onRedraw) m.onRedraw(ctxObj);
   }

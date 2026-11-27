@@ -237,17 +237,9 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
       const wx=(col+shift)*dx,wy=row*dy,x=ox+wx*scale;
       const i=row*cols+col,o=w.owner[i],water=w.water[i];
       const edge=clamp(Math.min(row,col,rows-1-row,cols-1-col)/9,0,1);
-      if(water===1){
-        const depth=w.elev[i]==null?0:clamp(-w.elev[i]/4500,0,1);
-        if(depth>.08&&edge>0){ctx.fillStyle=`rgba(11,37,53,${(.055*depth*edge).toFixed(3)})`;hexPath(ctx,x,y,R+.35);ctx.fill();}
-        continue;
-      }
-      if(water){
-        ctx.globalAlpha=edge;ctx.fillStyle=water===3?'#6d9fa9':'#4b8089';
-        if(water===3&&R>3)boundaryHex(ctx,x,y,R+.35,exposedCorners(w,row,col,rows,cols,j=>w.water[j]===3));
-        else hexPath(ctx,x,y,R+.35);
-        ctx.fill();ctx.globalAlpha=1;continue;
-      }
+      // Water cells are filled by paintWater so oversized hex fills do not
+      // poke past the midpoint shoreline.
+      if(water) continue;
       const corners=R>3?exposedCorners(w,row,col,rows,cols,j=>!w.water[j]):null;
       const rounded=corners&&corners.some(Boolean);
       const cover=w.cover[i]||0;
