@@ -82,10 +82,16 @@ def main():
     args = parser.parse_args()
     try:
         if args.command == 'fetch':
-            from pipeline.mvp import fetch as fetch_atlas
+            from pipeline.mvp_sources import fetch as fetch_atlas
             fetch(args.offline); fetch_atlas(args.offline)
-        elif args.command == 'process': process()
-        elif args.command == 'list': print(INFO['id'], '-', INFO['title'])
+            from pipeline.mvp_annual import fetch as fetch_annual
+            fetch_annual(args.offline)
+        elif args.command == 'process':
+            from pipeline.mvp import process as process_atlas
+            process(); process_atlas()
+        elif args.command == 'list':
+            print(INFO['id'], '-', INFO['title'])
+            print('MVP: Census 2021 profile and boundaries, population, GDP, employment')
         elif args.command == 'check':
             from pipeline.world import check as validate
             from pipeline.mvp_check import check as validate_atlas
@@ -93,15 +99,15 @@ def main():
             atlas_status = validate_atlas(WEB / 'data')
             return int(bool(world_status or atlas_status))
         elif args.command == 'build':
-            from pipeline.world import build
-            from pipeline.mvp import build as build_atlas
-            build(); build_atlas()
+            from pipeline.mvp import process as process_atlas, build as build_atlas
+            process_atlas(); build_atlas()
         elif args.command == 'all':
-            from pipeline.mvp import fetch as fetch_atlas, build as build_atlas
-            fetch(args.offline); fetch_atlas(args.offline); process()
-            from pipeline.world import build, check as validate
+            from pipeline.mvp_sources import fetch as fetch_atlas
+            from pipeline.mvp import process as process_atlas, build as build_atlas
+            from pipeline.world import check as validate
             from pipeline.mvp_check import check as validate_atlas
-            build(); build_atlas()
+            from pipeline.mvp_annual import fetch as fetch_annual
+            fetch(args.offline); fetch_atlas(args.offline); fetch_annual(args.offline); process(); process_atlas(); build_atlas()
             world_status = validate()
             atlas_status = validate_atlas(WEB / 'data')
             return int(bool(world_status or atlas_status))

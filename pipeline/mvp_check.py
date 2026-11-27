@@ -5,6 +5,7 @@ fixtures without modifying the shipped files.
 """
 import json
 import math
+import re
 from pathlib import Path
 
 YIELDS = frozenset(('food', 'production', 'gold', 'science', 'culture'))
@@ -12,6 +13,8 @@ LENSES = frozenset(('density', 'income', 'home', 'age', 'bachelors',
                     'forest', 'farmland', 'developed', 'official_language'))
 # 2021 Census cartographic CMA/CA boundary attributes, CMATYPE=B.
 CMA_IDS = frozenset('001 205 305 310 320 408 421 433 442 447 462 505 521 522 529 532 535 537 539 541 543 550 555 559 568 580 595 602 705 725 810 825 830 835 915 925 930 932 933 935 938'.split())
+JOB_CODES = {'food': ('11',), 'production': ('21', '23', '31-33'),
+             'science': ('51', '54'), 'culture': ('71',)}
 
 
 def _number(value):
@@ -33,6 +36,10 @@ def validate(data):
     world = data['world']
     owner = world['owner']
     size = world['grid']['cols'] * world['grid']['rows']
+    require(world['grid'].get('radius') == 25 and world['grid']['cols'] == 134 and world['grid']['rows'] == 134,
+            'world: expected the Milestone 0 25 km, 134 by 134 grid')
+    require(world.get('crs') == 'EPSG:3347', 'world: expected EPSG:3347')
+    require(len(owner) == size, 'world: owner array length differs from grid')
     province_meta = world['provinces']
     provinces = data['provinces'].get('provinces', [])
     cities = data['cities']
@@ -50,13 +57,17 @@ def validate(data):
             for f in files:
                 require(str(f.get('url', '')).startswith(('http://', 'https://')), f'source {label}: missing file URL')
                 require(all(f.get(k) for k in ('file', 'retrieved', 'sha256', 'bytes')), f'source {label}: incomplete file provenance')
+                require(bool(re.fullmatch(r'[0-9a-f]{64}', str(f.get('sha256', '')))), f'source {label}: invalid SHA-256')
+                require(isinstance(f.get('bytes'), int) and not isinstance(f.get('bytes'), bool) and f['bytes'] > 0,
+                        f'source {label}: invalid file size')
     source_ids = {s.get('id') for s in sources}
+    require(len(source_ids) == len(sources), 'source ids must be unique')
     if require(len(provinces) == 13, 'provinces must contain 13 entries'):
         require([p.get('pruid') for p in provinces] == [p.get('pruid') for p in province_meta], 'provinces must follow world PRUID order')
     for p in provinces:
         label = p.get('abbr', '?')
         require(_bilingual(p.get('name')), f'province {label}: missing bilingual name')
-        require(_number(p.get('population')) and p['population'] >= 0, f'province {label}: missing population')
+        require(_number(p.get('population')) and p['population'] > 0, f'province {label}: missing or invalid population')
     city_ids = [c.get('id') for c in cities]
     require(len(cities) == 44, 'cities must contain 41 CMAs and three territorial capitals')
     require(len(set(city_ids)) == len(city_ids), 'city ids must be unique')
@@ -67,16 +78,20 @@ def validate(data):
     if iqaluit:
         require(iqaluit.get('metro') is False and iqaluit.get('gdp') is None, 'Iqaluit must be non-metro and have null GDP')
     ottawa = next((c for c in cities if c.get('id') == '505'), None)
-    require(ottawa is not None and set(ottawa.get('provinces', [])) == {'ON', 'QC'}, 'Ottawa–Gatineau must include Ontario and Quebec')
+    require(ottawa is not None and set(ottawa.get('provinces', [])) == {'ON', 'QC'} and ottawa.get('capital') is True,
+            'Ottawa–Gatineau must include Ontario and Quebec and be marked capital')
     used_cells = set()
     previous_population = float('inf')
     for c in cities:
         label = c.get('id', '?')
         require(_bilingual(c.get('name')) and _bilingual(c.get('full')), f'city {label}: missing bilingual name')
         pop = c.get('population')
-        if require(_number(pop) and pop >= 0, f'city {label}: missing population'):
+        if require(pop is None or (_number(pop) and pop > 0), f'city {label}: invalid population') and pop is not None:
             require(pop <= previous_population, 'cities must be sorted by descending population')
             previous_population = pop
+        if c.get('kind') != 'cma':
+            require(c.get('gdp') is None and c.get('yields', {}).get('gold') is None,
+                    f'city {label}: non-CMA GDP and gold must be null')
         cell = c.get('cell')
         cell_ok = isinstance(cell, int) and not isinstance(cell, bool) and 0 <= cell < size and owner[cell] >= 0
         require(cell_ok, f'city {label}: invalid land cell')
@@ -89,7 +104,7 @@ def validate(data):
             used_cells.update(footprint)
     require(nation.get('year') is not None and bool(nation.get('vintage')), 'nation: missing year or vintage')
     metrics = nation.get('nation', {})
-    require(_number(metrics.get('population')) and metrics['population'] >= 0, 'nation: missing population')
+    require(_number(metrics.get('population')) and metrics['population'] > 0, 'nation: missing or invalid population')
     definitions = nation.get('yields', [])
     keys = {y.get('key') for y in definitions}
     require(keys == YIELDS, 'nation: missing or extra yield definitions')
@@ -104,6 +119,14 @@ def validate(data):
         for key in YIELDS:
             value = yields.get(key)
             require(value is None or (_number(value) and value >= 0), f'{label}: invalid {key}')
+        require('gdp' in row and row.get('gdp') == yields.get('gold'), f'{label}: GDP and gold must agree, including nulls')
+        jobs = row.get('jobs')
+        if require(isinstance(jobs, dict), f'{label}: missing jobs'):
+            for key, codes in JOB_CODES.items():
+                inputs = [jobs.get(code) for code in codes]
+                require(all(v is None or (_number(v) and v >= 0) for v in inputs), f'{label}: invalid industry jobs')
+                expected = None if any(v is None for v in inputs) else sum(inputs)
+                require(yields.get(key) == expected, f'{label}: {key} must match its industry inputs and preserve missing data')
         value = row.get('unemployment')
         require(value is None or (_number(value) and 0 <= value <= 1), f'{label}: unemployment must be null or a fraction')
     ids = {lens.get('id') for lens in lenses}
@@ -120,6 +143,15 @@ def validate(data):
             require(all(v is None for v, o in zip(values, owner) if o < 0), f'lens {label}: non-Canadian cells must be null')
             if lens.get('format') == 'pct':
                 require(all(v is None or (_number(v) and 0 <= v <= 1) for v in values), f'lens {label}: percentages must be fractions')
+    divisions = data.get('divisions')
+    if divisions is not None:
+        # GDP is not published for census divisions; no column may imply it is.
+        fields = divisions.get('fields', [])
+        columns = divisions.get('columns', {})
+        names = list(columns) if isinstance(columns, dict) else []
+        names += [field if isinstance(field, str) else field.get('key', field.get('id', '')) for field in fields]
+        require(not any('gdp' in str(name).lower() or str(name).lower() == 'gold' for name in names),
+                'divisions: GDP and gold columns are not available at census-division level')
     return errors
 
 
@@ -129,6 +161,9 @@ def check(directory):
     try:
         data = {name: json.loads((directory / (name + '.json')).read_text()) for name in
                 ('world', 'nation', 'provinces', 'cities', 'lenses', 'sources')}
+        divisions_path = directory / 'divisions.json'
+        if divisions_path.exists():
+            data['divisions'] = json.loads(divisions_path.read_text())
         errors = validate(data)
     except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
         print(f'FAIL: atlas data could not be validated: {exc}')
