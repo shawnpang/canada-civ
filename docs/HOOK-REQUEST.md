@@ -39,3 +39,11 @@ Shared-shell work for the integrator (`main.js`, hash helpers, chrome layout). W
 - Lazily load `data/districts.json` for City View and cache it for banners. Import `drawCityTypeBadge` and `drawDistrictPlaques` from `js/render/districts.js`; both take the Canvas 2D context, payload, city ID and an options object with screen-pixel `x`, `y`, and `lang`. The badge helper returns its bounds or `null`. Draw it with the city banner when `cities[id].badge` is present, allowing room for its bounds in banner layout and hit testing.
 - In the selected City View, draw district plaques with `drawDistrictPlaques`; optionally supply `positions` as screen-pixel `{x, y}` objects in district order. These are decorative positions, not job or neighbourhood locations. Show the bilingual `rules[lang]` text from the payload in City View and quote that same text in the Almanac. A `null` district list or badge means unavailable; an empty district list means no sector met the published threshold.
 - Merge the verified source entry in `data/sources-districts.json` into the Almanac source catalogue, reconciling its `statcan_labour_98100594` ID with the existing entry. Its files document the additional all-industry and sector observations used for districts. Keep the district payload lazy-loaded and refresh rendered labels when the language changes.
+
+## Workstream ws-layers
+
+- Add `<link rel="stylesheet" href="css/layers.css">` to `web/index.html`.
+- `main.js` already imports and initializes `ui/layers.js` and dispatches `onLang` and `onHash`. In `draw()`, call `layers.onRedraw(ctxObj)` after `lensRender.onRedraw(ctxObj)` and before `banners.onRedraw(ctxObj)`, then exclude `layers` from the later module redraw loop. This keeps transport and site symbols below city banners and avoids drawing twice.
+- Include the open `.map-layer-menu` in the shell's ordered Escape handling when coordinating topmost surfaces. The module has a local Escape fallback.
+- The layer menu exposes the payload's bilingual selection and coverage rules, but the v1 Almanac still needs a layers entry citing the shipped sources and their licences. The help sheet should also mention the R shortcut.
+
