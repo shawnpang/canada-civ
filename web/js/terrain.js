@@ -3,8 +3,8 @@
 import {FAR, MID, NEAR, CLOSE, lodFor, hexPath} from './render/art/lod.js';
 import {getSprite, drawSprite, seedRand} from './render/art/sprites.js';
 import {paintWater} from './render/water.js';
+import {landFill, SHADE_TINTS, FAR_MOUNTAIN} from './render/art/palette.js';
 
-const LAND = ['#81936d','#839b63','#526f4d','#718c60','#a1a47b','#b4a979','#a4a575','#bea96b','#849b79','#aaa487','#aaa998','#e0e7df'];
 const SQRT3 = Math.sqrt(3);
 const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
 function rand(i,n) {
@@ -260,6 +260,20 @@ function countFor(share,maximum,i,salt) {
   const n=clamp(share,0,100)*maximum/100;
   return Math.floor(n)+(rand(i,salt)<n%1?1:0);
 }
+// This is the same decorative snow rule used by the detailed mountain stamps.
+function mountainSnow(cover,wy,max) {
+  return cover===11||wy<1500||(max!=null&&max>2300)?2:wy<2300||(max!=null&&max>1800)?1:0;
+}
+function paintFarMountain(ctx,x,y,r,snow) {
+  // Compact silhouettes stay inside the cell and do not imply a summit position.
+  const top=y-r*.48, base=y+r*.28, left=x-r*.48, right=x+r*.48;
+  polygon(ctx,[left,base,x,top,x+r*.05,base],FAR_MOUNTAIN.light);
+  polygon(ctx,[x,top,right,base,x+r*.05,base],FAR_MOUNTAIN.dark);
+  if(snow){
+    const depth=snow===2?.34:.23, sy=top+(base-top)*depth, sw=r*.48*depth;
+    polygon(ctx,[x-sw,sy,x,top,x+sw,sy,x+sw*.4,sy+r*.04,x,sy-r*.03,x-sw*.45,sy+r*.05],FAR_MOUNTAIN.snow);
+  }
+}
 export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
   if(scale<=0)return;
   const radius=w.grid.radius||25,R=radius*scale,dx=SQRT3*radius,dy=1.5*radius;
@@ -288,13 +302,14 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
       // ice cover itself remains the only explicit ice classification.
       const cold=(cover===4||cover===5||cover===10)&&rand(i,44)<clamp((2200-wy)/700,0,1);
       ctx.globalAlpha=o===-2?edge:1;
-      ctx.fillStyle=o===-2?'#758873':cold?'#b5bcb0':LAND[cover]||LAND[0];
+      ctx.fillStyle=o===-2?'#758873':cold?'#b5bcb0':landFill(cover,lod);
       if(rounded)boundaryHex(ctx,x,y,R+.35,corners);else hexPath(ctx,x,y,R+.35);
       ctx.fill();ctx.globalAlpha=1;
       if(o<0)continue;
       const light=shade(w,i,row,col,rows,cols);
       if(light){
-        ctx.fillStyle=light>0?`rgba(250,239,202,${(.14*light).toFixed(3)})`:`rgba(23,38,36,${(-.16*light).toFixed(3)})`;
+        const strength=lod===FAR?1.3:1;
+        ctx.fillStyle=light>0?`rgba(${SHADE_TINTS.light},${(.14*strength*light).toFixed(3)})`:`rgba(${SHADE_TINTS.dark},${(-.16*strength*light).toFixed(3)})`;
         if(rounded)boundaryHex(ctx,x,y,R+.2,corners);else hexPath(ctx,x,y,R+.2);
         ctx.fill();
       }
@@ -310,7 +325,10 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
     const variant=Math.floor(rand(i,3)*8),key=`${cover}:${variant}:${cold}`;
     if(lod<=MID){
       const texture=sprite(textures,key,()=>pigmentSprite(cover,variant,cold,scale));
+      // At national scale keep the classified colour legible under the wash.
+      if(lod===FAR&&!cold&&cover!==11)ctx.globalAlpha=.35;
       drawSprite(ctx,texture,x,y);
+      ctx.globalAlpha=1;
     } else {
       const texture=sprite(textures,key,()=>groundSprite(cover,variant,cold,scale));
       if(corners){ctx.save();boundaryHex(ctx,x,y,R,corners);ctx.clip();}
@@ -320,6 +338,13 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
   }
   // Water stream integration belongs here: after land and before shore stamps.
   paintWater(ctx, w, {width, height, scale, ox, oy});
+  if(lod===FAR)for(const cell of cells){
+    const {i,x,y,wy,cover}=cell;
+    if(w.relief[i]<2)continue;
+    ctx.save();hexPath(ctx,x,y,R);ctx.clip();
+    paintFarMountain(ctx,x,y,R,mountainSnow(cover,wy,w.elev_max?.[i]));
+    ctx.restore();
+  }
   const allMarks=[];
   if(lod!==FAR)for(const cell of cells){
     const {i,x,y,wx,wy,cold,corners,shore}=cell,cover=w.cover[i],rel=w.relief[i];
@@ -342,8 +367,7 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
       }
     } else if(rel>=2){
       // Elevation and northern location affect decorative snow, never summit placement.
-      const max=w.elev_max?.[i];
-      const snow=cover===11||wy<1500||(max!=null&&max>2300)?2:wy<2300||(max!=null&&max>1800)?1:0;
+      const snow=mountainSnow(cover,wy,w.elev_max?.[i]);
       const base=lod===MID?2:lod===NEAR?4:5;
       const density=rand(i,590);
       const count=density<.12?1:density<.36?Math.max(2,base-2):density<.76?base:base+2;
