@@ -45,8 +45,11 @@ try {
 
 // --- canvases --------------------------------------------------------------------------------------------------
 const mk = (w, h) => { const c = document.createElement("canvas"); c.width = w; c.height = h; return c; };
+// Overscan so edge hexes, water and lens fills are fully painted before the
+// visible 1920×1080 window is cropped out of the supersampled canvas.
+const OVERSCAN = 160;
 let SS = 2; // supersampling factor for the map render
-let hi = mk(W * SS, H * SS);
+let hi = mk((W + 2 * OVERSCAN) * SS, (H + 2 * OVERSCAN) * SS);
 const bufs = [mk(W, H), mk(W, H), mk(W, H)];
 const frameCv = mk(W, H);
 const fctx = frameCv.getContext("2d");
@@ -55,16 +58,22 @@ const preview = $("preview");
 function setSS(ss) {
   if (ss === SS) return;
   SS = ss;
-  hi = mk(W * SS, H * SS);
+  hi = mk((W + 2 * OVERSCAN) * SS, (H + 2 * OVERSCAN) * SS);
+}
+
+/** Force a synchronous raster flush so later reads see a complete frame. */
+function flushCanvas(canvas) {
+  canvas.getContext("2d").getImageData(0, 0, 1, 1);
 }
 
 function drawView(ctx, view, alpha) {
   const cam = stage.render(hi, { ...view, dpr: stage.dpr * SS });
+  flushCanvas(hi);
   ctx.save();
   ctx.globalAlpha = alpha;
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = "high";
-  ctx.drawImage(hi, 0, 0, W, H);
+  ctx.drawImage(hi, OVERSCAN * SS, OVERSCAN * SS, W * SS, H * SS, 0, 0, W, H);
   ctx.restore();
   return cam;
 }
@@ -80,11 +89,13 @@ function composeShot(shot, sec, buf) {
     const c = drawView(ctx, l.view, l.alpha ?? 1);
     cam ??= c;
   }
-  const kx = W / cam.w, ky = H / cam.h;
-  const frame = { cam, toScreen: (x, y) => [((x - cam.x) * cam.scale + cam.w / 2) * kx, ((y - cam.y) * cam.scale + cam.h / 2) * ky] };
+  // Overlays are in output pixels. The visible window is the centre of the
+  // overscanned render, so the principal point is W/2, H/2 at the current scale.
+  const frame = { cam, toScreen: (x, y) => [(x - cam.x) * cam.scale + W / 2, (y - cam.y) * cam.scale + H / 2] };
   ctx.save();
   shot.overlay?.(ctx, sec, frame);
   ctx.restore();
+  flushCanvas(buf);
 }
 
 function renderFrame(i) {
@@ -131,6 +142,7 @@ function renderFrame(i) {
     fctx.fillStyle = `rgba(0,0,0,${fadeIn})`;
     fctx.fillRect(0, 0, W, H);
   }
+  flushCanvas(frameCv);
   return frameCv;
 }
 
@@ -293,6 +305,21 @@ T.audio = async ({ save = false } = {}) => {
   return stats;
 };
 
+/** Paint every frame once so sprite, water-geometry and lens work is already
+ *  in cache before the encoded pass. Yields so the page can stay responsive. */
+async function prewarm() {
+  say("Warming renderer caches…");
+  const t0 = performance.now();
+  for (let i = 0; i < sb.frames; i++) {
+    renderFrame(i);
+    if (i % 8 === 0) await new Promise((r) => setTimeout(r, 0));
+    if (i % 30 === 0) say(`Warming frame ${i + 1} / ${sb.frames}`);
+  }
+  T.state.warmed = true;
+  say(`Caches warmed in ${((performance.now() - t0) / 1000).toFixed(1)} s`);
+}
+T.prewarm = prewarm;
+
 T.render = async ({ save = false, sound = $("opt-sound").checked } = {}) => {
   if (T.state.phase === "rendering") throw new Error("already rendering");
   const t0 = performance.now();
@@ -322,6 +349,7 @@ T.render = async ({ save = false, sound = $("opt-sound").checked } = {}) => {
     const stills = save ? stillFrames() : new Set();
     const uploads = [];
     const frameUs = 1e6 / sb.fps;
+    await prewarm();
     for (let i = 0; i < sb.frames; i++) {
       if (encErr) throw encErr;
       renderFrame(i);

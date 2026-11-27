@@ -10,7 +10,7 @@ const integer = v => Math.round(v).toLocaleString('en-CA');
 function camAt(a,b,k) { return { x:lerp(a.x,b.x,k), y:lerp(a.y,b.y,k), rpx:Math.exp(lerp(Math.log(a.rpx),Math.log(b.rpx),k)) }; }
 function camZoom(a,b,k) { const rpx=Math.exp(lerp(Math.log(a.rpx),Math.log(b.rpx),k)); const d=1/b.rpx-1/a.rpx; const u=Math.abs(d)<1e-9?k:(1/rpx-1/a.rpx)/d; return {x:lerp(a.x,b.x,u),y:lerp(a.y,b.y,u),rpx}; }
 const glide = k => .35*clamp01(k)+.65*smooth(k);
-const easeOutQ = k => 1-(1-clamp01(k)**1.3)**4;
+const easeOutQ = k => 1-(1-clamp01(k)**1.15)**3;
 
 /** Facts are serialisable for an accompanying provenance report. */
 export function gatherFacts(stage) {
@@ -72,7 +72,7 @@ export function buildStoryboard(stage,cfg=CONFIG) {
   const panel={name:van.name.en,full:van.full.en,badge:{label:typeById.get(d.districts.cities[van.id].badge).name.en},stats:[[people(van.population),'people'],[moneyShort(van.gdp),`GDP ${van.gdp_year}`],[`$${integer(van.median_income)}`,'median income']],districts:F.vancouverDistricts.map(x=>({name:typeById.get(x.type).name.en,line:`${x.lq.toFixed(2)}× the Canadian share of employed residents`})),source:`Statistics Canada · ${censusYear} Census districts and income · GDP ${van.gdp_year} · population July ${populationYear}`};
   const CITY_T=T_TRADE-T_CITY, cityA={x:van.x+150,y:van.y,rpx:45},cityB={x:van.x+125,y:van.y,rpx:51};
   shot({id:'city',t0:T_CITY,t1:T_TRADE,trans:'cut',cues:[.5,1.3],render(t){const cam=t<1.2?camAt(impCam(IMP_T),cityA,smooth(t/1.2)):camAt(cityA,cityB,glide((t-1.2)/(CITY_T-1.2)));return [{view:{...cam,city:van.id,cityAnimMs:Math.max(0,t-.5)*1000,labels:false}}];},overlay(ctx,t){cityPanel(ctx,W,H,panel,win(t,1.3,CITY_T+.3,.3,.4),clamp01((t-1.3)/.7),t-.8);}});
-  const TRADE_T=T_END-T_TRADE,tradeA={x:to.x+50,y:to.y-70,rpx:25},endB={x:land.cx+10,y:land.cy+5,rpx:homeRpx*.98};
+  const TRADE_T=T_END-T_TRADE,tradeA={x:to.x-40,y:to.y-40,rpx:36},endB={x:land.cx+10,y:land.cy+5,rpx:homeRpx*.98};
   const tradeCam=t=>{const k=easeOutQ(t/(T_OUT-T_TRADE)),a=camZoom(tradeA,endB,k),b=camAt(tradeA,endB,k);return {x:(a.x+b.x)/2,y:(a.y+b.y)/2,rpx:a.rpx};};
   shot({id:'trade',t0:T_TRADE,t1:T_END,trans:'punch',render:t=>[{view:{...tradeCam(t),lens:'election2025',...wide}}],overlay(ctx,t){caption(ctx,W,H,{kicker:'Election',title:`${integer(F.ridings)} federal ridings`,sub:'Elected candidates’ parties, assigned to hexes',source:`Elections Canada · General Election · ${electionDate}`},win(t,.45,TRADE_T-.05,.45,.3),clamp01((t-.45)/.6));}});
   shot({id:'end',t0:T_END,t1:T_OUT,trans:'cut',render:t=>[{view:{...tradeCam(TRADE_T+t),...wide}},{view:{...tradeCam(TRADE_T+t),lens:'election2025',...wide},alpha:1-.8*smooth(t/.9)}],overlay(ctx,t){darken(ctx,W,H,.55*smooth(t/.5));vignette(ctx,W,H,.9*smooth(t/.5));endCard(ctx,W,H,cfg,{facts:`${F.sourceCount} public data sources · every number traceable`},smooth((t-.1)/.5),clamp01((t-.15)/.6));}});

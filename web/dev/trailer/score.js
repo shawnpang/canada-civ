@@ -128,7 +128,7 @@ function plan(sb) {
   motifAt(t("lenses", "t0") + 0.08, lu, 3).forEach((x, i) => horn.push([x, MOTIF[i], i === 2 ? 1.2 : (CELL[i + 1] - CELL[i]) * lu + 0.06, 0.5]));
   // the whole motif as a pickup across the end of trade, its last note (F#, the third of D) landing on the end card
   // with the timpani, then held while the chord rings out
-  const e0 = t("end", "t0"), eu = 0.26, lastEnd = end - 1.0;
+  const e0 = t("end", "t0"), eu = 0.26, lastEnd = end - 1.55;
   const eon = motifAt(e0 - CELL[4] * eu, eu);
   MOTIF.forEach((m, i) => {
     const len = i === 4 ? lastEnd - e0 : eon[i + 1] - eon[i] + 0.06;
@@ -146,7 +146,7 @@ function plan(sb) {
       [city0 + 0.8, 0], [t("city", "t1") - 0.4, 0], [hit("trade") + 0.5, 0.75], [t("end", "t0"), 1.0], [end, 1.0]],
     drone: [[0, 0.32], [hit("rockies"), 0.7], [lens0, 0.85], [city0 + 0.5, 0.5], [t("end", "t0"), 1], [end, 1]],
   };
-  return { chords, timp, risers, bells, horn, levels, end, lastEnd, fadeFrom: end - 0.65 };
+  return { chords, timp, risers, bells, horn, levels, end, lastEnd, fadeFrom: end - 1.5 };
 }
 
 // --- instruments ---------------------------------------------------------------------------------------------------
@@ -520,16 +520,34 @@ export async function buildScore(sb, opts = {}) {
     S.brass(lead, m, t, t1, { vel: v * 2.1, att: 0.09, rel: t1 >= P.lastEnd ? 1.0 : 0.25, pan: 0.1, bright: 1.35 });
   }
 
-  // master: a short fade at the very end; the voices' own releases have already taken the chord most of the way
-  const fadeLen = P.end - 0.02 - P.fadeFrom;
+  // master: a 1.5 s resolve-and-fade that reaches silence at the last sample
+  const fadeLen = Math.max(0.05, P.end - 1 / SR - P.fadeFrom);
   S.master.gain.setValueAtTime(1, 0);
-  S.master.gain.setValueCurveAtTime(rc(1, 0, 256), P.fadeFrom, fadeLen);
+  S.master.gain.setValueCurveAtTime(rc(1, 0, 512), P.fadeFrom, fadeLen);
+  S.master.gain.setValueAtTime(0, P.fadeFrom + fadeLen);
 
   const t0 = performance.now();
   const buffer = await ctx.startRendering();
   const renderMs = Math.round(performance.now() - t0);
   const stats = opts.master === false ? {} : master(buffer);
+  fadeTailToSilence(buffer, 1.5);
   return { buffer, stats: { ...stats, renderMs, nodes: S.count, chords: P.chords.map((c) => +c.t.toFixed(2)), hits: P.timp.map((h) => +h[0].toFixed(3)), bells: P.bells.map((b) => +b[0].toFixed(3)) } };
+}
+
+/** Cosine fade over the last `seconds`, with the final 80 ms held at 0. */
+function fadeTailToSilence(buffer, seconds) {
+  const n = buffer.length, sr = buffer.sampleRate;
+  const fade = Math.min(n, Math.round(seconds * sr));
+  const hold = Math.min(fade, Math.round(0.08 * sr));
+  const start = n - fade;
+  for (let c = 0; c < buffer.numberOfChannels; c++) {
+    const ch = buffer.getChannelData(c);
+    for (let i = start; i < n; i++) {
+      const k = i - start;
+      const g = k >= fade - hold ? 0 : 0.5 + 0.5 * Math.cos(Math.PI * k / (fade - hold));
+      ch[i] *= g;
+    }
+  }
 }
 
 // --- mastering: loudness, true peak, limiter -------------------------------------------------------------------
