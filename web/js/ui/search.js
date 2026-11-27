@@ -146,7 +146,10 @@ function choose(entry) {
   input.setAttribute('aria-expanded', 'false');
   input.removeAttribute('aria-activedescendant');
   input.blur();
-  if (entry.kind === 'city') setHashKeys({city: String(entry.place.id), province: null});
+  if (entry.kind === 'city') {
+    setHashKeys({city: String(entry.place.id), province: null});
+    window.dispatchEvent(new CustomEvent('canadaciv:select-city', {detail: {id: entry.place.id}}));
+  }
   else setHashKeys({province: String(entry.place.abbr), city: null});
   flyTo(point, entry.kind);
 }

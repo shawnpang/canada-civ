@@ -29,3 +29,10 @@
   .map-layers { left: 8px; right: auto; bottom: 204px; }
   .map-layer-panel { right: auto; left: 0; max-height: min(55vh, 460px); }
 }
+#bottom-toolbar .map-layers { position: static; display: flex; gap: 3px; padding: 0; border: 0; background: transparent; box-shadow: none; }
+#bottom-toolbar .map-layer-resource, #bottom-toolbar .map-layer-trigger { min-height: 30px; }
+.map-layer-count { display: inline-grid; place-items: center; min-width: 17px; height: 17px; margin-left: 4px; border-radius: 50%; background: #c3a354; color: #172633; font: bold 10px Arial, sans-serif; }
+@media (max-width: 700px) {
+  #bottom-toolbar .map-layer-menu { position: static; }
+  #bottom-toolbar .map-layer-panel { left: 0; right: auto; bottom: calc(100% + 6px); }
+}

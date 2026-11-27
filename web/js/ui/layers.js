@@ -1,14 +1,15 @@
 import {drawLayers, hitLayer} from '../render/layers.js';
+import {onRedraw as drawWonders, hitWonder, clearHits, wonderName} from '../render/wonders.js';
 
 // All overlays start off. The hash lists the enabled (non-default) overlays.
-const ids = ['resources', 'roads', 'rail', 'airports', 'ports', 'military'];
+const ids = ['resources', 'roads', 'rail', 'airports', 'ports', 'military', 'wonders'];
 const data = {resources: null, infrastructure: null};
 let app = null;
 let enabled = new Set();
 let root, menu, tooltip;
 const copy = {
   en: {
-    map: 'Map', resources: 'Resources', title: 'Map layers', shortcut: 'Toggle resources: R',
+    map: 'Map', resources: 'Resources', title: 'Map layers', shortcut: 'Toggle resources: R', wonders: 'Wonders', attendance: 'Visits',
     roads: 'Roads', rail: 'Rail', airports: 'Airports', ports: 'Fishing harbours', military: 'Military',
     resourceRules: 'Resource selection and coverage', infrastructureRules: 'Infrastructure coverage',
     vintage: 'Vintage', typeRules: 'Resource type cutoffs', missing: 'Data unavailable',
@@ -19,7 +20,7 @@ const copy = {
     airportsNote: 'Transport Canada inventory, 2021: airports with air navigation services.', portsNote: 'DFO core fishing harbour, 2026; not a commercial port ranking.'
   },
   fr: {
-    map: 'Carte', resources: 'Ressources', title: 'Couches de la carte', shortcut: 'Afficher ou masquer les ressources : R',
+    map: 'Carte', resources: 'Ressources', title: 'Couches de la carte', shortcut: 'Afficher ou masquer les ressources : R', wonders: 'Merveilles', attendance: 'Visites',
     roads: 'Routes', rail: 'Voies ferrées', airports: 'Aéroports', ports: 'Ports de pêche', military: 'Défense',
     resourceRules: 'Sélection et couverture des ressources', infrastructureRules: 'Couverture des infrastructures',
     vintage: 'Millésime', typeRules: 'Seuils par type de ressource', missing: 'Données indisponibles',
@@ -32,7 +33,7 @@ const copy = {
 };
 const lang = () => app?.getLang?.() === 'fr' ? 'fr' : 'en';
 const localized = (value) => typeof value === 'string' ? value : value?.[lang()] || value?.en || '';
-const available = id => id === 'resources' ? !!data.resources : !!data.infrastructure && Array.isArray(data.infrastructure[id]);
+const available = id => id === 'resources' ? !!data.resources : id === 'wonders' ? Array.isArray(app?.wonders?.items) : !!data.infrastructure && Array.isArray(data.infrastructure[id]);
 
 function applyHash(ctx) {
   const hash = ctx.getHash?.() || Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
@@ -53,6 +54,7 @@ function toggle(id) {
   }
   // The shared helper dispatches hashchange synchronously, but also work in isolation.
   enabled = next;
+  if (!enabled.has('wonders')) clearHits();
   render();
   hideTooltip();
   app.redraw?.();
@@ -68,7 +70,7 @@ function choice(id) {
   button.type = 'button';
   button.disabled = !available(id);
   button.setAttribute('aria-pressed', String(enabled.has(id)));
-  const icon = element('span', 'map-layer-icon map-layer-icon--' + id, {roads:'━', rail:'┄', airports:'✈', ports:'⚓', military:'◆'}[id]);
+  const icon = element('span', 'map-layer-icon map-layer-icon--' + id, {roads:'━', rail:'┄', airports:'✈', ports:'⚓', military:'◆', wonders:'✦'}[id]);
   icon.setAttribute('aria-hidden', 'true');
   button.append(icon, element('span', 'map-layer-label', copy[lang()][id]));
   const state = element('span', 'map-layer-switch');
@@ -97,7 +99,8 @@ function render() {
   resource.addEventListener('click', () => toggle('resources'));
   menu = element('details', 'map-layer-menu');
   menu.open = open;
-  const summary = element('summary', 'map-layer-trigger', '▦  ' + words.map);
+  const summary = element('summary', 'map-layer-trigger', '▦  ' + words.map + ' ');
+  summary.append(element('span', 'map-layer-count', String(enabled.size)));
   menu.append(summary);
   const panel = element('div', 'map-layer-panel');
   panel.append(element('h2', 'map-layer-heading', words.title));
@@ -127,6 +130,16 @@ function render() {
 function hideTooltip() { if (tooltip) tooltip.hidden = true; }
 function showFeature(event) {
   if (!app || !tooltip) return;
+  const wonder = enabled.has('wonders') && hitWonder(event);
+  if (wonder) {
+    tooltip.replaceChildren(element('strong', '', wonderName(wonder, lang())));
+    if (Number.isFinite(wonder.attendance)) tooltip.append(element('div', '', `${copy[lang()].attendance}: ${wonder.attendance.toLocaleString(lang() === 'fr' ? 'fr-CA' : 'en-CA')} · 2025–26`));
+    tooltip.hidden = false;
+    const width = tooltip.offsetWidth, height = tooltip.offsetHeight;
+    tooltip.style.left = Math.max(8, Math.min(innerWidth - width - 8, event.clientX + 14)) + 'px';
+    tooltip.style.top = Math.max(8, Math.min(innerHeight - height - 8, event.clientY + 14)) + 'px';
+    return;
+  }
   const feature = hitLayer(app, data, enabled, event.clientX, event.clientY);
   if (!feature) { hideTooltip(); return; }
   // Renderer returns the underlying payload feature and its group and resource type.
@@ -173,7 +186,7 @@ export async function init(ctx) {
   [data.resources, data.infrastructure] = await Promise.all([load('resources'), load('infrastructure')]);
   root = element('nav', 'map-layers');
   root.setAttribute('aria-label', copy[lang()].title);
-  document.body.append(root);
+  (document.querySelector('#layer-root') || document.body).append(root);
   tooltip = element('div', 'map-layer-tooltip');
   tooltip.hidden = true;
   tooltip.setAttribute('role', 'tooltip');
@@ -192,5 +205,5 @@ export async function init(ctx) {
   document.addEventListener('pointerdown', event => { if (menu?.open && !root.contains(event.target)) menu.open = false; });
 }
 export function onLang(ctx) { if (app && root) { app = ctx; root.setAttribute('aria-label', copy[lang()].title); render(); hideTooltip(); } }
-export function onHash(ctx) { if (app && root) { app = ctx; applyHash(ctx); render(); hideTooltip(); } }
-export function onRedraw(ctx) { if (app && root) drawLayers(ctx, data, enabled); }
+export function onHash(ctx) { if (app && root) { app = ctx; applyHash(ctx); if (!enabled.has('wonders')) clearHits(); render(); hideTooltip(); } }
+export function onRedraw(ctx) { if (app && root) { drawLayers(ctx, data, enabled); if (enabled.has('wonders')) drawWonders(ctx); } }

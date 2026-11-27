@@ -89,3 +89,28 @@
   body .yield-report { top: 210px; max-height: calc(100vh - 240px); }
   body .city-roster { top: 210px; }
 }
+
+/* City View: wider summary and horizontal tabs, with the detail below. */
+@media (min-width: 901px) {
+  .cc-city-panel { right: 0; bottom: 0; width: min(455px, 42vw); }
+}
+.cc-city-panel .cc-panel-header { padding: 14px 16px 10px; }
+.cc-city-panel .cc-panel-header h2 { padding-right: 36px; text-transform: uppercase; }
+.city-type-badge { display: inline-block; margin: 3px 0 8px; padding: 4px 10px; border: 1px solid #c5a864; border-radius: 12px; background: #294b6b; color: #f5e3b5; font: 10px Georgia, serif; letter-spacing: .05em; }
+.city-head-stats { margin-top: 5px; }
+.city-head-stats .cc-stat { padding: 7px 9px; }
+.city-head-stats .cc-stat-value { font-size: 15px; }
+.city-medals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 8px 0 0; gap: 4px; }
+.city-medal { display: flex; flex-direction: column; align-items: center; gap: 3px; color: #cdbf9e; font: 9px Arial, sans-serif; text-align: center; text-transform: uppercase; }
+.city-medal-disc { display: grid; place-items: center; width: 40px; height: 40px; border: 2px solid #c2a25e; border-radius: 50%; background: radial-gradient(circle at 35% 25%, #f6f3e8, #aab5b9 65%, #65747d); color: #202b30; box-shadow: inset 0 0 0 2px #30414b, 0 2px 4px #0009; font: bold 11px Georgia, serif; }
+.cc-city-panel .cc-panel-tabs { overflow-x: auto; gap: 2px; padding: 5px; scrollbar-width: thin; }
+.cc-city-panel .cc-panel-tab { flex: 0 0 auto; padding: 7px 8px; font-size: 10px; }
+.cc-city-panel .cc-panel-body { padding: 13px 16px 24px; }
+.city-district-plaques { display: block; max-width: 100%; }
+.city-chart { display: flex; align-items: stretch; height: 125px; gap: 8px; padding: 10px 4px 0; border-bottom: 1px solid #a28f5c55; }
+.city-chart-column { display: flex; flex: 1; min-width: 0; flex-direction: column; align-items: center; justify-content: end; gap: 3px; color: #c7b991; font: 10px Arial, sans-serif; }
+.city-chart-value { font-size: 9px; overflow-wrap: anywhere; text-align: center; }
+.city-chart-bar { width: min(35px, 80%); min-height: 2px; background: linear-gradient(#b7c87b, #718742); border: 1px solid #c0ba77; }
+@media (max-width: 900px) {
+  .cc-city-panel { width: 100%; }
+}

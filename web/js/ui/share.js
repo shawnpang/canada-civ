@@ -174,7 +174,8 @@ export async function init(ctx) {
   status.setAttribute('role', 'status');
   dialog.append(closeButton, heading, urlInput, actions, status);
   overlay.append(dialog);
-  root.append(trigger, overlay);
+  root.append(trigger);
+  document.body.append(overlay);
   document.addEventListener('keydown', event => {
     if (!overlay.hidden && event.key === 'Escape') {
       event.preventDefault();

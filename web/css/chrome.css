@@ -10,7 +10,7 @@
 .almanac-launch, .share-trigger { position: absolute; z-index: 5; top: 55px; }
 .almanac-launch { right: 108px; }
 .share-trigger { right: 14px; }
-.almanac-overlay, .share-overlay { position: fixed; z-index: 20; inset: 0; display: grid; place-items: center; padding: 18px; background: #07141dcc; }
+.almanac-overlay, .share-overlay { position: fixed; z-index: 40; inset: 0; display: grid; place-items: center; padding: 18px; background: #07141dcc; }
 .almanac-overlay[hidden], .share-overlay[hidden], .search-results[hidden] { display: none; }
 .almanac-dialog, .share-dialog { width: min(760px, 100%); max-height: min(90vh, 850px); overflow: auto; padding: 22px; color: #f3e5bd; background: #1b2d39; border: 1px solid #c2a569; border-radius: 3px; box-shadow: 0 8px 32px #000b; line-height: 1.5; }
 .share-dialog { width: min(520px, 100%); }
@@ -44,7 +44,7 @@ header { z-index: 5; }
 .almanac-launch, .share-trigger { top: 7px; z-index: 6; }
 .almanac-launch { right: 12px; }
 .share-trigger { right: 105px; }
-#dialog { z-index: 20; }
+body #dialog { z-index: 50; }
 @media (max-width: 900px) {
   header { height: 42px; padding: 0 8px; }
   .header-right { right: 8px; }
@@ -63,3 +63,73 @@ header { z-index: 5; }
   body .share-trigger { left: 105px; right: auto; }
   body .adv-launch { left: auto; right: 8px; }
 }
+
+/* One continuous desktop bar. The roots remain in the header so their
+   fixed overlays can be managed by their own modules. */
+header { height: 44px; display: flex; justify-content: flex-start; gap: 6px; padding: 0 10px; }
+header .brand { order: 1; flex: 0 0 auto; }
+header #yield-bar, header #advisors-root, header #share-root, header #almanac-root { display: contents; }
+header .yield-strip { order: 2; display: flex; align-items: center; flex: 0 1 auto; min-width: 0; overflow: hidden; }
+header .yield-turn { order: 4; flex: 0 1 190px; min-width: 0; max-width: 190px; overflow: hidden; text-overflow: ellipsis; margin: 0; padding: 0 3px; white-space: nowrap; }
+body header #search-root { position: relative; order: 3; top: auto; left: auto; right: auto; flex: 0 1 210px; width: auto; min-width: 110px; margin-left: auto; }
+header .search-results { position: absolute; left: 0; right: 0; }
+body header .adv-launch, body header .share-trigger, body header .almanac-launch, header #help, header #lang { position: static; flex: 0 0 auto; margin: 0; padding: 5px 8px; min-height: 29px; font-size: 12px; }
+header .adv-launch { order: 5; }
+header .share-trigger { order: 6; }
+header #help { order: 7; }
+header .almanac-launch { order: 8; }
+header #lang { order: 9; }
+header #vintage { display: none; }
+header .yield-chip { flex: 0 0 auto; }
+header .adv-panel { top: 44px; }
+.almanac-overlay, .share-overlay { z-index: 50; }
+body #dialog { z-index: 60; }
+@media (min-width: 901px) {
+  body .cc-panel { top: 45px; }
+  body .yield-report, body .city-roster { top: 50px; }
+}
+@media (max-width: 1100px) and (min-width: 701px) {
+  header .yield-turn { flex-basis: 82px; }
+  header .brand { letter-spacing: .08em; }
+  header .yield-chip { padding-left: 4px; padding-right: 4px; }
+  body header #search-root { flex-basis: 145px; }
+}
+@media (max-width: 700px) {
+  header { height: 126px; align-items: flex-start; padding: 6px 8px; }
+  header .brand { height: 30px; }
+  header #yield-bar { position: absolute; top: 40px; left: 0; right: 0; display: flex; height: 40px; min-height: 0; padding: 0 6px; overflow-x: auto; background: #172b39; border: 0; border-top: 1px solid #a48c5b66; border-bottom: 1px solid #a48c5b66; box-shadow: none; }
+  header .yield-strip { display: flex; flex: 0 0 auto; overflow: visible; }
+  header .yield-turn { flex: 0 0 auto; align-self: center; max-width: none; font-size: 10px; }
+  body header #search-root { position: absolute; top: 86px; left: 8px; right: auto; width: calc(100% - 185px); min-width: 0; margin: 0; }
+  body header .adv-launch, body header .share-trigger, body header .almanac-launch, header #help, header #lang { position: absolute; top: 7px; min-height: 28px; padding: 4px 6px; }
+  body header .adv-launch { left: auto; right: 163px; }
+  body header .share-trigger { left: auto; right: 111px; }
+  body header .almanac-launch { left: auto; right: 8px; }
+  header #help { right: 82px; }
+  header #lang { right: 51px; }
+  header .adv-panel { top: auto; }
+}
+@media (max-width: 430px) {
+  body header .adv-launch { top: 87px; right: 103px; }
+  body header .share-trigger { top: 87px; right: 53px; }
+  body header .almanac-launch { top: 87px; right: 8px; max-width: 42px; overflow: hidden; }
+  header #help { right: 41px; }
+  header #lang { right: 8px; }
+  body header #search-root { width: calc(100% - 190px); }
+}
+@media (min-width: 901px) {
+  body .cc-panel, body .yield-report, body .city-roster { top: 44px; }
+  body .yield-report { max-height: calc(100vh - 55px); }
+}
+@media (max-width: 700px) {
+  header #yield-bar { flex-direction: row; gap: 2px; overflow-y: hidden; }
+}
+@media (max-width: 430px) {
+  body header .adv-launch { right: 124px; }
+  body header .share-trigger { right: 73px; }
+  body header .almanac-launch { right: 8px; max-width: none; }
+  body header #search-root { width: calc(100% - 210px); }
+}
+/* Search results must stay above a selected-area panel. Modal surfaces are
+   portalled to the body and have their own higher stacking levels. */
+header { z-index: 19; }

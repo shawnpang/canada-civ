@@ -14,6 +14,7 @@ import * as lenses from './ui/lenses.js';
 import * as legend from './ui/legend.js';
 import * as layers from './ui/layers.js';
 import * as lensRender from './render/lenses.js';
+import * as labels from './render/labels.js';
 
 const modules = [i18n, hash, search, almanac, share, yields, city, province, banners, advisors, lenses, legend, layers, lensRender];
 
@@ -23,7 +24,7 @@ let w, scale, ox, oy, drag = null, dragStart = null;
 const initialLang = new URLSearchParams(location.hash.slice(1)).get('lang');
 let lang = initialLang === 'en' || initialLang === 'fr' ? initialLang : (navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en');
 let viewportWidth = innerWidth, viewportHeight = innerHeight, saveTimer;
-const data = {world: null, nation: null, provinces: null, cities: null, lenses: null, sources: null, divisions: null};
+const data = {world: null, nation: null, provinces: null, cities: null, lenses: null, sources: null, divisions: null, wonders: null};
 
 const drawMinimap = setupMinimap({
   getWorld: () => w,
@@ -37,8 +38,8 @@ const drawMinimap = setupMinimap({
 });
 
 const words = {
-  en: ['A living atlas of the land', 'DRAG TO EXPLORE  ·  SCROLL TO ZOOM', 'Surveying the land…', 'Explore the map', 'Drag to pan, scroll or use + and − to zoom. Click, drag, or use the arrow keys on the overview map to navigate. This is a schematic atlas, not a legal boundary map. Terrain uses 2020 land cover and MRDEM elevation. Data: Statistics Canada Open Licence; Open Government Licence – Canada; NOAA; Natural Earth.'],
-  fr: ['Un atlas vivant du territoire', 'GLISSEZ POUR EXPLORER  ·  DÉFILEZ POUR ZOOMER', 'Arpentage du territoire…', 'Explorer la carte', 'Glissez pour déplacer la carte; utilisez la molette ou + et − pour zoomer. Cliquez, glissez ou utilisez les flèches sur la carte générale pour naviguer. Cette carte schématique ne représente pas les limites légales. Relief MRDEM et couverture terrestre 2020. Données : Licence ouverte de Statistique Canada; Licence du gouvernement ouvert – Canada; NOAA; Natural Earth.']
+  en: ['A living atlas of the land', 'DRAG TO EXPLORE  ·  SCROLL TO ZOOM', 'Surveying the land…', 'Explore the map', 'Drag to pan, scroll or use + and − to zoom. Press R to toggle resources. Click, drag, or use the arrow keys on the overview map to navigate. This is a schematic atlas, not a legal boundary map. Terrain uses 2020 land cover and MRDEM elevation. Data: Statistics Canada Open Licence; Open Government Licence – Canada; NOAA; Natural Earth.'],
+  fr: ['Un atlas vivant du territoire', 'GLISSEZ POUR EXPLORER  ·  DÉFILEZ POUR ZOOMER', 'Arpentage du territoire…', 'Explorer la carte', 'Glissez pour déplacer la carte; utilisez la molette ou + et − pour zoomer. Appuyez sur R pour afficher ou masquer les ressources. Cliquez, glissez ou utilisez les flèches sur la carte générale pour naviguer. Cette carte schématique ne représente pas les limites légales. Relief MRDEM et couverture terrestre 2020. Données : Licence ouverte de Statistique Canada; Licence du gouvernement ouvert – Canada; NOAA; Natural Earth.']
 };
 
 function translate() {
@@ -95,9 +96,11 @@ function draw() {
   paintMapTerrain(ctx, w, {width: W, height: H, scale, ox, oy});
   const ctxObj = api();
   if (lensRender.onRedraw) lensRender.onRedraw(ctxObj);
+  labels.onRedraw(ctxObj);
+  if (layers.onRedraw) layers.onRedraw(ctxObj);
   if (banners.onRedraw) banners.onRedraw(ctxObj);
   for (const m of modules) {
-    if (m !== lensRender && m !== banners && m.onRedraw) m.onRedraw(ctxObj);
+    if (m !== lensRender && m !== layers && m !== banners && m.onRedraw) m.onRedraw(ctxObj);
   }
   if (drawMinimap) drawMinimap();
 }
@@ -153,6 +156,7 @@ function api() {
     lenses: data.lenses,
     sources: data.sources,
     divisions: data.divisions,
+    wonders: data.wonders,
     canvas,
     ctx,
     getCamera: () => ({scale, ox, oy}),
@@ -245,6 +249,7 @@ window.addEventListener('keydown', event => {
   else if (visible('.adv-panel')) close = () => document.querySelector('.adv-close')?.click();
   else if (document.activeElement === searchInput) close = () => { searchInput.value = ''; searchInput.blur(); };
   else if (document.querySelector('.lens-picker[open]')) close = () => { document.querySelector('.lens-picker').open = false; };
+  else if (document.querySelector('.map-layer-menu[open]')) close = () => { document.querySelector('.map-layer-menu').open = false; };
   else if (visible('.yield-report')) close = () => document.querySelector('.yield-report .yield-report-close')?.click();
   else if (visible('.cc-panel')) close = () => document.querySelector('.cc-panel:not([hidden]) .cc-panel-close')?.click();
   if (close) { event.preventDefault(); event.stopImmediatePropagation(); close(); }
@@ -274,8 +279,9 @@ Promise.all([
   loadPayload('cities'),
   loadPayload('lenses'),
   loadPayload('sources'),
-  loadPayload('divisions')
-]).then(async ([world, nation, provinces, cities, lensesp, sources, divisions]) => {
+  loadPayload('divisions'),
+  loadPayload('wonders')
+]).then(async ([world, nation, provinces, cities, lensesp, sources, divisions, wonders]) => {
   w = world;
   data.world = world;
   data.nation = nation.data;
@@ -284,6 +290,7 @@ Promise.all([
   data.lenses = lensesp.data;
   data.sources = sources.data;
   data.divisions = divisions.data;
+  data.wonders = wonders.data;
   data.payloadSources = {nation: nation, provinces, cities, lenses: lensesp, sources, divisions};
   document.querySelector('#loading').hidden = true;
   reset();

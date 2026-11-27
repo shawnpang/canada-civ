@@ -51,3 +51,29 @@
   .lens-dock > .lens-choice:nth-child(n+3) { display: none; }
   .lens-legend__range input { max-width: 100%; }
 }
+
+/* The resource and map controls lead the same dock as the quick lenses. */
+#bottom-toolbar { position: absolute; right: 62px; bottom: 39px; z-index: 6; display: flex; align-items: stretch; gap: 3px; max-width: calc(100vw - 290px); padding: 4px; border: 1px solid #a48c5b; border-radius: 4px; background: #142633ed; box-shadow: 0 2px 8px #0009; }
+#bottom-toolbar #lens-bar { position: static; max-width: none; }
+#bottom-toolbar .lens-dock { gap: 3px; padding: 0; border: 0; background: transparent; box-shadow: none; }
+#bottom-toolbar .lens-choice, #bottom-toolbar .lens-picker summary { min-height: 30px; }
+#bottom-toolbar .lens-picker summary::after { content: ' ▾'; }
+@media (min-width: 901px) {
+  body:has(.cc-city-panel:not([hidden])) #bottom-toolbar { right: calc(min(455px, 42vw) + 10px); }
+  body:has(.cc-panel:not(.cc-city-panel):not([hidden])) #bottom-toolbar { right: calc(min(410px, 100vw - 24px) + 22px); }
+}
+@media (max-width: 700px) {
+  #bottom-toolbar { left: 8px; right: 8px; bottom: 156px; max-width: none; }
+  #bottom-toolbar #lens-bar { position: static; flex: 1 1 auto; min-width: 0; }
+  #bottom-toolbar .lens-dock { justify-content: flex-end; }
+  #bottom-toolbar .lens-dock > .lens-choice:nth-child(n+3) { display: none; }
+  #bottom-toolbar .lens-picker-menu { right: 0; bottom: calc(100% + 6px); }
+}
+@media (min-width: 1100px) {
+  body:has(.cc-panel:not([hidden])) #bottom-toolbar,
+  body:has(.cc-panel:not([hidden])) #legend-root { right: calc(min(455px, 42vw) + 10px); }
+  body:has(.cc-panel:not([hidden])) #bottom-toolbar { max-width: calc(100vw - min(455px, 42vw) - 235px); }
+}
+@media (min-width: 1100px) and (max-width: 1400px) {
+  body:has(.cc-panel:not([hidden])) .lens-dock > .lens-choice:nth-child(n+3) { display: none; }
+}
