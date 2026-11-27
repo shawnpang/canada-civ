@@ -132,6 +132,40 @@ function groundSprite(cover,variant,cold,scale) {
     ctx.restore();
   });
 }
+// Overlapping map-anchored washes soften classification boundaries. Water is
+// repainted afterwards, so the pigment never changes the water mask.
+function pigmentSprite(cover,variant,cold,scale) {
+  const box={w:92*scale,h:94*scale,ax:-46*scale,ay:-47*scale};
+  return getSprite(`pigment:${cover}:${variant}:${cold}`,scale,box,ctx=>{
+    const random=sequence(3001+cover*139+variant*919+(cold?601:0));
+    const snow=cover===11||cold;
+    const palette=snow
+      ? ['rgba(255,255,249,.42)','rgba(220,234,230,.38)','rgba(104,143,153,.22)','rgba(247,251,244,.36)']
+      : cover>=1&&cover<=3
+        ? ['rgba(31,67,42,.28)','rgba(56,91,47,.30)','rgba(175,185,112,.23)','rgba(220,213,158,.18)']
+        : cover===7||cover===5||cover===6
+          ? ['rgba(131,119,65,.25)','rgba(233,207,133,.31)','rgba(113,137,78,.26)','rgba(241,223,168,.23)']
+          : ['rgba(91,111,83,.25)','rgba(221,211,166,.27)','rgba(139,150,121,.26)','rgba(243,236,199,.20)'];
+    const wash=ctx.createRadialGradient(46,47,1,46,47,43);
+    wash.addColorStop(0,palette[variant%palette.length]);
+    wash.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=wash;ctx.fillRect(3,4,86,86);
+    for(let j=0;j<15;j++){
+      const x=16+random()*60,y=17+random()*60;
+      const rx=4+random()*13,ry=2+random()*7;
+      ctx.fillStyle=palette[Math.floor(random()*palette.length)];
+      ctx.beginPath();ctx.ellipse(x,y,rx,ry,(random()-.5)*1.1,0,Math.PI*2);ctx.fill();
+    }
+    if(snow){
+      for(let j=0;j<7;j++){
+        const x=15+random()*58,y=18+random()*57;
+        ctx.strokeStyle=j%2?'rgba(255,255,250,.46)':'rgba(116,151,161,.23)';
+        ctx.lineWidth=1+random()*2;ctx.beginPath();ctx.moveTo(x-7,y+2);
+        ctx.quadraticCurveTo(x,y-2,x+8+random()*9,y-1);ctx.stroke();
+      }
+    }
+  });
+}
 function treeSprite(kind,variant,scale) {
   const box={w:13*scale,h:15*scale,ax:-6.5*scale,ay:-12*scale};
   return getSprite(`trees:${kind}:${variant}`,scale,box,ctx=>{
@@ -154,22 +188,29 @@ function treeSprite(kind,variant,scale) {
   });
 }
 function mountainSprite(variant,snow,scale) {
-  const box={w:38*scale,h:36*scale,ax:-19*scale,ay:-31*scale};
+  const box={w:58*scale,h:36*scale,ax:-29*scale,ay:-31*scale};
   return getSprite(`massif:${variant}:${snow}`,scale,box,ctx=>{
+    ctx.translate(10,0);
     const random=sequence(177+variant*101);
     ctx.fillStyle='rgba(28,40,32,.24)';ctx.beginPath();ctx.ellipse(19,30,17,3.2,0,0,Math.PI*2);ctx.fill();
-    // Distinct asymmetrical overlapping ridges give a continuous range.
-    const peaks=[{x:10,y:12+random()*4,w:10},{x:25,y:10+random()*5,w:12},{x:17+random()*4,y:3+random()*4,w:15}];
+    // Unequal silhouettes and staggered shoulders retain upper-left light.
+    const peaks=[],count=2+Math.floor(random()*3);
+    for(let n=0;n<count;n++){
+      const x=6+(n+.35+random()*.5)*26/count;
+      peaks.push({x,y:3+random()*14,w:6+random()*9});
+    }
+    peaks.sort((a,b)=>a.y-b.y);
     for(const p of peaks){
-      const base=29+random()*2, shoulder=p.x-p.w*(.45+random()*.12),sy=p.y+(base-p.y)*(.42+random()*.1);
-      polygon(ctx,[p.x-p.w,base,shoulder,sy,p.x,p.y,p.x+1,base],variant%2?'#9daca0':'#a6b2a1');
-      polygon(ctx,[p.x,p.y,p.x+p.w,base,p.x+1,base],variant%2?'#53695e':'#5b7064');
-      polygon(ctx,[p.x-p.w,base,shoulder,sy,p.x-1,base],'rgba(55,75,61,.25)');
-      ctx.strokeStyle='rgba(43,60,51,.33)';ctx.lineWidth=.45;ctx.beginPath();ctx.moveTo(p.x,p.y+1);ctx.lineTo(p.x-2,sy+2);ctx.lineTo(p.x+1,base-2);ctx.stroke();
+      const base=27+random()*4,shoulder=p.x-p.w*(.25+random()*.3),sy=p.y+(base-p.y)*(.32+random()*.25);
+      const right=p.x+p.w*(.65+random()*.4),ridge=p.x+(random()-.35)*3;
+      polygon(ctx,[p.x-p.w,base,shoulder,sy,p.x,p.y,ridge,base],variant%2?'#9daca0':'#a6b2a1');
+      polygon(ctx,[p.x,p.y,right,base,ridge,base],variant%2?'#53695e':'#5b7064');
+      polygon(ctx,[p.x-p.w,base,shoulder,sy,ridge-1,base],'rgba(55,75,61,.25)');
+      ctx.strokeStyle='rgba(43,60,51,.33)';ctx.lineWidth=.45;ctx.beginPath();ctx.moveTo(p.x,p.y+1);ctx.lineTo(p.x-2,sy+2);ctx.lineTo(ridge,base-2);ctx.stroke();
       if(snow){
-        const t=snow===2?.37:.22,sy2=p.y+(base-p.y)*t,sw=p.w*t;
-        polygon(ctx,[p.x-sw,sy2,p.x,p.y,p.x+sw,sy2,p.x+sw*.52,sy2+2,p.x+sw*.1,sy2+.6,p.x-sw*.38,sy2+2], '#eaf1eb');
-        polygon(ctx,[p.x,p.y,p.x+sw,sy2,p.x+sw*.52,sy2+2,p.x+sw*.1,sy2+.6], '#becfd0');
+        const t=(snow===2?.33:.19)+random()*.09,sy2=p.y+(base-p.y)*t,sw=p.w*t;
+        polygon(ctx,[p.x-sw,sy2,p.x,p.y,p.x+sw,sy2,p.x+sw*.55,sy2+1+random()*2,p.x+sw*.08,sy2+.6,p.x-sw*.4,sy2+1+random()*2], '#eaf1eb');
+        polygon(ctx,[p.x,p.y,p.x+sw,sy2,p.x+sw*.55,sy2+2,p.x+sw*.08,sy2+.6], '#becfd0');
       }
     }
   });
@@ -257,26 +298,36 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
         if(rounded)boundaryHex(ctx,x,y,R+.2,corners);else hexPath(ctx,x,y,R+.2);
         ctx.fill();
       }
-      const variant=Math.floor(rand(i,3)*4),key=`${cover}:${variant}:${cold}`;
-      const texture=sprite(textures,key,()=>groundSprite(cover,variant,cold,scale));
-      if(rounded){ctx.save();boundaryHex(ctx,x,y,R,corners);ctx.clip();}
-      drawSprite(ctx,texture,x,y);
-      if(rounded)ctx.restore();
       const shore=lod!==FAR&&neighbours(row,col).some(([r,c])=>{
         const j=indexAt(r,c,rows,cols);return j<0||!!w.water[j];
       });
-      cells.push({i,x,y,wx,wy,corners:rounded?corners:null,shore});
+      cells.push({i,x,y,wx,wy,cover,cold,corners:rounded?corners:null,shore});
+    }
+  }
+  // A second pass permits pigment to overlap adjacent land classifications.
+  for(const cell of cells){
+    const {i,x,y,cover,cold,corners}=cell;
+    const variant=Math.floor(rand(i,3)*8),key=`${cover}:${variant}:${cold}`;
+    if(lod<=MID){
+      const texture=sprite(textures,key,()=>pigmentSprite(cover,variant,cold,scale));
+      drawSprite(ctx,texture,x,y);
+    } else {
+      const texture=sprite(textures,key,()=>groundSprite(cover,variant,cold,scale));
+      if(corners){ctx.save();boundaryHex(ctx,x,y,R,corners);ctx.clip();}
+      drawSprite(ctx,texture,x,y);
+      if(corners)ctx.restore();
     }
   }
   // Water stream integration belongs here: after land and before shore stamps.
   paintWater(ctx, w, {width, height, scale, ox, oy});
+  const allMarks=[];
   if(lod!==FAR)for(const cell of cells){
-    const {i,x,y,wx,wy,corners,shore}=cell,cover=w.cover[i],rel=w.relief[i];
+    const {i,x,y,wx,wy,cold,corners,shore}=cell,cover=w.cover[i],rel=w.relief[i];
     const pct=w.pct||{};
     if(shore){ctx.save();if(corners)boundaryHex(ctx,x,y,R,corners);else hexPath(ctx,x,y,R);ctx.clip();}
     paintFields(ctx,x,y,wx,wy,R,scale,i,pct.crop?.[i],lod);
     const marks=[];
-    const forest=countFor(pct.forest?.[i],lod===MID?4:lod===NEAR?13:20,i,300);
+    const forest=cover===11||(cold&&wy<1500)?0:countFor(pct.forest?.[i],lod===MID?4:lod===NEAR?13:20,i,300);
     for(let j=0;j<forest;j++){
       const px=x+(rand(i,301+j*3)-.5)*R*1.38,py=y+(rand(i,302+j*3)-.5)*R*1.20;
       const kind=cover===1?1:cover===2?2:cover===3?3:(rand(i,360+j)<(wy<2300?.13:.35)?1:2);
@@ -293,15 +344,27 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
       // Elevation and northern location affect decorative snow, never summit placement.
       const max=w.elev_max?.[i];
       const snow=cover===11||wy<1500||(max!=null&&max>2300)?2:wy<2300||(max!=null&&max>1800)?1:0;
-      const count=lod===MID?2:lod===NEAR?4:5;
+      const base=lod===MID?2:lod===NEAR?4:5;
+      const density=rand(i,590);
+      const count=density<.12?1:density<.36?Math.max(2,base-2):density<.76?base:base+2;
       for(let j=0;j<count;j++){
-        const variant=Math.floor(rand(i,600+j)*6),key=`${variant}:${snow}`;
-        marks.push({x:x+(rand(i,610+j*2)-.5)*R*1.12,y:y+(rand(i,611+j*2)-.5)*R*.85,k:.62+rand(i,640+j)*.5,sprite:sprite(mountains,key,()=>mountainSprite(variant,snow,scale))});
+        const variant=Math.floor(rand(i,600+j)*12),key=`${variant}:${snow}`;
+        marks.push({x:x+(rand(i,610+j*2)-.5)*R*1.55,y:y+(rand(i,611+j*2)-.5)*R*1.25,k:.48+rand(i,640+j)*.82,sprite:sprite(mountains,key,()=>mountainSprite(variant,snow,scale))});
       }
     }
-    marks.sort((a,b)=>a.y-b.y);
-    for(const mark of marks)drawSprite(ctx,mark.sprite,mark.x,mark.y,mark.k);
+    for(const mark of marks)allMarks.push({...mark,shore,corners,cellX:x,cellY:y});
     if(shore)ctx.restore();
+  }
+  allMarks.sort((a,b)=>a.y-b.y);
+  for(const mark of allMarks){
+    if(mark.shore){
+      ctx.save();
+      if(mark.corners)boundaryHex(ctx,mark.cellX,mark.cellY,R,mark.corners);
+      else hexPath(ctx,mark.cellX,mark.cellY,R);
+      ctx.clip();
+    }
+    drawSprite(ctx,mark.sprite,mark.x,mark.y,mark.k);
+    if(mark.shore)ctx.restore();
   }
   paintRivers(ctx,w,width,height,scale,ox,oy);
 }
