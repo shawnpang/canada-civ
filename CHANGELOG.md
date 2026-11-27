@@ -4,6 +4,26 @@ Each development stage is a commit on `main`. Finished milestones also get a tag
 
 ## Unreleased
 
+## 2026-11-27 — v1.2
+
+- Date: 2026-11-27 (Asia/Singapore)
+- Tag: `v1.2` (this commit)
+
+National-view fidelity pass toward usaciv, after v1.1 close zoom was accepted. Eight parallel workstreams, then integration on `v12-integrate`.
+
+- Saturated far-zoom land palette (vivid forests, yellow-ochre prairies) and compact snow-capped relief marks at landing; close-zoom fills stay the v1.1 colours.
+- Foreign neighbours (Alaska, Greenland, the contiguous US, Saint-Pierre-and-Miquelon) use the existing `owner === -2` Natural Earth classification, painted muted grey with a grid-edge vignette.
+- Thin dark province, territory, and international borders along shared hex edges at every zoom.
+- City banners coloured by the published `districts.json` NAICS badge, with a type icon, leader arrow, pill shape, and a matching City types legend.
+- National zoom keeps major metros (including Calgary, Edmonton, Ottawa–Gatineau, and Québec) and hides town labels; official names are not shortened.
+- Arctic ice and tundra read as cohesive sheets rather than per-hex noise; water still owns the shoreline.
+- Distinct deep-ocean, shelf, and lake blues at every zoom, so the Great Lakes and Hudson Bay stay clearly blue at landing.
+- Bottom toolbar uses gold-bordered icon-and-label chips; header yield icons use their existing distinct colours.
+
+`pipeline check` and 105 unit tests pass. No new statistical series were invented.
+
+Remaining gaps, recorded honestly: far-zoom mountain caps are still subtler than usaciv's Rockies; Arctic islands are cohesive but still show some hex texture; the national land mosaic is richer than v1.1 but slightly smoother than usaciv's hex-by-hex variation; header yield labels stay hidden at 1440px so the vintage string remains visible; Hamilton and a few other southern Ontario metros can still lose a landing banner when they sit only a few pixels from Toronto.
+
 ## 2026-11-27 — v1.1
 
 - Date: 2026-11-27 (Asia/Singapore)
