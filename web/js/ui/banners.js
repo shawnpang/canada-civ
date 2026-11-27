@@ -102,15 +102,13 @@ function highlightFootprint(ctx, city, camera) {
   g.restore();
 }
 
-export function onRedraw(ctx) {
-  hitBoxes = [];
-  if (!ctx.world || !ctx.ctx) return;
+export function layoutBanners(ctx) {
+  if (!ctx.world || !ctx.ctx) return [];
   const camera = ctx.getCamera();
-  if (!camera || !Number.isFinite(camera.scale) || camera.scale <= 0) return;
+  if (!camera || !Number.isFinite(camera.scale) || camera.scale <= 0) return [];
   const selected = new URLSearchParams(location.hash.slice(1)).get('city');
   const all = cities(ctx);
   const focused = all.find(city => String(city.id) === selected);
-  if (focused) highlightFootprint(ctx, focused, camera);
   // At a national view many CMA centres are only a few pixels apart. Place the
   // selected city first, then larger cities, and reveal neighbours as one zooms.
   // The anchor remains the supplied map coordinate; no geographic positions are
@@ -164,6 +162,26 @@ export function onRedraw(ctx) {
     }
     if (box) placed.push(box);
   }
+  g.restore();
+  return placed;
+}
+
+export function onRedraw(ctx) {
+  hitBoxes = [];
+  if (!ctx.world || !ctx.ctx) return;
+  const camera = ctx.getCamera();
+  if (!camera || !Number.isFinite(camera.scale) || camera.scale <= 0) return;
+  const selected = new URLSearchParams(location.hash.slice(1)).get('city');
+  const focused = cities(ctx).find(city => String(city.id) === selected);
+  if (focused) highlightFootprint(ctx, focused, camera);
+  const placed = layoutBanners(ctx);
+  const g = ctx.ctx;
+  const fit = Math.min(innerWidth / (ctx.world.width + 200), (innerHeight - 95) / (ctx.world.height + 200));
+  const zoom = camera.scale / fit;
+  g.save();
+  g.font = 'bold 11px Georgia, serif';
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
   // Paint the selected banner last and use the same rectangles for hit tests.
   for (const box of placed.reverse()) {
     const {city, x, y, left, top, right, bottom, name, nameWidth, chipWidth, population} = box;
