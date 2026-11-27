@@ -1,0 +1,22 @@
+[
+  {
+    "id": "cdd",
+    "title": "Canadian Disaster Database — CDD_Extract_2022_EN",
+    "publisher": "Public Safety Canada",
+    "product_id": "1c3d15f9-9cfa-4010-8462-0d67e493d9b9",
+    "vintage": "CDD_Extract_2022_EN; resource updated 2026-02-10",
+    "license": "Open Government Licence – Canada",
+    "license_url": "https://open.canada.ca/en/open-government-licence-canada",
+    "homepage": "https://open.canada.ca/data/en/dataset/1c3d15f9-9cfa-4010-8462-0d67e493d9b9",
+    "used_for": "Distinct CDD event point markers assigned to Canadian land hexes",
+    "files": [
+      {
+        "file": "cdd-extract-1.xlsx",
+        "url": "https://open.canada.ca/data/dataset/1c3d15f9-9cfa-4010-8462-0d67e493d9b9/resource/c701e05e-4554-4c96-b7c9-0ec4a845fe91/download/cdd-extract-1.xlsx",
+        "retrieved": "2026-11-27",
+        "sha256": "1321a40003599b690e8970d422177582c67db1323dbf4cc6d5e02cbcc0eb0f2a",
+        "bytes": 551792
+      }
+    ]
+  }
+]
