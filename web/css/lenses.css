@@ -1,0 +1,40 @@
+/* Lens controls share the atlas's bronze and deep-blue palette. */
+#lens-bar { position: absolute; right: 62px; bottom: 39px; z-index: 3; max-width: calc(100vw - 290px); }
+.lens-dock { display: flex; align-items: stretch; gap: 3px; padding: 4px; border: 1px solid #a48c5b; border-radius: 4px; background: #142633ed; box-shadow: 0 2px 8px #0009; }
+.lens-choice, .lens-picker summary { min-height: 34px; white-space: nowrap; font-size: 12px; }
+.lens-choice.is-active { color: #fff2c4; border-color: #e2c477; background: #6d603b; }
+.lens-picker { position: relative; }
+.lens-picker summary { display: flex; align-items: center; padding: 5px 10px; cursor: pointer; list-style: none; border: 1px solid #a48c5b; border-radius: 3px; background: linear-gradient(#354553, #202e39); }
+.lens-picker summary::-webkit-details-marker { display: none; }
+.lens-picker summary::after { content: ' ▴'; color: #e1c680; }
+.lens-picker summary:focus-visible { outline: 2px solid #fff1bd; outline-offset: 2px; }
+.lens-picker-menu { position: absolute; right: 0; bottom: calc(100% + 8px); width: min(290px, calc(100vw - 24px)); max-height: min(65vh, 480px); overflow-y: auto; padding: 12px; border: 1px solid #b49a63; background: #182b38f7; box-shadow: 0 5px 18px #000b; }
+.lens-picker-menu h3 { margin: 10px 0 5px; color: #d0b879; font: 11px Arial, sans-serif; text-transform: uppercase; letter-spacing: .1em; }
+.lens-picker-menu section:first-child h3 { margin-top: 0; }
+.lens-picker-menu .lens-choice { display: block; width: 100%; text-align: left; white-space: normal; margin: 3px 0; }
+#legend-root { position: absolute; right: 62px; bottom: 91px; z-index: 2; width: min(320px, calc(100vw - 24px)); }
+.lens-legend { padding: 13px 15px; color: #f3e5bd; border: 1px solid #b49a63; background: #172a37f2; box-shadow: 0 3px 15px #0009; }
+.lens-legend__heading { margin: 0 0 4px; font-size: 16px; font-weight: normal; }
+.lens-legend__unit, .lens-legend__note, .lens-legend__empty, .lens-legend__scale, .lens-legend__brush-controls { font: 12px/1.4 Arial, sans-serif; }
+.lens-legend__unit { color: #d5c79e; }
+.lens-legend__note, .lens-legend__empty { margin: 8px 0 0; color: #d2c8ac; }
+.lens-legend__histogram { position: relative; display: flex; align-items: end; gap: 1px; height: 64px; margin-top: 10px; cursor: crosshair; touch-action: none; border-bottom: 1px solid #cfbb83; }
+.lens-legend__bar { flex: 1; min-width: 0; height: var(--bar-height); }
+.lens-legend__selection { position: absolute; top: 0; bottom: 0; left: var(--brush-left); width: var(--brush-width); border: 1px solid #fff1bd; background: #fff4c322; pointer-events: none; }
+.lens-legend__scale { display: flex; justify-content: space-between; gap: 8px; color: #d5c79e; }
+.lens-legend__brush-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 10px; margin-top: 8px; }
+.lens-legend__range { width: 100%; accent-color: #d5b968; }
+.lens-legend__reset { font-size: 12px; }
+@media (max-width: 700px) {
+  #lens-bar { left: 8px; right: 8px; bottom: 156px; max-width: none; }
+  .lens-dock { overflow-x: auto; }
+  .lens-picker { position: static; }
+  .lens-picker-menu { right: 0; bottom: calc(100% + 6px); }
+  #legend-root { right: 8px; bottom: 207px; width: min(320px, calc(100vw - 16px)); max-height: calc(100vh - 260px); overflow-y: auto; }
+}
+@media (max-width: 700px) {
+  /* Leave the full picker visible and its upward-opening menu unclipped. */
+  .lens-dock { overflow: visible; }
+  .lens-dock > .lens-choice:nth-child(n+3) { display: none; }
+  .lens-legend__range input { max-width: 100%; }
+}
