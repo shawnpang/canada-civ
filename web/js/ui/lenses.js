@@ -52,10 +52,20 @@ function select(id, write = true) {
   notify();
   app?.redraw?.();
 }
-function makeButton(text, active, action) {
+function makeButton(text, active, action, icon = null) {
   const button = document.createElement('button');
   button.type = 'button';
-  button.textContent = text;
+  if (icon) {
+    const glyph = document.createElement('span');
+    glyph.className = 'toolbar-icon';
+    glyph.setAttribute('aria-hidden', 'true');
+    glyph.textContent = icon;
+    const caption = document.createElement('span');
+    caption.className = 'toolbar-label';
+    caption.textContent = text;
+    button.append(glyph, caption);
+    button.setAttribute('aria-label', text);
+  } else button.textContent = text;
   button.setAttribute('aria-pressed', String(active));
   button.className = 'lens-choice' + (active ? ' is-active' : '');
   button.addEventListener('click', action);
@@ -72,18 +82,27 @@ function renderPicker() {
   dock.className = 'lens-dock';
   dock.setAttribute('aria-label', words.lenses);
   dock.title = words.shortcut;
-  dock.append(makeButton(words.terrain, !selectedId, () => select(null)));
+  dock.append(makeButton(words.terrain, !selectedId, () => select(null), '▲'));
   // Keep quick choices stable while allowing either poverty measure in data.
   const quickIds = ['density', 'income', 'home', 'forest'];
+  const quickIcons = {density: '♟', income: '$', home: '⌂', forest: '♣'};
   for (const id of quickIds) {
     const lens = lenses.find(item => item.id === id);
-    if (lens) dock.append(makeButton(label(lens.name, lang), selectedId === id, () => select(id)));
+    if (lens) dock.append(makeButton(label(lens.name, lang), selectedId === id, () => select(id), quickIcons[id]));
   }
   const details = document.createElement('details');
   details.className = 'lens-picker';
   details.open = wasOpen;
   const summary = document.createElement('summary');
-  summary.textContent = words.all;
+  const pickerIcon = document.createElement('span');
+  pickerIcon.className = 'toolbar-icon';
+  pickerIcon.setAttribute('aria-hidden', 'true');
+  pickerIcon.textContent = '◈';
+  const pickerLabel = document.createElement('span');
+  pickerLabel.className = 'toolbar-label';
+  pickerLabel.textContent = words.all;
+  summary.append(pickerIcon, pickerLabel);
+  summary.setAttribute('aria-label', words.all);
   details.append(summary);
   const menu = document.createElement('div');
   menu.className = 'lens-picker-menu';

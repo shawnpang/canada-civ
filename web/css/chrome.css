@@ -175,3 +175,55 @@ header { z-index: 19; }
   body .yield-report, body .city-roster { top: 171px; }
   body .yield-report { max-height: calc(100vh - 201px); }
 }
+
+/* A consistent brass-framed chip for each control in the map dock. */
+body #bottom-toolbar .map-layer-resource,
+body #bottom-toolbar .map-layer-trigger,
+body #bottom-toolbar .lens-dock > .lens-choice,
+body #bottom-toolbar .lens-picker > summary,
+body #bottom-toolbar .time-slider-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 34px;
+  padding: 5px 9px;
+  border: 1px solid #b69a59;
+  border-radius: 3px;
+  color: #f4e5bc;
+  background: linear-gradient(#34434a, #1b2b34);
+  box-shadow: inset 0 1px #e9d49a26, 0 1px 2px #0008;
+  font: 12px Georgia, serif;
+  white-space: nowrap;
+}
+body #bottom-toolbar .map-layer-resource:hover,
+body #bottom-toolbar .map-layer-trigger:hover,
+body #bottom-toolbar .lens-dock > .lens-choice:hover,
+body #bottom-toolbar .lens-picker > summary:hover,
+body #bottom-toolbar .time-slider-trigger:hover { background: #4a5140; }
+body #bottom-toolbar .map-layer-resource[aria-pressed="true"],
+body #bottom-toolbar .lens-dock > .lens-choice.is-active {
+  color: #fff3cd;
+  border-color: #e3c67b;
+  background: linear-gradient(#817044, #574c31);
+}
+body #bottom-toolbar .toolbar-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 19px;
+  color: #e5c778;
+  font: bold 17px/1 Georgia, serif;
+  text-shadow: 0 1px 2px #000;
+}
+body #bottom-toolbar .map-layer-count { margin-left: 0; }
+body #bottom-toolbar .time-slider-current { color: #f1d895; }
+@media (max-width: 430px) {
+  /* Accessible names remain on controls whose text is hidden for space. */
+  body #bottom-toolbar .map-layer-resource .toolbar-label,
+  body #bottom-toolbar .map-layer-trigger .toolbar-label,
+  body #bottom-toolbar .lens-dock > .lens-choice .toolbar-label,
+  body #bottom-toolbar .lens-picker > summary .toolbar-label,
+  body #bottom-toolbar .time-slider-trigger .toolbar-label { display: none; }
+}

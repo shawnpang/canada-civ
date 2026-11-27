@@ -81,7 +81,12 @@ function render() {
   const focusTrigger = focused?.classList.contains('time-slider-trigger');
   const t = copy[language()];
   root.replaceChildren();
-  const summary = node('summary', 'time-slider-trigger', selectedYear == null ? t.unavailable : `${t.title} · ${selectedYear}`);
+  const summary = node('summary', 'time-slider-trigger');
+  const icon = node('span', 'toolbar-icon', '◷');
+  icon.setAttribute('aria-hidden', 'true');
+  summary.append(icon, node('span', 'toolbar-label', selectedYear == null ? t.unavailable : t.title));
+  if (selectedYear != null) summary.append(node('span', 'time-slider-current', String(selectedYear)));
+  summary.setAttribute('aria-label', selectedYear == null ? t.unavailable : `${t.title} · ${selectedYear}`);
   root.append(summary);
   if (!years.length) return;
   const panel = node('div', 'time-slider-panel');

@@ -73,7 +73,9 @@ function renderBar() {
     icon.setAttribute('aria-hidden', 'true');
     const label = element('span', 'yield-label', metric[lang()]);
     const value = element('span', 'yield-value', compact(valueFor(national, metric.key), metric.key));
-    button.append(icon, label, value);
+    const text = element('span', 'yield-text');
+    text.append(label, value);
+    button.append(icon, text);
     button.addEventListener('click', () => openReport(metric.key));
     strip.append(button);
   }

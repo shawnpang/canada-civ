@@ -128,13 +128,34 @@ function tracePill(g, left, top, width, height, radius) {
   g.closePath();
 }
 
-// The colour is decorative; the initial and the close-zoom plaque both come
-// from the published city classification, not an inferred yield.
-function typeColour(id) {
-  const colours = ['#617e61', '#a96f4f', '#697d96', '#92719a', '#ad8a43', '#668a86'];
-  let hash = 0;
-  for (const char of String(id)) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
-  return colours[hash % colours.length];
+// Fixed visual keys for the published NAICS categories. The monograms are
+// language-independent symbols; their translated names are in the legend.
+const TYPE_STYLES = Object.freeze({
+  agriculture: {color: '#648440', icon: 'AG'},
+  mining: {color: '#9b613d', icon: 'MI'},
+  utilities: {color: '#b48b2c', icon: 'UT'},
+  construction: {color: '#a76b35', icon: 'CO'},
+  manufacturing: {color: '#a64e43', icon: 'MF'},
+  wholesale: {color: '#8a7544', icon: 'WH'},
+  retail: {color: '#aa6272', icon: 'RT'},
+  transport: {color: '#527c87', icon: 'TR'},
+  information: {color: '#6a72a0', icon: 'IN'},
+  finance: {color: '#987943', icon: 'FI'},
+  real_estate: {color: '#9b755b', icon: 'RE'},
+  professional: {color: '#587d99', icon: 'PR'},
+  management: {color: '#77659a', icon: 'MG'},
+  administration: {color: '#698578', icon: 'AD'},
+  education: {color: '#587caa', icon: 'ED'},
+  health: {color: '#a95d68', icon: 'HE'},
+  arts: {color: '#976a9c', icon: 'AR'},
+  hospitality: {color: '#b2754b', icon: 'HO'},
+  other_services: {color: '#7b8573', icon: 'OS'},
+  public_administration: {color: '#426d91', icon: 'PA'}
+});
+const DEFAULT_TYPE_STYLE = Object.freeze({color: '#58635d', icon: ''});
+
+export function typeStyle(id) {
+  return Object.hasOwn(TYPE_STYLES, id) ? TYPE_STYLES[id] : DEFAULT_TYPE_STYLE;
 }
 
 function highlightFootprint(ctx, city, camera) {
@@ -174,7 +195,6 @@ export function layoutBanners(ctx) {
   });
   const g = ctx.ctx;
   g.save();
-  g.font = 'bold 11px Georgia, serif';
   g.textAlign = 'center';
   g.textBaseline = 'middle';
   const placed = [];
@@ -182,7 +202,9 @@ export function layoutBanners(ctx) {
   const compact = new Intl.NumberFormat(locale, {notation: 'compact', maximumFractionDigits: 1});
   const fit = Math.min(innerWidth / (ctx.world.width + 200), (innerHeight - 95) / (ctx.world.height + 200));
   const zoom = camera.scale / fit;
-  const reservations = zoom <= 1.15 && ctx.world.grid && Array.isArray(ctx.world.owner) && Array.isArray(ctx.world.provinces)
+  const cityFont = zoom <= 1.4 ? 'bold 10px Georgia, serif' : 'bold 11px Georgia, serif';
+  g.font = cityFont;
+  const reservations = zoom <= 2 && ctx.world.grid && Array.isArray(ctx.world.owner) && Array.isArray(ctx.world.provinces)
     ? smallProvinceReservations(ctx.world, camera) : [];
   for (const city of ordered) {
     const pos = position(city, ctx.world);
@@ -190,8 +212,8 @@ export function layoutBanners(ctx) {
     const x = camera.ox + pos[0] * camera.scale, y = camera.oy + pos[1] * camera.scale;
     const name = label(city, ctx.getLang());
     const population = Number.isFinite(city.population) ? compact.format(city.population) : null;
-    const chipWidth = population ? Math.max(36, Math.ceil(g.measureText(population).width) + 12) : 0;
-    const nameWidth = Math.max(56, Math.ceil(g.measureText(name).width) + 20);
+    const chipWidth = population ? Math.max(36, Math.ceil(g.measureText(population).width) + (zoom <= 1.4 ? 8 : 12)) : 0;
+    const nameWidth = Math.max(56, Math.ceil(g.measureText(name).width) + (zoom <= 1.4 ? 12 : 20));
     const badgeId = districts?.cities?.[String(city.id)]?.badge;
     const badgeType = districts?.types?.find(type => type.id === badgeId);
     const badgeName = typeof badgeType?.name === 'string' ? badgeType.name :
@@ -204,14 +226,16 @@ export function layoutBanners(ctx) {
     const showBadge = !!badgeName && (city === focused || zoom >= 2.5);
     g.font = 'bold 10px Georgia, serif';
     const badgeWidth = showBadge ? Math.ceil(g.measureText(badgeName).width) + 18 : 0;
-    g.font = 'bold 11px Georgia, serif';
-    // At intermediate zoom, alternate vertical offsets make room for nearby
-    // city labels while keeping a leader line to each official map coordinate.
-    const offsets = zoom >= 1.4 ? [30, 55, 80] : [30];
+    g.font = cityFont;
+    // Stack nearby metropolitan labels at national scale, retaining their
+    // real anchor points and a leader to each one.
+    const offsets = zoom <= 1.4 ? [30, 58, 86, 114] : [30, 55, 80];
+    // Two records on the same official point must not stack; nearby metros may.
+    if (placed.some(other => other.city && Math.hypot(other.x - x, other.y - y) < 4)) continue;
     let box = null;
     for (const offset of offsets) {
       const top = y - offset;
-      const candidate = {city, left, top, right: left + width, bottom: top + height + 5, x, y, name, nameWidth, chipWidth, population, badgeId, badgeName, emblemWidth};
+      const candidate = {city, left, top, right: left + width, bottom: top + height + 5, x, y, name, nameWidth, chipWidth, population, badgeId, badgeName, emblemWidth, font: cityFont};
       if (candidate.left > innerWidth || candidate.right < 0 || candidate.top > innerHeight || candidate.bottom < 0) continue;
       candidate.collision = {left: Math.min(left, x - badgeWidth / 2), right: Math.max(left + width, x + badgeWidth / 2), top: top - (showBadge ? 22 : 0), bottom: candidate.bottom};
       if (placed.some(other => candidate.collision.left < other.collision.right + 4 && candidate.collision.right + 4 > other.collision.left &&
@@ -229,7 +253,7 @@ export function layoutBanners(ctx) {
     return (b.population ?? -1) - (a.population ?? -1) || String(a.id).localeCompare(String(b.id));
   });
   g.font = '10px Georgia, serif';
-  for (const town of orderedTowns) {
+  for (const town of zoom > 1.4 ? orderedTowns : []) {
     const pos = townPosition(town);
     if (!pos) continue;
     const x = camera.ox + pos[0] * camera.scale, y = camera.oy + pos[1] * camera.scale;
@@ -298,24 +322,28 @@ export function onRedraw(ctx) {
     }
     const {city, x, y, left, top, right, bottom, name, nameWidth, chipWidth, population, badgeId, badgeName, emblemWidth} = box;
     const active = city === focused;
+    g.font = box.font;
     g.globalAlpha = focused && !active ? .72 : 1;
-    if (y - bottom > 9) {
-      g.beginPath(); g.moveTo(x, bottom); g.lineTo(x, y - 2);
-      g.strokeStyle = 'rgba(230, 201, 143, .85)'; g.lineWidth = 1; g.stroke();
-    }
+    const style = typeStyle(badgeId);
+    const pillBottom = bottom - 5;
+    // A clamped banner can be offset from its real coordinate. Connect the
+    // nearest point of the pill to the coordinate instead of moving the city.
+    const anchorX = Math.max(left + 8, Math.min(right - 8, x));
+    g.beginPath(); g.moveTo(anchorX, pillBottom); g.lineTo(x, y);
+    g.strokeStyle = '#e4c381'; g.lineWidth = 1.5; g.stroke();
     g.shadowColor = 'rgba(0,0,0,.65)';
     g.shadowBlur = 4;
     g.shadowOffsetY = 2;
-    g.beginPath(); g.moveTo(x - 5, bottom - 7); g.lineTo(x, bottom);
-    g.lineTo(x + 5, bottom - 7); g.closePath();
-    g.fillStyle = active ? '#76572d' : '#202a2b'; g.fill();
+    g.beginPath(); g.moveTo(anchorX - 5, pillBottom - 1); g.lineTo(anchorX, pillBottom + 5);
+    g.lineTo(anchorX + 5, pillBottom - 1); g.closePath();
+    g.fillStyle = style.color; g.fill();
     g.strokeStyle = active ? '#ffe3a0' : '#c5a15d'; g.lineWidth = active ? 2 : 1; g.stroke();
     tracePill(g, left, top, right - left, bottom - top - 5, 9);
     g.fill(); g.stroke();
     g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
     if (population) {
       tracePill(g, left + 2, top + 2, chipWidth - 2, 19, 7);
-      g.fillStyle = active ? '#8b9b54' : '#627b4b'; g.fill();
+      g.fillStyle = 'rgba(18, 25, 25, .4)'; g.fill();
       g.fillStyle = '#fff2c8';
       g.fillText(population, left + chipWidth / 2 + 1, top + 12);
     }
@@ -324,11 +352,11 @@ export function onRedraw(ctx) {
     if (emblemWidth) {
       const bx = right - emblemWidth / 2 - 2, by = top + 11.5;
       g.beginPath(); g.arc(bx, by, 7, 0, Math.PI * 2);
-      g.fillStyle = typeColour(badgeId); g.fill();
+      g.fillStyle = 'rgba(18, 25, 25, .36)'; g.fill();
       g.strokeStyle = '#d9c18a'; g.lineWidth = .8; g.stroke();
-      g.fillStyle = '#fff4d5'; g.font = 'bold 9px Georgia, serif';
-      g.fillText(Array.from(badgeName)[0].toLocaleUpperCase(ctx.getLang() === 'fr' ? 'fr-CA' : 'en-CA'), bx, by + .5);
-      g.font = 'bold 11px Georgia, serif';
+      g.fillStyle = '#fff4d5'; g.font = 'bold 8px Georgia, serif';
+      g.fillText(style.icon, bx, by + .5);
+      g.font = box.font || 'bold 11px Georgia, serif';
     }
     // At city scale there is room for the published type plaque; its own
     // bounds participate in hit testing, just like the banner itself.
