@@ -158,3 +158,20 @@ header { z-index: 19; }
   body #bottom-toolbar .map-layer-resource, body #bottom-toolbar .map-layer-trigger,
   body #bottom-toolbar .lens-choice, body #bottom-toolbar .lens-picker summary { padding-left: 7px; padding-right: 7px; }
 }
+
+@media (max-width: 700px) {
+  /* Search shares the action row, leaving more room for the map. Grid sizes
+     the translated buttons by their contents instead of clipping labels. */
+  header { height: 166px; display: grid; grid-template-columns: minmax(0, 1fr) repeat(3, max-content); grid-template-rows: 30px 86px 30px; align-items: center; gap: 4px; padding: 4px 8px; }
+  header .brand { grid-area: 1 / 1; }
+  header #help { grid-area: 1 / 3; position: static; }
+  header #lang { grid-area: 1 / 4; position: static; }
+  header #yield-bar { grid-area: 2 / 1 / 3 / -1; position: static; width: calc(100% + 16px); height: 86px; margin: 0 -8px; }
+  body header #search-root { grid-area: 3 / 1; position: relative; top: auto; left: auto; right: auto; width: 100%; min-width: 0; margin: 0; }
+  body header .adv-launch, body header .share-trigger, body header .almanac-launch { position: static; min-height: 30px; padding: 4px 6px; transform: none; }
+  body header .adv-launch { grid-area: 3 / 2; }
+  body header .share-trigger { grid-area: 3 / 3; }
+  body header .almanac-launch { grid-area: 3 / 4; }
+  body .yield-report, body .city-roster { top: 171px; }
+  body .yield-report { max-height: calc(100vh - 201px); }
+}

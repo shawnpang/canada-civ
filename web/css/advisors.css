@@ -46,3 +46,8 @@
 .adv-sort { padding: 2px 0; border: 0; background: none; color: inherit; font: inherit; font-weight: 600; text-align: inherit; cursor: pointer; }
 .adv-sort:hover, .adv-sort:focus-visible, .adv-place:focus-visible { color: #fff0b8; outline: 1px solid #d5b55e; }
 .adv-scatter circle.no-location { fill: #7a817b; stroke: #a8aea4; cursor: default; }
+
+.adv-panel { opacity: 1; transition: opacity 200ms ease, display 200ms allow-discrete; }
+.adv-panel[hidden] { opacity: 0; pointer-events: none; }
+@starting-style { .adv-panel:not([hidden]) { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .adv-panel { transition: none; } }
