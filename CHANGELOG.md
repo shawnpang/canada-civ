@@ -22,7 +22,10 @@ Fidelity pass toward usaciv visual quality. Two audit-and-fix loops on `v11-inte
 - Optional `election2025` lens from Elections Canada official voting results (Table 11) and 2025 federal riding boundaries, joined by majority overlap; 55 land hexes without a majority stay blank. Attribution required; commercial redistribution of that dataset needs Elections Canada permission.
 - Advisors Explorer columns from Statistics Canada table 98-10-0002-01.
 
-Independent checks recorded in `/workspace/canada-civ-runs/verification.md`.
+Independent checks: all 343 Elections Canada Table 11 winners match the payload; census division 1103 wheat is 5,620 hectares (quality B) in table 32-10-0309-01; Toronto population and GDP are unchanged from the previously verified official tables. `pipeline check` and 96 unit tests pass.
+
+Remaining gaps, recorded honestly: national zoom is still flatter than usaciv; mountain spacing can still hint at the hex grid; coasts are smoothed and given shallows but stay schematic at the 25 km cell size; unemployment remains the labelled 2021 Census rate; neighbour-country mute fill was not added; town coordinates still use the documented GeoSuite mirror.
+
 
 ## 2026-11-27 — v1.0
 
