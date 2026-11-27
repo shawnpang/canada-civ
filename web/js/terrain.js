@@ -3,6 +3,7 @@
 import {FAR, MID, NEAR, CLOSE, lodFor, hexPath} from './render/art/lod.js';
 import {getSprite, drawSprite, seedRand} from './render/art/sprites.js';
 import {paintWater} from './render/water.js';
+import {paintNeighbours} from './render/neighbours.js';
 
 const LAND = ['#81936d','#839b63','#526f4d','#718c60','#a1a47b','#b4a979','#a4a575','#bea96b','#849b79','#aaa487','#aaa998','#e0e7df'];
 const SQRT3 = Math.sqrt(3);
@@ -277,18 +278,16 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
     for(let col=firstCol;col<=lastCol;col++){
       const wx=(col+shift)*dx,wy=row*dy,x=ox+wx*scale;
       const i=row*cols+col,o=w.owner[i],water=w.water[i];
-      const edge=clamp(Math.min(row,col,rows-1-row,cols-1-col)/9,0,1);
       // Water cells are filled by paintWater so oversized hex fills do not
       // poke past the midpoint shoreline.
-      if(water) continue;
+      if(water || o===-2) continue;
       const corners=R>3?exposedCorners(w,row,col,rows,cols,j=>!w.water[j]):null;
       const rounded=corners&&corners.some(Boolean);
       const cover=w.cover[i]||0;
       // High northern barren and shrub cells receive a cool surface treatment;
       // ice cover itself remains the only explicit ice classification.
       const cold=(cover===4||cover===5||cover===10)&&rand(i,44)<clamp((2200-wy)/700,0,1);
-      ctx.globalAlpha=o===-2?edge:1;
-      ctx.fillStyle=o===-2?'#758873':cold?'#b5bcb0':LAND[cover]||LAND[0];
+      ctx.fillStyle=cold?'#b5bcb0':LAND[cover]||LAND[0];
       if(rounded)boundaryHex(ctx,x,y,R+.35,corners);else hexPath(ctx,x,y,R+.35);
       ctx.fill();ctx.globalAlpha=1;
       if(o<0)continue;
@@ -318,7 +317,8 @@ export function paintMapTerrain(ctx,w,{width,height,scale,ox,oy}) {
       if(corners)ctx.restore();
     }
   }
-  // Water stream integration belongs here: after land and before shore stamps.
+  // Foreign land and water are part of the cached terrain pass.
+  paintNeighbours(ctx, w, {width, height, scale, ox, oy});
   paintWater(ctx, w, {width, height, scale, ox, oy});
   const allMarks=[];
   if(lod!==FAR)for(const cell of cells){
