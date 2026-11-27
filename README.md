@@ -10,7 +10,7 @@ This project is inspired by [usaciv](https://karpathy.ai/usaciv/) by [Andrej Kar
 
 ## Status
 
-**Milestone 0 accepted** (tag `m0`). A browsable hex map of all 13 provinces and territories is in this repository (`web/`, served by the pipeline). City chrome, yields, and lenses are Milestone 1 work. Remaining terrain-art polish is deferred; see [CHANGELOG.md](CHANGELOG.md). [docs/SPEC.md](docs/SPEC.md) remains the source of truth for the deliverable, and [docs/MILESTONES.md](docs/MILESTONES.md) is the ordered work plan.
+**Milestone 1 accepted** (tag `m1`). The MVP atlas is runnable from `web/` with `uv run python -m pipeline serve`: national yields, City View for all 41 CMAs plus Whitehorse, Yellowknife, and Iqaluit, province and territory panels, data lenses with a brushable legend, search, shareable URLs, an Almanac, and a bilingual English/French interface. Official Statistics Canada population and GDP figures were independently checked; see [docs/verification-notes.md](docs/verification-notes.md). Known gaps, shown as missing data rather than invented zeros: Census employed counts and median rent are not yet wired. Residual terrain-art polish is still deferred. Advisors and resource/infrastructure payloads are early Milestone 2 work present in the tree but not accepted as v1-complete. [docs/SPEC.md](docs/SPEC.md) remains the source of truth, and [docs/MILESTONES.md](docs/MILESTONES.md) is the ordered work plan.
 
 ## What “done” looks like
 

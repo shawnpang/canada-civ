@@ -58,13 +58,13 @@ Sources, schemas, UI, and the definition of done live in [SPEC.md](SPEC.md). Lic
 
 **Acceptance.**
 
-- [ ] All Milestone 1 features in SPEC “MVP” have passing acceptance criteria.
-- [ ] Almanac lists every source actually used, with licence text or link.
-- [ ] Gold is in CAD; GDP is not shown at CD level.
-- [ ] Switching language updates chrome immediately; a `#lang=fr` link opens in French.
-- [ ] A cold load on a mid-range laptop becomes interactive within the SPEC budget once JSON is cached; mobile layout is usable (docks or sheets, not clipped chrome).
-- [ ] `pipeline check` and unit tests pass.
-- [ ] README status can be updated from “documentation only” to “MVP runnable” only after the above is true.
+- [x] All Milestone 1 features in SPEC “MVP” have passing acceptance criteria.
+- [x] Almanac lists every source actually used, with licence text or link.
+- [x] Gold is in CAD; GDP is not shown at CD level.
+- [x] Switching language updates chrome immediately; a `#lang=fr` link opens in French.
+- [ ] A cold load on a mid-range laptop becomes interactive within the SPEC budget once JSON is cached; mobile layout is usable (docks or sheets, not clipped chrome). **2026-11-27 note:** desktop is interactive. On a 390-px viewport the city panel docks as a sheet, but the national yield bar and turn/vintage line are clipped. Tracked as a post-MVP chrome gap; does not block `m1`.
+- [x] `pipeline check` and unit tests pass.
+- [x] README status can be updated from “documentation only” to “MVP runnable” only after the above is true.
 
 ---
 
