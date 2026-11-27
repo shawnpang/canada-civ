@@ -22,6 +22,17 @@ function provinceNames(city, ctx, lang) {
   }).join(' · ');
 }
 const local = (value, lang) => typeof value === 'string' ? value : value?.[lang] || value?.en || '';
+// The official payload keys jobs by NAICS code; the catalogue may not include
+// an industries dictionary, so retain readable bilingual names for those codes.
+const industryNames = {
+  '11': {en: 'Agriculture, forestry, fishing and hunting', fr: 'Agriculture, foresterie, pêche et chasse'},
+  '21': {en: 'Mining, quarrying, and oil and gas extraction', fr: 'Extraction minière, exploitation en carrière, et extraction de pétrole et de gaz'},
+  '23': {en: 'Construction', fr: 'Construction'},
+  '31-33': {en: 'Manufacturing', fr: 'Fabrication'},
+  '51': {en: 'Information and cultural industries', fr: 'Industrie de l’information et industrie culturelle'},
+  '54': {en: 'Professional, scientific and technical services', fr: 'Services professionnels, scientifiques et techniques'},
+  '71': {en: 'Arts, entertainment and recreation', fr: 'Arts, spectacles et loisirs'}
+};
 function format(value, lang, type = 'number') {
   if (typeof value !== 'number' || !Number.isFinite(value)) return copy[lang].noData;
   const locale = lang === 'fr' ? 'fr-CA' : 'en-CA';
@@ -56,7 +67,7 @@ function render(ctx) {
   const provinces = Array.isArray(city.provinces) ? provinceNames(city, ctx, lang) : '';
   const economic = [
     stat(t.population, format(city.population, lang), ranks.population, lang),
-    stat(t.gold, format(gold, lang, 'cad'), ranks.gold ?? ranks.gdp, lang),
+    stat(`${t.gold}${city.gdp_year ? ` · ${city.gdp_year}` : ''}`, format(gold, lang, 'cad'), ranks.gold ?? ranks.gdp, lang),
     stat(t.food, format(yields.food, lang), ranks.food, lang),
     stat(t.production, format(yields.production, lang), ranks.production, lang),
     stat(t.science, format(yields.science, lang), ranks.science, lang),
@@ -68,7 +79,7 @@ function render(ctx) {
   const industries = ctx.nation?.industries || {};
   const jobs = Object.entries(city.jobs || {}).filter(([, value]) => typeof value === 'number' && Number.isFinite(value));
   const workforce = [stat(t.employed, format(city.employed, lang), ranks.employed, lang), stat(t.unemployment, format(city.unemployment, lang, 'percent'), ranks.unemployment, lang)].join('');
-  const jobRows = jobs.map(([key, value]) => `<li><span>${esc(local(industries[key], lang) || key.replaceAll('_', ' '))}</span><strong>${esc(format(value, lang))}</strong></li>`).join('');
+  const jobRows = jobs.map(([key, value]) => `<li><span>${esc(local(industries[key], lang) || local(industryNames[key], lang) || key.replaceAll('_', ' '))}</span><strong>${esc(format(value, lang))}</strong></li>`).join('');
   root.innerHTML = `<div class="cc-panel-header"><div><span class="cc-panel-kicker">${esc(t.city)} · ${esc(kind)}</span><h2>${esc(local(city.name, lang))}</h2><p>${esc(provinces)}${city.capital ? ` · ${esc(t.capitalBadge)}` : ''}</p></div><button type="button" class="cc-panel-close" aria-label="${esc(t.close)}">×</button></div><div class="cc-panel-tabs" role="tablist"><button type="button" class="cc-panel-tab" role="tab" data-tab="economy" aria-selected="${activeTab === 'economy'}">${esc(t.economy)}</button><button type="button" class="cc-panel-tab" role="tab" data-tab="workforce" aria-selected="${activeTab === 'workforce'}">${esc(t.workforce)}</button></div><div class="cc-panel-body">${activeTab === 'economy' ? `<div class="cc-stat-grid">${economic}</div><p class="cc-panel-note">${esc(t.gdpNote)}</p>` : `<div class="cc-stat-grid">${workforce}</div><section class="cc-panel-section"><h3>${esc(t.jobs)}</h3>${jobs.length ? `<ul class="cc-jobs-list">${jobRows}</ul>` : `<p class="cc-panel-note">${esc(t.noJobs)}</p>`}</section><p class="cc-panel-note">${esc(t.jobNote)}</p>`}</div>`;
   root.hidden = false;
   root.querySelector('.cc-panel-close').onclick = () => changeSelection(null);

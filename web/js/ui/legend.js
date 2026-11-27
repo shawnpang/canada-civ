@@ -1,4 +1,4 @@
-import {getActiveLens, getBrush, setBrush, subscribe} from './lenses.js';
+import {clearLens, getActiveLens, getBrush, setBrush, subscribe} from './lenses.js';
 import {lensPosition, lensColor, lensValue} from '../render/lenses.js';
 
 const BIN_COUNT = 32;
@@ -32,8 +32,9 @@ function format(value, lens) {
   const locale = context?.getLang?.() === 'fr' ? 'fr-CA' : 'en-CA';
   if (!Number.isFinite(value)) return '—';
   if (lens.format === 'pct') return new Intl.NumberFormat(locale, {style: 'percent', maximumFractionDigits: 1}).format(value);
+  if (lens.format === 'cad') return new Intl.NumberFormat(locale, {style: 'currency', currency: 'CAD', maximumFractionDigits: 0}).format(value);
   return new Intl.NumberFormat(locale, {
-    maximumFractionDigits: lens.format === 'float' ? 1 : 0
+    maximumFractionDigits: lens.format === 'float' || lens.format === 'years' ? 1 : 0
   }).format(value);
 }
 
@@ -50,8 +51,10 @@ function updateSelection() {
   selection.style.setProperty('--brush-width', `${Math.max(0, hi - lo) * 100}%`);
   lowInput.value = String(Math.round(lo * 1000));
   highInput.value = String(Math.round(hi * 1000));
-  lowLabel.textContent = format(brush ? brush[0] : bounds[0], currentLens);
-  highLabel.textContent = format(brush ? brush[1] : bounds[1], currentLens);
+  // The ramp clamps observations outside the published domain into its edge
+  // bins. Label those bins by the domain rather than the observed extremes.
+  lowLabel.textContent = lo === 0 ? `≤ ${format(currentLens.domain[0], currentLens)}` : format(brush[0], currentLens);
+  highLabel.textContent = hi === 1 ? `≥ ${format(currentLens.domain[1], currentLens)}` : format(brush[1], currentLens);
   lowInput.setAttribute('aria-valuetext', lowLabel.textContent);
   highInput.setAttribute('aria-valuetext', highLabel.textContent);
 }
@@ -81,8 +84,16 @@ function render() {
   const lang = context.getLang?.() || 'en';
   const panel = element('section', 'lens-legend');
   panel.setAttribute('aria-label', label('Lens legend', 'Légende de la couche'));
+  const header = element('div', 'lens-legend__header');
   const heading = element('h2', 'lens-legend__heading', text(lens.name, lang));
-  panel.append(heading);
+  const close = element('button', 'lens-legend__close', '×');
+  close.type = 'button';
+  close.setAttribute('aria-label', label('Clear lens', 'Effacer la couche'));
+  close.addEventListener('click', clearLens);
+  header.append(heading, close);
+  panel.append(header);
+  const description = text(lens.description, lang);
+  if (description) panel.append(element('p', 'lens-legend__description', description));
   const unit = text(lens.unit, lang);
   if (unit) panel.append(element('div', 'lens-legend__unit', unit));
 
@@ -169,6 +180,16 @@ function render() {
       start = null;
     });
     histogram.addEventListener('pointercancel', () => { start = null; });
+  }
+  const missing = element('div', 'lens-legend__missing');
+  missing.append(element('span', 'lens-legend__missing-swatch'), document.createTextNode(label('No data', 'Aucune donnée')));
+  panel.append(missing);
+  if (context.lenses?.vintage) {
+    const vintage = String(context.lenses.vintage);
+    // The catalogue vintage is a shared English string; translate its known
+    // components without assuming that all lenses have the same source year.
+    const localized = lang === 'fr' ? vintage.replace('Census', 'Recensement').replace('land cover', 'couverture terrestre') : vintage;
+    panel.append(element('div', 'lens-legend__vintage', localized));
   }
   const note = text(lens.note, lang);
   if (note) panel.append(element('p', 'lens-legend__note', note));

@@ -57,3 +57,23 @@
 .yield-report-total { color: #f2dfb0; font-weight: bold; }
 .yield-report-empty { color: #c0b593; font: 12px Arial, sans-serif; }
 .yield-report-number { white-space: nowrap; color: #f2dfb0; }
+
+/* Keep the national figures in the header on wide screens; use a second
+   scrollable strip where the complete bar cannot fit. */
+#yield-bar { height: 48px; min-height: 0; }
+.yield-chip { gap: 4px; }
+.yield-label { display: none; }
+.yield-value { font-size: 12px; }
+.yield-turn { font-size: 10px; }
+@media (min-width: 1600px) {
+  #yield-bar { top: 0; left: 158px; right: 535px; height: 44px; padding: 0 5px; background: transparent; border: 0; box-shadow: none; }
+  .yield-chip { padding: 2px 5px; }
+  .cc-panel { top: 45px; }
+  .yield-report, .city-roster { top: 50px; }
+}
+@media (max-width: 900px) {
+  #yield-bar { top: 42px; height: 44px; padding: 2px 6px; }
+  .cc-panel { top: auto; right: 0; bottom: 28px; width: 100%; max-height: 58vh; }
+  .yield-report { top: 136px; left: 6px; width: calc(100vw - 12px); max-height: calc(100vh - 165px); }
+  .city-roster { top: 136px; left: 8px; }
+}

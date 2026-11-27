@@ -5,8 +5,8 @@ let brush = null;
 const listeners = new Set();
 
 const copy = {
-  en: {terrain: 'Terrain', lenses: 'Lenses', all: 'All lenses', close: 'Close lens picker', shortcut: 'Cycle lenses: L / Shift+L'},
-  fr: {terrain: 'Relief', lenses: 'Couches', all: 'Toutes les couches', close: 'Fermer le choix des couches', shortcut: 'Parcourir les couches : L / Maj+L'}
+  en: {terrain: 'Terrain', lenses: 'Lenses', all: 'Lenses', choose: 'Choose a lens', close: 'Close lens picker', shortcut: 'Cycle lenses: L / Shift+L'},
+  fr: {terrain: 'Relief', lenses: 'Couches', all: 'Couches', choose: 'Choisir une couche', close: 'Fermer le choix des couches', shortcut: 'Parcourir les couches : L / Maj+L'}
 };
 const language = () => app?.getLang?.() === 'fr' ? 'fr' : 'en';
 const label = (value, lang) => typeof value === 'string' ? value : value?.[lang] || value?.en || '';
@@ -16,6 +16,7 @@ export function getActiveLens() {
   return available().find(item => item.id === selectedId) || null;
 }
 export function getBrush() { return brush && [...brush]; }
+export function clearLens() { select(null); }
 export function subscribe(listener) {
   listeners.add(listener);
   return () => listeners.delete(listener);
@@ -86,6 +87,10 @@ function renderPicker() {
   details.append(summary);
   const menu = document.createElement('div');
   menu.className = 'lens-picker-menu';
+  const title = document.createElement('h2');
+  title.className = 'lens-picker-title';
+  title.textContent = words.choose;
+  menu.append(title);
   const groups = Array.isArray(app.lenses.groups) ? app.lenses.groups : [];
   const grouped = new Set();
   for (const group of groups) {
