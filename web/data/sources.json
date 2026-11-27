@@ -23,7 +23,7 @@
     "id": "nrcan_mrdem",
     "product_id": "MRDEM-30-DTM",
     "vintage": "current",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "files": [
       {
         "file": "data/raw/nrcan_mrdem/overview.tif",
@@ -43,7 +43,7 @@
     "id": "nrcan_landcover_2020",
     "product_id": "2020 Land Cover of Canada",
     "vintage": "2020",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "files": [
       {
         "file": "data/raw/nrcan_landcover_2020/overview.tif",
@@ -113,11 +113,11 @@
   },
   {
     "id": "atlas_rivers",
-    "title": "Atlas of Canada National Scale Data 1:5,000,000 – Rivers",
+    "title": "Atlas of Canada National Scale Data 1:5,000,000 \u2013 Rivers",
     "product_id": "AC_5M_Rivers sparse",
     "publisher": "Natural Resources Canada",
     "vintage": "2017",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "homepage": "https://open.canada.ca/data/en/dataset/eda6b104-a284-5701-93b0-8dcde6777450",
     "used_for": "Generalized river lines",
     "files": [
@@ -132,11 +132,11 @@
   },
   {
     "id": "atlas_lakes",
-    "title": "Atlas of Canada National Scale Data 1:5,000,000 – Waterbodies",
+    "title": "Atlas of Canada National Scale Data 1:5,000,000 \u2013 Waterbodies",
     "product_id": "AC_5M_Waterbodies",
     "publisher": "Natural Resources Canada",
     "vintage": "2015",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "homepage": "https://ftp.geogratis.gc.ca/pub/nrcan_rncan/vector/framework_cadre/Atlas_of_Canada_5M/hydrology/AC_5M_Waterbodies.shp.zip",
     "used_for": "Lake classification including international lakes",
     "files": [
@@ -6563,7 +6563,7 @@
     "title": "Population estimates on July 1 by age and gender",
     "publisher": "Statistics Canada",
     "product_id": "17-10-0005-01",
-    "vintage": "2021–2025; Canada and provinces and territories",
+    "vintage": "2021\u20132025; Canada and provinces and territories",
     "license": "Statistics Canada Open Licence; https://www.statcan.gc.ca/en/reference/licence",
     "homepage": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710000501",
     "description": "Annual July 1 postcensal population estimates; distinct from Census counts.",
@@ -6583,7 +6583,7 @@
     "title": "Population estimates by CMA and CA, 2021 boundaries",
     "publisher": "Statistics Canada",
     "product_id": "17-10-0148-01",
-    "vintage": "2021–2025; CMAs and CAs",
+    "vintage": "2021\u20132025; CMAs and CAs",
     "license": "Statistics Canada Open Licence; https://www.statcan.gc.ca/en/reference/licence",
     "homepage": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710014801",
     "description": "Annual July 1 postcensal population estimates; distinct from Census counts.",
@@ -6603,7 +6603,7 @@
     "title": "Population estimates by census subdivision, 2021 boundaries",
     "publisher": "Statistics Canada",
     "product_id": "17-10-0155-01",
-    "vintage": "2021–2025; Iqaluit CSD",
+    "vintage": "2021\u20132025; Iqaluit CSD",
     "license": "Statistics Canada Open Licence; https://www.statcan.gc.ca/en/reference/licence",
     "homepage": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710015501",
     "description": "Annual July 1 postcensal population estimates; distinct from Census counts.",
@@ -6625,7 +6625,7 @@
     "product_id": "65d3db23-b83c-4f49-ab93-65c59ee0e6aa",
     "vintage": "2016",
     "homepage": "https://open.canada.ca/data/en/dataset/65d3db23-b83c-4f49-ab93-65c59ee0e6aa",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "used_for": "Resource sites and published selection rules",
     "files": [
       {
@@ -6680,7 +6680,7 @@
     "product_id": "000183ed-8864-42f0-ae43-c4313a860720",
     "vintage": "2025",
     "homepage": "https://open.canada.ca/data/en/dataset/000183ed-8864-42f0-ae43-c4313a860720",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "used_for": "Resource sites and published selection rules",
     "files": [
       {
@@ -6716,13 +6716,13 @@
   },
   {
     "id": "atlas_15m_roads",
-    "title": "Atlas of Canada National Scale Data 1:15,000,000 – Roads",
+    "title": "Atlas of Canada National Scale Data 1:15,000,000 \u2013 Roads",
     "product_id": "1326fb30-046a-546e-b9a3-1102bcfb44b8",
     "vintage": "2017",
     "publisher": "Natural Resources Canada",
     "homepage": "https://open.canada.ca/data/en/dataset/1326fb30-046a-546e-b9a3-1102bcfb44b8",
-    "license": "Open Government Licence – Canada",
-    "description": "Atlas of Canada National Scale Data 1:15,000,000 – Roads",
+    "license": "Open Government Licence \u2013 Canada",
+    "description": "Atlas of Canada National Scale Data 1:15,000,000 \u2013 Roads",
     "used_for": "Generalized road routes",
     "files": [
       {
@@ -6736,13 +6736,13 @@
   },
   {
     "id": "atlas_15m_rail",
-    "title": "Atlas of Canada National Scale Data 1:15,000,000 – Railways",
+    "title": "Atlas of Canada National Scale Data 1:15,000,000 \u2013 Railways",
     "product_id": "c751172b-37d5-5115-92f0-6652f97b1743",
     "vintage": "2017",
     "publisher": "Natural Resources Canada",
     "homepage": "https://open.canada.ca/data/en/dataset/c751172b-37d5-5115-92f0-6652f97b1743",
-    "license": "Open Government Licence – Canada",
-    "description": "Atlas of Canada National Scale Data 1:15,000,000 – Railways",
+    "license": "Open Government Licence \u2013 Canada",
+    "description": "Atlas of Canada National Scale Data 1:15,000,000 \u2013 Railways",
     "used_for": "Generalized railway routes",
     "files": [
       {
@@ -6761,7 +6761,7 @@
     "vintage": "2021",
     "publisher": "Transport Canada",
     "homepage": "https://open.canada.ca/data/en/dataset/3a1eb6ef-6054-4f9d-b1f6-c30322cd7abf",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "description": "Airports with air navigation services",
     "used_for": "Airports served by NAV CANADA control towers or flight service stations",
     "files": [
@@ -6788,7 +6788,7 @@
     "vintage": "2026-03-24",
     "publisher": "Fisheries and Oceans Canada",
     "homepage": "https://open.canada.ca/data/en/dataset/262451e7-6416-47b5-8453-f31d212ea657",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "description": "Small Craft Harbours Locations and Information",
     "used_for": "Core fishing harbour points, not commercial port rankings",
     "files": [
@@ -6842,7 +6842,7 @@
     "vintage": "decisions 1990; retrieval date in files",
     "publisher": "Natural Resources Canada",
     "homepage": "https://natural-resources.canada.ca/maps-tools-publications/maps/geographical-names-canada/geoname-service-api",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "description": "Canadian Geographical Names Database",
     "used_for": "Official geographical name coordinates for selected directory entries",
     "files": [
@@ -6938,11 +6938,11 @@
   },
   {
     "id": "parks_canada_attendance",
-    "title": "Parks Canada attendance 2025–26",
+    "title": "Parks Canada attendance 2025\u201326",
     "publisher": "Parks Canada",
     "homepage": "https://open.canada.ca/data/en/dataset/1e2bd6b2-d6c7-415b-8c95-f5f6b2459759",
-    "license": "Open Government Licence – Canada",
-    "vintage": "2025–26",
+    "license": "Open Government Licence \u2013 Canada",
+    "vintage": "2025\u201326",
     "used_for": "National park and historic-site attendance rules",
     "files": [
       {
@@ -6968,7 +6968,7 @@
     "title": "Find a Parks Canada location",
     "publisher": "Parks Canada",
     "homepage": "https://parks.canada.ca/",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "vintage": "retrieval date",
     "used_for": "Schematic points for attendance units",
     "files": [
@@ -6988,7 +6988,7 @@
     "title": "Canadian Geographical Names Database",
     "publisher": "Natural Resources Canada",
     "homepage": "https://open.canada.ca/data/en/dataset/e27c6eba-3c5d-4051-9db2-082dc6411c2c",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "vintage": "retrieved 2026-11-27",
     "used_for": "Curated landmark coordinates and names; individual record URLs are on the items",
     "files": [
@@ -7059,11 +7059,11 @@
     "homepage": "https://www150.statcan.gc.ca/n1/en/catalogue/92-150-x",
     "used_for": {
       "en": "Census agglomeration town anchor coordinates and province membership",
-      "fr": "Coordonnées des repères des agglomérations et appartenance provinciale"
+      "fr": "Coordonn\u00e9es des rep\u00e8res des agglom\u00e9rations et appartenance provinciale"
     },
     "description": {
-      "en": "The official GeoSuite package blocked automated retrieval. The included CSV is an extract of the third-party MountainMath mirror of the 2021 GeoSuite census subdivision table. Each town uses the representative point of its most populous member census subdivision with an available point (ties by smallest CSDUID); this is not the census agglomeration centroid. The nearest land hex in that subdivision’s province or territory is used as the map cell.",
-      "fr": "Le téléchargement automatisé du fichier officiel GéoSuite a été bloqué. Le CSV inclus est un extrait du miroir tiers MountainMath de la table des subdivisions de recensement de GéoSuite 2021. Chaque ville utilise le point représentatif de sa subdivision membre la plus peuplée dont le point est disponible (en cas d’égalité, le plus petit SDRIDU); ce point n’est pas le centroïde de l’agglomération. La cellule est l’hexagone terrestre le plus proche dans la province ou le territoire de cette subdivision."
+      "en": "The official GeoSuite package blocked automated retrieval. The included CSV is an extract of the third-party MountainMath mirror of the 2021 GeoSuite census subdivision table. Each town uses the representative point of its most populous member census subdivision with an available point (ties by smallest CSDUID); this is not the census agglomeration centroid. The nearest land hex in that subdivision\u2019s province or territory is used as the map cell.",
+      "fr": "Le t\u00e9l\u00e9chargement automatis\u00e9 du fichier officiel G\u00e9oSuite a \u00e9t\u00e9 bloqu\u00e9. Le CSV inclus est un extrait du miroir tiers MountainMath de la table des subdivisions de recensement de G\u00e9oSuite 2021. Chaque ville utilise le point repr\u00e9sentatif de sa subdivision membre la plus peupl\u00e9e dont le point est disponible (en cas d\u2019\u00e9galit\u00e9, le plus petit SDRIDU); ce point n\u2019est pas le centro\u00efde de l\u2019agglom\u00e9ration. La cellule est l\u2019hexagone terrestre le plus proche dans la province ou le territoire de cette subdivision."
     },
     "files": [
       {
@@ -7083,11 +7083,11 @@
   },
   {
     "id": "cdd",
-    "title": "Canadian Disaster Database — CDD_Extract_2022_EN",
+    "title": "Canadian Disaster Database \u2014 CDD_Extract_2022_EN",
     "publisher": "Public Safety Canada",
     "product_id": "1c3d15f9-9cfa-4010-8462-0d67e493d9b9",
     "vintage": "CDD_Extract_2022_EN; resource updated 2026-02-10",
-    "license": "Open Government Licence – Canada",
+    "license": "Open Government Licence \u2013 Canada",
     "license_url": "https://open.canada.ca/en/open-government-licence-canada",
     "homepage": "https://open.canada.ca/data/en/dataset/1c3d15f9-9cfa-4010-8462-0d67e493d9b9",
     "used_for": "Distinct CDD event point markers assigned to Canadian land hexes",
@@ -7118,6 +7118,59 @@
         "retrieved": "2026-11-27T05:11:44.141698+00:00",
         "sha256": "4347084c6262bc27262a14ab0a52f826115ee733dedc3644c30c623da716476f",
         "bytes": 2465360
+      }
+    ]
+  },
+  {
+    "id": "statcan_csd_population_98100002",
+    "title": "Population and dwelling counts: Canada, provinces and territories, census divisions and census subdivisions",
+    "publisher": "Statistics Canada",
+    "product_id": "98-10-0002-01",
+    "vintage": "2021 Census, 2021 boundaries",
+    "license": "Statistics Canada Open Licence",
+    "homepage": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810000201",
+    "description": "Population and dwelling counts, land area and population density for census subdivisions. Percentage change compares 2016 and 2021 Census counts. Suppressed, unavailable and flagged estimates are null.",
+    "used_for": "Census subdivision Explorer table and scatter",
+    "files": [
+      {
+        "file": "data/raw/csd_explorer/98100002-eng.zip",
+        "url": "https://www150.statcan.gc.ca/n1/tbl/csv/98100002-eng.zip",
+        "retrieved": "2026-11-27",
+        "sha256": "36ab6c8f3f6b82d70d9dea927cb5cf04f6fbf9b543a7ad543695e6ea70d22876",
+        "bytes": 551875
+      },
+      {
+        "file": "data/raw/csd_explorer/98100002-fra.zip",
+        "url": "https://www150.statcan.gc.ca/n1/tbl/csv/98100002-fra.zip",
+        "retrieved": "2026-11-27",
+        "sha256": "9b862c8bdc0ee3bad8ccb76e24a25ec44b917faef5c6396336d24599bf203bdd",
+        "bytes": 561023
+      }
+    ]
+  },
+  {
+    "id": "elections_canada_2025",
+    "title": "45th General Election: Official Voting Results, Table 11; Electoral Geography Boundary Files (45th General Election), Federal Electoral Districts SHP",
+    "publisher": "Elections Canada",
+    "vintage": "2025-04-28",
+    "homepage": "https://www.elections.ca/content.aspx?dir=rep/off/45gedata&document=summary&lang=e&section=res",
+    "description": "Official electoral district results and 2025 federal electoral district boundaries.",
+    "used_for": "Federal election 2025 lens",
+    "license": "Elections Canada terms: non-commercial reproduction permitted with attribution; commercial redistribution requires permission. https://www.elections.ca/content.aspx?document=index&lang=e&section=pri",
+    "files": [
+      {
+        "file": "data/raw/election2025/results.csv",
+        "url": "https://www.elections.ca/res/rep/off/ovrGE45/62/data_donnees/table_tableau11.csv",
+        "sha256": "7a406ddd90b4ef9dfc96c718c04addfca5628ccbc657539626de54f26505cf82",
+        "bytes": 48201,
+        "retrieved": "2026-11-27T05:12:47.616184+00:00"
+      },
+      {
+        "file": "data/raw/election2025/boundaries.zip",
+        "url": "https://www.elections.ca/res/cir/mapsCorner/vector/FederalElectoralDistricts_2025_SHP.zip",
+        "sha256": "4004a6bff0303c46bc5d9318a3c0b4a0322599bc707712a3c41acffafbef0b93",
+        "bytes": 10301648,
+        "retrieved": "2026-11-27T05:12:48.848350+00:00"
       }
     ]
   }
