@@ -41,3 +41,8 @@
 .adv-rank.is-selected, .adv-table tr.is-selected { background: #485042; box-shadow: inset 3px 0 #d5b55e; }
 .adv-source a { color: #e4cb89; }
 .adv-selection { padding: 7px 9px; color: #f0d995; background: #394336; border-left: 3px solid #d5b55e; }
+.adv-site { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 6px 2px; border-bottom: 1px solid #36414a; }
+.adv-site > :last-child { flex-shrink: 0; color: #dfc990; text-align: right; }
+.adv-sort { padding: 2px 0; border: 0; background: none; color: inherit; font: inherit; font-weight: 600; text-align: inherit; cursor: pointer; }
+.adv-sort:hover, .adv-sort:focus-visible, .adv-place:focus-visible { color: #fff0b8; outline: 1px solid #d5b55e; }
+.adv-scatter circle.no-location { fill: #7a817b; stroke: #a8aea4; cursor: default; }
