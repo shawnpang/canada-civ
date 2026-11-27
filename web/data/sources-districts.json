@@ -1,0 +1,4692 @@
+[
+  {
+    "id": "statcan_labour_98100594",
+    "title": "Labour force status by occupation, industry, age and gender",
+    "publisher": "Statistics Canada",
+    "product_id": "98-10-0594-01",
+    "vintage": "2021 Census",
+    "license": "Statistics Canada Open Licence; https://www.statcan.gc.ca/en/reference/licence",
+    "homepage": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810059401",
+    "description": "Employed labour force by industry of employment, place of residence; all industries and NAICS 2017 sectors.",
+    "used_for": "District and city-type location quotients",
+    "files": [
+      {
+        "file": "data/raw/districts2021/metadata.json",
+        "url": "https://www150.statcan.gc.ca/t1/wds/rest/getCubeMetadata",
+        "request_body": [
+          {
+            "productId": 98100594
+          }
+        ],
+        "retrieved": "2026-11-27T01:04:17.130641+00:00",
+        "sha256": "d2a9237558649a34fa209712dfc9029e4926ae3f906141329e51494a0d9487aa",
+        "bytes": 811869
+      },
+      {
+        "file": "data/raw/districts2021/data-00.json",
+        "url": "https://www150.statcan.gc.ca/t1/wds/rest/getDataFromCubePidCoordAndLatestNPeriods",
+        "request_body": [
+          {
+            "productId": 98100594,
+            "coordinate": "100.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "100.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "37.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "166.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "123.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "85.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "126.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "110.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "38.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "70.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          }
+        ],
+        "retrieved": "2026-11-27T01:04:18.448327+00:00",
+        "sha256": "fb458f700ca191d18b70f8c6d6d93fedea059bb8b08dcb0ba29ee775a5afbb36",
+        "bytes": 75622
+      },
+      {
+        "file": "data/raw/districts2021/data-01.json",
+        "url": "https://www150.statcan.gc.ca/t1/wds/rest/getDataFromCubePidCoordAndLatestNPeriods",
+        "request_body": [
+          {
+            "productId": 98100594,
+            "coordinate": "78.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "78.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "79.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "12.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "95.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "84.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "102.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "168.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "117.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "116.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "151.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          }
+        ],
+        "retrieved": "2026-11-27T01:04:19.404882+00:00",
+        "sha256": "a79a7685bb1b3f700a3d39ff4821b0562de57b197a903aecba1adb5fb744bf06",
+        "bytes": 75510
+      },
+      {
+        "file": "data/raw/districts2021/data-02.json",
+        "url": "https://www150.statcan.gc.ca/t1/wds/rest/getDataFromCubePidCoordAndLatestNPeriods",
+        "request_body": [
+          {
+            "productId": 98100594,
+            "coordinate": "57.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "57.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "50.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "6.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "142.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "24.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "68.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "77.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "69.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "59.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          }
+        ],
+        "retrieved": "2026-11-27T01:04:20.474370+00:00",
+        "sha256": "fcd2b0a300d158264cad7cbfb29f0de2c6c04773edfe31f3345aa5dd7b8fa796",
+        "bytes": 75323
+      },
+      {
+        "file": "data/raw/districts2021/data-03.json",
+        "url": "https://www150.statcan.gc.ca/t1/wds/rest/getDataFromCubePidCoordAndLatestNPeriods",
+        "request_body": [
+          {
+            "productId": 98100594,
+            "coordinate": "53.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "53.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "42.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "91.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "25.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "130.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "97.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "144.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "153.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "150.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "22.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          }
+        ],
+        "retrieved": "2026-11-27T01:04:21.727351+00:00",
+        "sha256": "ad2564888ea48aed99ade97033abf083c0effba1605379affef8d9672f4baead",
+        "bytes": 75374
+      },
+      {
+        "file": "data/raw/districts2021/data-04.json",
+        "url": "https://www150.statcan.gc.ca/t1/wds/rest/getDataFromCubePidCoordAndLatestNPeriods",
+        "request_body": [
+          {
+            "productId": 98100594,
+            "coordinate": "58.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "58.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "136.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "32.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "171.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "173.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.3.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.4.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.5.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.6.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.7.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.8.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.9.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.10.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.11.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.12.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.13.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.14.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.15.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.16.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.17.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.18.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.19.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.20.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.21.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.22.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          },
+          {
+            "productId": 98100594,
+            "coordinate": "1.23.1.1.1.1.2.0.0.0",
+            "latestN": 1
+          }
+        ],
+        "retrieved": "2026-11-27T01:04:22.778414+00:00",
+        "sha256": "f57f3015d9ea169a201c0da6f80e3080bd9fb603dec2514ff5c4b31e9bc90e04",
+        "bytes": 46289
+      }
+    ]
+  }
+]
