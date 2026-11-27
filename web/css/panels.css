@@ -114,3 +114,32 @@
 @media (max-width: 900px) {
   .cc-city-panel { width: 100%; }
 }
+
+/* Hidden panels leave the layout after the fade in browsers supporting
+   discrete display transitions. Older browsers still hide them immediately. */
+.cc-panel, .almanac-overlay {
+  opacity: 1;
+  transition: opacity 200ms ease, display 200ms allow-discrete;
+}
+.cc-panel[hidden], .almanac-overlay[hidden] { opacity: 0; pointer-events: none; }
+@starting-style {
+  .cc-panel:not([hidden]), .almanac-overlay:not([hidden]) { opacity: 0; }
+}
+
+/* The legend is inserted as a new node when a lens changes. */
+.lens-legend { animation: legend-appear 200ms ease both; }
+@keyframes legend-appear { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .cc-panel, .almanac-overlay { transition: none; }
+  .lens-legend { animation: none; }
+}
+
+/* A compact city summary leaves room for the ranked medallions and detail. */
+.cc-city-panel .cc-panel-kicker, .cc-city-panel .cc-panel-section h3,
+.city-head-stats .cc-stat-label, .city-medal { font-variant: small-caps; }
+.cc-city-panel .cc-panel-header h2 { margin: 3px 0; }
+.city-head-stats { gap: 5px; }
+.city-head-stats .cc-stat { padding: 6px 8px; background: linear-gradient(145deg, #1b2c36, #0e1a24); }
+.city-head-stats .cc-stat-value { margin-top: 3px; font-variant-numeric: tabular-nums; }
+.city-medals { margin-top: 7px; }
+.city-medal { gap: 2px; letter-spacing: .04em; }

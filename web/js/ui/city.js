@@ -69,6 +69,14 @@ function format(value, lang, type = 'number') {
   const n = new Intl.NumberFormat(locale, {maximumFractionDigits: 0}).format(value);
   return type === 'cad' ? `${n} CAD` : n;
 }
+// Keep the header tiles legible without sacrificing the full official value.
+// Detailed tables and charts continue to use the unabridged formatter above.
+function formatHeader(value, lang, type = 'number') {
+  if (!finite(value) || Math.abs(value) < 1000) return format(value, lang, type);
+  const locale = lang === 'fr' ? 'fr-CA' : 'en-CA';
+  const n = new Intl.NumberFormat(locale, {notation: 'compact', maximumSignificantDigits: 3}).format(value);
+  return type === 'cad' ? `${n} CAD` : n;
+}
 function changeSelection(id) {
   if (id && String(id) === selected()) return;
   const p = new URLSearchParams(location.hash.slice(1));
@@ -77,9 +85,10 @@ function changeSelection(id) {
   history.pushState(null, '', '#' + p.toString());
   window.dispatchEvent(new HashChangeEvent('hashchange'));
 }
-function stat(label, value, rank, lang) {
+function stat(label, value, rank, lang, exact = null) {
   const rankText = typeof rank === 'number' && Number.isFinite(rank) ? `<span class="cc-stat-rank">${esc(copy[lang].rank)} ${esc(rank)}</span>` : '';
-  return `<div class="cc-stat"><span class="cc-stat-label">${esc(label)}</span><strong class="cc-stat-value">${esc(value)}</strong>${rankText}</div>`;
+  const title = exact && exact !== value ? ` title="${esc(exact)}" aria-label="${esc(exact)}"` : '';
+  return `<div class="cc-stat"><span class="cc-stat-label">${esc(label)}</span><strong class="cc-stat-value"${title}>${esc(value)}</strong>${rankText}</div>`;
 }
 const extra = {
   en: {citizens: 'Citizens', districts: 'Districts', resources: 'Resources', compare: 'Compare', perPerson: 'GDP per person', growth: 'Growth', badge: 'City type', unavailable: 'Unavailable', noDistricts: 'No sector met the published threshold.', sites: 'Mapped resource sites within 50 km of the city marker', noSites: 'No resource sites mapped within 50 km of the city marker.', series: 'Population estimates', seriesNote: 'July 1 estimates on 2021 geography; 2025 preliminary. Estimates are not Census counts.', land: 'Land cover', landProvince: 'Province / territory land mix; average cover share across mapped land hexes, not a city measure.', landCity: 'City land cover', ratioNote: 'GDP per person divides 2022 GDP at basic prices by the July 2025 population estimate. GDP often uses 2011 CMA geography; these vintages and boundaries differ.', loading: 'Loading…', failure: 'Data unavailable.', peerNote: 'Nearest cities by population; official July 2025 estimates.', rankMissing: 'No rank', forest:'Forest', crop:'Cropland', pasture:'Pasture', grass:'Grassland', shrub:'Shrubland', wetland:'Wetland', developed:'Developed', barren:'Barren', ice:'Snow and ice'},
@@ -113,9 +122,11 @@ function render(ctx) {
   if (!root) return;
   const id = selected();
   const city = list(ctx.cities).find(item => String(item.id) === id);
+  // Leave the outgoing contents in place while the panel fades out. They are
+  // replaced on the next open, after invalidating any pending citizens render.
+  if (!city) { root.hidden = true; lastId = null; return; }
   const previousMount = root.querySelector('[data-citizens]');
   if (previousMount) clearCitizens(previousMount);
-  if (!city) { root.hidden = true; root.replaceChildren(); lastId = null; return; }
   if (id !== lastId) {
     activeTab = 'citizens'; lastId = id;
     document.dispatchEvent(new CustomEvent('canadaciv:panel-open', {detail: {source: 'city'}}));
@@ -155,7 +166,7 @@ function render(ctx) {
   }
   const tabs = ['citizens','districts','economy','workforce','resources','compare'];
   const geographyNote = city.gdp_geography_vintage ? (lang === 'fr' ? `Géographie du PIB : ${city.gdp_geography_vintage}.` : `GDP geography: ${city.gdp_geography_vintage}.`) : '';
-  root.innerHTML = `<div class="cc-panel-header"><div><span class="cc-panel-kicker">${esc(t.city)} · ${esc(kind)}</span><h2>${esc(local(city.name,lang))}</h2><p>${esc(provinces)}${city.capital ? ` · ${esc(t.capitalBadge)}` : ''}</p><span class="city-type-badge">${esc(x.badge)}: ${esc(badge)}</span></div><button type="button" class="cc-panel-close" aria-label="${esc(t.close)}">×</button><div class="cc-stat-grid city-head-stats">${stat(`${t.population} · ${year ?? '—'}`,format(city.population,lang),null,lang)}${stat(`${t.gold}${city.gdp_year ? ` · ${city.gdp_year}` : ''}`,format(gold,lang,'cad'),null,lang)}${stat(`${x.growth} · ${years}`,format(city.growth,lang,'percent'),null,lang)}${stat(x.perPerson,format(perPerson,lang,'cad'),null,lang)}</div><p class="cc-panel-note">${esc(x.ratioNote)} ${esc(geographyNote)}</p><div class="city-medals">${medals}</div></div><div class="cc-panel-tabs" role="tablist">${tabs.map(tab => `<button type="button" class="cc-panel-tab" role="tab" data-tab="${tab}" aria-selected="${activeTab === tab}">${esc(x[tab] || t[tab])}</button>`).join('')}</div><div class="cc-panel-body">${body}</div>`;
+  root.innerHTML = `<div class="cc-panel-header"><div><span class="cc-panel-kicker">${esc(t.city)} · ${esc(kind)}</span><h2>${esc(local(city.name,lang))}</h2><p>${esc(provinces)}${city.capital ? ` · ${esc(t.capitalBadge)}` : ''}</p><span class="city-type-badge">${esc(x.badge)}: ${esc(badge)}</span></div><button type="button" class="cc-panel-close" aria-label="${esc(t.close)}">×</button><div class="cc-stat-grid city-head-stats">${stat(`${t.population} · ${year ?? '—'}`,formatHeader(city.population,lang),null,lang,format(city.population,lang))}${stat(`${t.gold}${city.gdp_year ? ` · ${city.gdp_year}` : ''}`,formatHeader(gold,lang,'cad'),null,lang,format(gold,lang,'cad'))}${stat(`${x.growth} · ${years}`,format(city.growth,lang,'percent'),null,lang)}${stat(x.perPerson,formatHeader(perPerson,lang,'cad'),null,lang,format(perPerson,lang,'cad'))}</div><p class="cc-panel-note">${esc(x.ratioNote)} ${esc(geographyNote)}</p><div class="city-medals">${medals}</div></div><div class="cc-panel-tabs" role="tablist">${tabs.map(tab => `<button type="button" class="cc-panel-tab" role="tab" data-tab="${tab}" aria-selected="${activeTab === tab}">${esc(x[tab] || t[tab])}</button>`).join('')}</div><div class="cc-panel-body">${body}</div>`;
   root.hidden = false;
   root.querySelector('.cc-panel-close').onclick = () => changeSelection(null);
   root.querySelectorAll('[data-tab]').forEach(button => button.addEventListener('click', () => { activeTab = button.dataset.tab; render(ctx); }));
