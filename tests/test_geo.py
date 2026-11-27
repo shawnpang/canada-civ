@@ -1,3 +1,4 @@
+import math
 import unittest
 from pipeline.core.geo import MapProjection, project, unproject
 from pipeline.core.hexgrid import HexGrid
@@ -20,3 +21,15 @@ class GeoTests(unittest.TestCase):
         for r in range(g.rows):
             for c in range(g.cols):
                 self.assertEqual(g.cell(*g.center(c, r)), (c, r))
+
+    def test_pointy_top_odd_row_and_neighbor_picking(self):
+        g = HexGrid.covering(1000, 1000)
+        width = math.sqrt(3) * 25
+        self.assertEqual(g.radius, 25)
+        self.assertAlmostEqual(g.center(0, 0)[0], 0)
+        self.assertAlmostEqual(g.center(0, 1)[0], width / 2)
+        self.assertAlmostEqual(g.center(0, 1)[1], 37.5)
+        self.assertEqual(g.cell(width * .49, 0), (0, 0))
+        self.assertEqual(g.cell(width * .51, 0), (1, 0))
+        self.assertEqual(g.cell(width / 2, 37.5), (0, 1))
+        self.assertEqual(g.cell(-width / 2, 37.5), (-1, 1))

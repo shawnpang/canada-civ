@@ -81,19 +81,36 @@ def main():
     parser.add_argument('--port', type=int, default=8765)
     args = parser.parse_args()
     try:
-        if args.command == 'fetch': fetch(args.offline)
-        elif args.command == 'process': process()
-        elif args.command == 'list': print(INFO['id'], '-', INFO['title'])
+        if args.command == 'fetch':
+            from pipeline.mvp_sources import fetch as fetch_atlas
+            fetch(args.offline); fetch_atlas(args.offline)
+            from pipeline.mvp_annual import fetch as fetch_annual
+            fetch_annual(args.offline)
+        elif args.command == 'process':
+            from pipeline.mvp import process as process_atlas
+            process(); process_atlas()
+        elif args.command == 'list':
+            print(INFO['id'], '-', INFO['title'])
+            print('MVP: Census 2021 profile and boundaries, population, GDP, employment')
         elif args.command == 'check':
             from pipeline.world import check as validate
-            return validate()
+            from pipeline.mvp_check import check as validate_atlas
+            world_status = validate()
+            atlas_status = validate_atlas(WEB / 'data')
+            return int(bool(world_status or atlas_status))
         elif args.command == 'build':
-            from pipeline.world import build
-            build()
+            from pipeline.mvp import process as process_atlas, build as build_atlas
+            process_atlas(); build_atlas()
         elif args.command == 'all':
-            fetch(args.offline); process()
-            from pipeline.world import build, check as validate
-            build(); return validate()
+            from pipeline.mvp_sources import fetch as fetch_atlas
+            from pipeline.mvp import process as process_atlas, build as build_atlas
+            from pipeline.world import check as validate
+            from pipeline.mvp_check import check as validate_atlas
+            from pipeline.mvp_annual import fetch as fetch_annual
+            fetch(args.offline); fetch_atlas(args.offline); fetch_annual(args.offline); process(); process_atlas(); build_atlas()
+            world_status = validate()
+            atlas_status = validate_atlas(WEB / 'data')
+            return int(bool(world_status or atlas_status))
         elif args.command == 'serve':
             os.chdir(WEB)
             http.server.ThreadingHTTPServer(('127.0.0.1', args.port), http.server.SimpleHTTPRequestHandler).serve_forever()
