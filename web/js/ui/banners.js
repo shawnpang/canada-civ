@@ -8,6 +8,27 @@ let townHitBoxes = [];
 let roster;
 let rosterOpen = false;
 let districts = null;
+let reservedWorld, smallProvinceCenters = [];
+
+// A province represented by only a few hexes has no alternative anchor when
+// a town banner covers it. Reserve space near its owned cells at national zoom.
+function smallProvinceReservations(world, camera) {
+  if (world !== reservedWorld) {
+    reservedWorld = world;
+    const groups = world.provinces.map(() => []);
+    world.owner.forEach((owner, i) => {
+      if (groups[owner]) groups[owner].push(center(i % world.grid.cols, Math.floor(i / world.grid.cols), world.grid.radius || 25));
+    });
+    smallProvinceCenters = groups.filter(points => points.length > 0 && points.length <= 2).map(points => [
+      points.reduce((sum, p) => sum + p[0], 0) / points.length,
+      points.reduce((sum, p) => sum + p[1], 0) / points.length
+    ]);
+  }
+  return smallProvinceCenters.map(([x, y]) => ({
+    left: camera.ox + x * camera.scale - 35, right: camera.ox + x * camera.scale + 35,
+    top: camera.oy + y * camera.scale - 21, bottom: camera.oy + y * camera.scale + 21
+  }));
+}
 
 function cities(ctx) {
   return Array.isArray(ctx.cities) ? ctx.cities : (ctx.cities?.cities || []);
@@ -138,6 +159,8 @@ export function layoutBanners(ctx) {
   const compact = new Intl.NumberFormat(locale, {notation: 'compact', maximumFractionDigits: 1});
   const fit = Math.min(innerWidth / (ctx.world.width + 200), (innerHeight - 95) / (ctx.world.height + 200));
   const zoom = camera.scale / fit;
+  const reservations = zoom <= 1.15 && ctx.world.grid && Array.isArray(ctx.world.owner) && Array.isArray(ctx.world.provinces)
+    ? smallProvinceReservations(ctx.world, camera) : [];
   for (const city of ordered) {
     const pos = position(city, ctx.world);
     if (!pos) continue;
@@ -191,6 +214,8 @@ export function layoutBanners(ctx) {
       const candidate = {town, left, right: left + width, top, bottom: top + 18, x, y, name};
       candidate.collision = {left, right: left + width, top, bottom: candidate.bottom};
       if (candidate.left > innerWidth || candidate.right < 0 || candidate.top > innerHeight || candidate.bottom < 0) continue;
+      if (String(town.id) !== selected && reservations.some(other => candidate.collision.left < other.right && candidate.collision.right > other.left &&
+          candidate.collision.top < other.bottom && candidate.collision.bottom > other.top)) continue;
       if (placed.some(other => candidate.collision.left < other.collision.right + 4 && candidate.collision.right + 4 > other.collision.left &&
           candidate.collision.top < other.collision.bottom + 3 && candidate.collision.bottom + 3 > other.collision.top)) continue;
       placed.push(candidate);
