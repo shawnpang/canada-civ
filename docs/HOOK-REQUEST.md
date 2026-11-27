@@ -33,3 +33,10 @@ Shared-shell work for the integrator (`main.js`, hash helpers, chrome layout). W
 - Add `<link rel="stylesheet" href="css/advisors.css">` to `web/index.html`. The shell already imports and initializes `advisors.js` and provides `#advisors-root`.
 - Expose the shared `getHash` and `setHashKeys` helpers on the module context as requested above, preserving unrelated hash keys and notifying listeners on selection changes, so advisor selections can synchronize with city and province panels. Coordinate the advisor court with the shell's topmost Escape and chrome layout handling.
 - Advisors imports `setHashKeys` and `writeHash` directly and uses the existing city/province selection contract. For full Explorer fidelity, provide a census-division selection/highlight contract (including a URL key, if adopted) and coordinate the advisor dock with city/province panels on mobile. Until then, Explorer marks the division's assigned map cell rather than its boundary.
+
+## Workstream ws-layers
+
+- Add `<link rel="stylesheet" href="css/layers.css">` to `web/index.html`.
+- `main.js` already imports and initializes `ui/layers.js` and dispatches `onLang` and `onHash`. In `draw()`, call `layers.onRedraw(ctxObj)` after `lensRender.onRedraw(ctxObj)` and before `banners.onRedraw(ctxObj)`, then exclude `layers` from the later module redraw loop. This keeps transport and site symbols below city banners and avoids drawing twice.
+- Include the open `.map-layer-menu` in the shell's ordered Escape handling when coordinating topmost surfaces. The module has a local Escape fallback.
+- The layer menu exposes the payload's bilingual selection and coverage rules, but the v1 Almanac still needs a layers entry citing the shipped sources and their licences. The help sheet should also mention the R shortcut.
