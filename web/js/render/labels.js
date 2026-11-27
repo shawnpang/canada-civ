@@ -87,8 +87,12 @@ export function onRedraw(ctx) {
     const text = pei && zoom <= 1.15 ? (lang === 'fr' ? 'Î.-P.-É.' : 'P.E.I.') : name.toLocaleUpperCase(lang === 'fr' ? 'fr-CA' : 'en-CA');
     const areaWidth = Math.max(pei ? 155 : 105, anchor.width * camera.scale * .88);
     const areaHeight = Math.max(15, anchor.height * camera.scale * .4);
-    const maxSize = Math.floor(Math.max(12, Math.min(38, 19 + camera.scale * 30, areaHeight)));
     const radius = world.grid.radius || 25;
+    // At close zoom, keep the lettering from expanding with the terrain.
+    // National and mid-zoom labels retain their original size.
+    const closeAmount = Math.max(0, Math.min(1, (radius * camera.scale - 10) / 12));
+    const sizeLimit = 38 - 10 * closeAmount;
+    const maxSize = Math.floor(Math.max(12, Math.min(sizeLimit, 19 + camera.scale * 30, areaHeight)));
     const visible = anchor.points.filter(point => {
       const x = camera.ox + point[0] * camera.scale, y = camera.oy + point[1] * camera.scale;
       return x >= -radius * camera.scale && x <= viewportWidth + radius * camera.scale &&
@@ -105,6 +109,10 @@ export function onRedraw(ctx) {
       const spacing = size * .18, outline = Math.max(2.5, size * .15);
       const options = lineOptions(text).map(lines => ({lines, width: Math.max(...lines.map(line => spacedWidth(g, line, spacing)))}));
       options.splice(1, options.length - 1, ...options.slice(1).sort((a, b) => a.lines.length - b.lines.length || a.width - b.width));
+      // A compact stack leaves room for Ontario and the city banners on phones.
+      if (anchor.province.pruid === '12' && viewportWidth <= 500 && options.length > 1) {
+        options.push(options.shift());
+      }
       for (const option of options) {
         if (option.width > areaWidth && size > 9) continue;
         const height = size * (1 + (option.lines.length - 1) * 1.1);
@@ -117,6 +125,7 @@ export function onRedraw(ctx) {
           // Compact coastal provinces can use a little adjacent water when
           // their cities occupy the land at national scale.
           if (anchor.province.pruid === '13') offsets.push([0, -32], [0, 32], [35, -30], [35, 30], [55, 0]);
+          if (anchor.province.pruid === '12') offsets.push([0, 32], [35, 30], [55, 0], [55, 30], [0, -32], [35, -30]);
           for (const [dx, dy] of offsets) {
             const x = px + dx, y = py + dy, padding = outline + 1;
             const box = {left: x - option.width / 2 - padding, right: x + option.width / 2 + padding,
