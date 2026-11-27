@@ -223,27 +223,12 @@ function closeHelp() { helpDialog.hidden = true; document.querySelector('#help')
 document.querySelector('#help').onclick = openHelp;
 document.querySelector('#close').onclick = closeHelp;
 
-// Search owns result rendering and camera flight. Dispatch before its result
-// handler writes the same hash, so the city selection creates one history entry.
-function dispatchSearchCity(button) {
-  if (!button || !data.cities) return;
-  const resultName = button.querySelector('.search-result-name')?.textContent;
-  const type = button.querySelector('.search-result-type')?.textContent;
-  if (type !== (lang === 'fr' ? 'Ville' : 'City')) return;
-  const cities = Array.isArray(data.cities) ? data.cities : (data.cities.cities || []);
-  const candidates = cities.filter(place => (place.name?.[lang] || place.name?.en || place.name?.fr || '') === resultName)
-    .sort((a, b) => (b.population ?? -1) - (a.population ?? -1));
-  if (candidates.length) window.dispatchEvent(new CustomEvent('canadaciv:select-city', {detail: {id: candidates[0].id}}));
-}
+// Search owns city selection (setHashKeys with the result id) and camera flight.
 window.addEventListener('click', event => {
   flushSave();
-  dispatchSearchCity(event.target.closest?.('#search-root .search-result'));
 }, true);
 window.addEventListener('keydown', event => {
   if (!event.ctrlKey && !event.metaKey && !event.altKey) flushSave();
-  if (event.key === 'Enter' && event.target.matches?.('#search-root .search-input')) {
-    dispatchSearchCity(document.querySelector('#search-root .search-result[aria-selected="true"]'));
-  }
   const editing = event.target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName || '');
   if (event.key === '?' && !editing && !event.ctrlKey && !event.metaKey && !event.altKey) {
     event.preventDefault();
@@ -257,6 +242,7 @@ window.addEventListener('keydown', event => {
   if (!helpDialog.hidden) close = closeHelp;
   else if (visible('.share-overlay')) close = () => document.querySelector('.share-overlay .share-close')?.click();
   else if (visible('.almanac-overlay')) close = () => document.querySelector('.almanac-overlay .almanac-close')?.click();
+  else if (visible('.adv-panel')) close = () => document.querySelector('.adv-close')?.click();
   else if (document.activeElement === searchInput) close = () => { searchInput.value = ''; searchInput.blur(); };
   else if (document.querySelector('.lens-picker[open]')) close = () => { document.querySelector('.lens-picker').open = false; };
   else if (visible('.yield-report')) close = () => document.querySelector('.yield-report .yield-report-close')?.click();
