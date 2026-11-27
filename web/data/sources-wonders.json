@@ -1,0 +1,55 @@
+[
+  {
+    "id": "parks_canada_attendance",
+    "title": "Parks Canada attendance 2025–26",
+    "publisher": "Parks Canada",
+    "homepage": "https://open.canada.ca/data/en/dataset/1e2bd6b2-d6c7-415b-8c95-f5f6b2459759",
+    "license": "Open Government Licence – Canada",
+    "vintage": "2025–26",
+    "used_for": "National park and historic-site attendance rules",
+    "files": [
+      {
+        "file": "data/raw/wonders/attendance-en.csv",
+        "url": "https://open.canada.ca/data/dataset/1e2bd6b2-d6c7-415b-8c95-f5f6b2459759/resource/73609a87-77f6-4a69-bd96-b8e3f3451aa7/download/parks-canada-attendance-2025_26.csv",
+        "retrieved": "2026-11-27",
+        "sha256": "5f23b2ade66e81d5cb21f10e5b107ce044d0e0a0a1aa69715fcdb15352bf038e",
+        "bytes": 5833
+      },
+      {
+        "file": "data/raw/wonders/attendance-fr.csv",
+        "url": "https://open.canada.ca/data/dataset/1e2bd6b2-d6c7-415b-8c95-f5f6b2459759/resource/c018c61f-ea87-4995-9224-9e529a7944a2/download/frequentation-a-parcs-canada-2025_26.csv",
+        "retrieved": "2026-11-27",
+        "sha256": "0a7fc7a6e5c1cf3b3a0a0c3b80d92468b71aad8a78228175331067bebe1c0e45",
+        "bytes": 6391
+      }
+    ]
+  },
+  {
+    "id": "parks_canada_locations",
+    "title": "Find a Parks Canada location",
+    "publisher": "Parks Canada",
+    "homepage": "https://parks.canada.ca/",
+    "license": "Open Government Licence – Canada",
+    "vintage": "retrieval date",
+    "used_for": "Schematic points for attendance units",
+    "files": [
+      {
+        "file": "data/raw/wonders/locations-en.html",
+        "url": "https://parks.canada.ca/",
+        "retrieved": "2026-11-27",
+        "sha256": "ed44c53422609bb2dc0535a32f53fc7cc54968bd4e609a2f8fe02008f9e98441",
+        "bytes": 644926
+      }
+    ]
+  },
+  {
+    "id": "nrcan_cgn",
+    "title": "Canadian Geographical Names Database",
+    "publisher": "Natural Resources Canada",
+    "homepage": "https://open.canada.ca/data/en/dataset/e27c6eba-3c5d-4051-9db2-082dc6411c2c",
+    "license": "Open Government Licence – Canada",
+    "vintage": "retrieved 2026-11-27",
+    "used_for": "Curated landmark coordinates and names; individual record URLs are on the items",
+    "files": []
+  }
+]

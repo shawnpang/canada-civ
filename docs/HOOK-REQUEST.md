@@ -33,3 +33,10 @@ Shared-shell work for the integrator (`main.js`, hash helpers, chrome layout). W
 - Add `<link rel="stylesheet" href="css/advisors.css">` to `web/index.html`. The shell already imports and initializes `advisors.js` and provides `#advisors-root`.
 - Expose the shared `getHash` and `setHashKeys` helpers on the module context as requested above, preserving unrelated hash keys and notifying listeners on selection changes, so advisor selections can synchronize with city and province panels. Coordinate the advisor court with the shell's topmost Escape and chrome layout handling.
 - Advisors imports `setHashKeys` and `writeHash` directly and uses the existing city/province selection contract. For full Explorer fidelity, provide a census-division selection/highlight contract (including a URL key, if adopted) and coordinate the advisor dock with city/province panels on mobile. Until then, Explorer marks the division's assigned map cell rather than its boundary.
+
+## Workstream wonders
+
+- Load the optional eager `web/data/wonders.json` and merge the `web/data/sources-wonders.json` catalogue fragment into `sources.json` without dropping other sources. Pass the payload as `ctx.wonders`.
+- Import `web/js/render/wonders.js` and call `onRedraw(ctx)` when the Wonders layer is enabled. Provide a Wonders map toggle and preserve its non-default state in the URL hash. Call `clearHits()` on disable; use `hitWonder(event)` and `wonderName(item, lang)` for a bilingual tooltip, showing attendance and 2025–26 only where present.
+- Add a Wonders Almanac page that quotes the bilingual `rules` array directly from the payload, including the university omission and caveat, and resolves the listed source IDs and vintages. A null point means a ranked reporting unit remains listable but cannot be drawn.
+- To make rebuilding and validation part of the common pipeline, integrate `pipeline.wonders` fetch/build and validate the optional payload; `uv run python -m pipeline.wonders --fetch` refreshes the inputs and rebuilds it, while the command without `--fetch` uses the cached source files.
