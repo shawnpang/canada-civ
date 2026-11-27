@@ -28,6 +28,8 @@ function makeGeometry(w) {
   const {rows, cols} = w.grid;
   const water = [new Path2D(), new Path2D()];
   const shores = [new Path2D(), new Path2D()];
+  const cutouts = [new Path2D(), new Path2D()];
+  const crossings = new Map();
   const land = new Map();
   const landPath = i => {
     const color = landColor(w,i);
@@ -69,17 +71,26 @@ function makeGeometry(w) {
     path.closePath();
     for(const points of extensions) triangle(path,...points);
   }
-  // Each triangle of neighbouring centres contributes a straight segment
-  // between the midpoints of its two unlike edges. Adjacent segments meet.
+  // Connect crossings by the pair of cells they lie between. Every complete
+  // crossing has one incoming and one outgoing segment, with water on the
+  // right. Keeping that orientation also tells us which corners to trim.
   function shoreTriangle(ids, points) {
     if(ids.some(i=>i<0)) return;
     const wet=ids.map(i=>kind(w,i)>=0);
     if(wet.every(Boolean)||wet.every(v=>!v)) return;
-    const crossings=[];
-    for(let k=0;k<3;k++) if(wet[k]!==wet[(k+1)%3]) crossings.push(midpoint(points[k],points[(k+1)%3]));
+    const ends=[];
+    for(let k=0;k<3;k++) if(wet[k]!==wet[(k+1)%3]) {
+      const j=(k+1)%3, key=[ids[k],ids[j]].sort((a,b)=>a-b).join(':');
+      if(!crossings.has(key)) crossings.set(key,{point:midpoint(points[k],points[j])});
+      ends.push(crossings.get(key));
+    }
     const wetTypes=ids.filter((_,k)=>wet[k]).map(i=>kind(w,i));
     const type=wetTypes.every(v=>v===1)?1:0;
-    shores[type].moveTo(...crossings[0]); shores[type].lineTo(...crossings[1]);
+    const wetPoint=points[wet.indexOf(true)], [a,b]=ends;
+    const cross=(b.point[0]-a.point[0])*(wetPoint[1]-a.point[1])-(b.point[1]-a.point[1])*(wetPoint[0]-a.point[0]);
+    const from=cross>0?a:b, to=cross>0?b:a;
+    from.next=to; to.prev=from; from.type=type;
+    from.land=ids[wet.indexOf(false)];
   }
   for(let row=0;row<rows-1;row++) for(let col=0;col<cols;col++) {
     const s=row&1;
@@ -88,7 +99,26 @@ function makeGeometry(w) {
       shoreTriangle(cells.map(([r,c])=>index(r,c,rows,cols)),cells.map(([r,c])=>centre(r,c)));
     }
   }
-  return {water, shores, land};
+  for(const node of crossings.values()) {
+    if(!node.prev || !node.next) continue;
+    const p=node.point, a=midpoint(node.prev.point,p), b=midpoint(p,node.next.point);
+    const type=node.type, shore=shores[type];
+    shore.moveTo(...a); shore.quadraticCurveTo(...p,...b);
+    const turn=(p[0]-a[0])*(b[1]-p[1])-(p[1]-a[1])*(b[0]-p[0]);
+    if(Math.abs(turn)<.001) continue;
+    // Replace just the small wedge between the straight and curved coast.
+    // Clockwise bends cut water; counterclockwise bends add it. The same
+    // curve is used for the fill, shallows, and waterline.
+    const path=turn>0?cutouts[type]:water[type];
+    if(turn>0) {
+      path.moveTo(...a); path.lineTo(...p); path.lineTo(...b); path.quadraticCurveTo(...p,...a); path.closePath();
+      const ground=landPath(node.land);
+      ground.moveTo(...a); ground.lineTo(...p); ground.lineTo(...b); ground.quadraticCurveTo(...p,...a); ground.closePath();
+    } else {
+      path.moveTo(...b); path.lineTo(...p); path.lineTo(...a); path.quadraticCurveTo(...p,...b); path.closePath();
+    }
+  }
+  return {water, shores, land, cutouts};
 }
 
 export function paintWater(ctx, w, {width,height,scale,ox,oy}) {
@@ -102,30 +132,50 @@ export function paintWater(ctx, w, {width,height,scale,ox,oy}) {
   // protrusions when a midpoint shore straightens a concave coast.
   for(const [color,path] of paths.land) { ctx.fillStyle=color; ctx.fill(path); }
   for(let type=0;type<2;type++) {
-    ctx.save(); ctx.clip(paths.water[type]);
+    ctx.save();
+    // Subtract rounded convex corners without changing the winding of the
+    // many overlapping cell polygons in the water mask.
+    const outside=new Path2D();
+    outside.rect(-DX*2,-R*2,(w.grid.cols+4)*DX,(w.grid.rows+4)*R*1.5);
+    outside.addPath(paths.cutouts[type]);
+    ctx.clip(outside,'evenodd'); ctx.clip(paths.water[type]);
     const gradient=ctx.createLinearGradient(0,0,DX*110,R*120);
     if(type===0) {
-      gradient.addColorStop(0,'#315f6b'); gradient.addColorStop(.48,'#376a74'); gradient.addColorStop(1,'#305e6b');
+      gradient.addColorStop(0,'#315f6b'); gradient.addColorStop(.48,'#396d77'); gradient.addColorStop(1,'#305e6b');
     } else {
-      gradient.addColorStop(0,'#345d6c'); gradient.addColorStop(.55,'#3c6d7a'); gradient.addColorStop(1,'#325c6a');
+      gradient.addColorStop(0,'#294e60'); gradient.addColorStop(.55,'#315d6c'); gradient.addColorStop(1,'#294f60');
     }
     ctx.fillStyle=gradient;
     ctx.fillRect(-ox/scale,-oy/scale,width/scale,height/scale);
     ctx.lineJoin='round'; ctx.lineCap='round';
     // Clip to water so the strokes form bands on the water side only.
     if(lod>=MID) {
-      ctx.strokeStyle=type===1?'rgba(120,188,191,.49)':'rgba(102,191,185,.48)';
-      ctx.lineWidth=Math.min(R*.75,Math.max(3/scale,R*.32))*2;
+      ctx.strokeStyle=type===1?'rgba(126,202,199,.62)':'rgba(112,207,194,.62)';
+      ctx.lineWidth=Math.max(3/scale,R*.40)*2;
+      ctx.stroke(paths.shores[type]);
+      ctx.strokeStyle=type===1?'rgba(174,222,210,.34)':'rgba(170,232,209,.37)';
+      ctx.lineWidth=Math.max(1.8/scale,R*.18)*2;
       ctx.stroke(paths.shores[type]);
     }
     if(lod>=NEAR) {
-      ctx.strokeStyle='rgba(213,236,218,.72)';
-      ctx.lineWidth=Math.max(1/scale,R*.055)*2;
+      ctx.strokeStyle='rgba(235,247,224,.90)';
+      ctx.lineWidth=Math.max(1.4/scale,R*.075)*2;
       ctx.stroke(paths.shores[type]);
     }
     ctx.strokeStyle=type===1?'rgba(32,79,83,.78)':'rgba(36,91,86,.82)';
     ctx.lineWidth=Math.max(.7/scale,R*.018)*2;
     ctx.stroke(paths.shores[type]);
+    if(type===0) {
+      // Fade both the fill and coastal bands into terrain's ocean background
+      // at the grid edge; this is not another coastline.
+      const right=(w.grid.cols-.5)*DX, bottom=(w.grid.rows-1)*1.5*R;
+      for(const [x0,y0,x1,y1] of [[0,0,DX*2.5,0],[right,0,right-DX*2.5,0],
+        [0,0,0,R*3.75],[0,bottom,0,bottom-R*3.75]]) {
+        const fade=ctx.createLinearGradient(x0,y0,x1,y1);
+        fade.addColorStop(0,'#315e6b'); fade.addColorStop(1,'rgba(49,94,107,0)');
+        ctx.fillStyle=fade; ctx.fillRect(-ox/scale,-oy/scale,width/scale,height/scale);
+      }
+    }
     ctx.restore();
   }
   ctx.restore();
