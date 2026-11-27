@@ -103,8 +103,8 @@
 .city-medals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 8px 0 0; gap: 4px; }
 .city-medal { display: flex; flex-direction: column; align-items: center; gap: 3px; color: #cdbf9e; font: 9px Arial, sans-serif; text-align: center; text-transform: uppercase; }
 .city-medal-disc { display: grid; place-items: center; width: 40px; height: 40px; border: 2px solid #c2a25e; border-radius: 50%; background: radial-gradient(circle at 35% 25%, #f6f3e8, #aab5b9 65%, #65747d); color: #202b30; box-shadow: inset 0 0 0 2px #30414b, 0 2px 4px #0009; font: bold 11px Georgia, serif; }
-.cc-city-panel .cc-panel-tabs { overflow-x: auto; gap: 2px; padding: 5px; scrollbar-width: thin; }
-.cc-city-panel .cc-panel-tab { flex: 0 0 auto; padding: 7px 8px; font-size: 10px; }
+.cc-city-panel .cc-panel-tabs { flex-wrap: wrap; gap: 2px; padding: 5px; }
+.cc-city-panel .cc-panel-tab { flex: 1 1 auto; padding: 7px 4px; font-size: 9px; letter-spacing: .02em; white-space: nowrap; }
 .cc-city-panel .cc-panel-body { padding: 13px 16px 24px; }
 .city-district-plaques { display: block; max-width: 100%; }
 .city-chart { display: flex; align-items: stretch; height: 125px; gap: 8px; padding: 10px 4px 0; border-bottom: 1px solid #a28f5c55; }

@@ -18,7 +18,8 @@ button:focus-visible, #minimap:focus-visible { outline: 2px solid #fff1bd; outli
 .minimap-frame { position: absolute; left: 12px; bottom: 37px; padding: 4px; border: 1px solid #a48c5b; border-radius: 4px; background: #122332; box-shadow: 0 2px 8px #0009, inset 0 0 0 1px #ffffff18; }
 #minimap { display: block; width: 200px; height: 164px; cursor: crosshair; touch-action: none; }
 footer { position: absolute; bottom: 0; left: 0; right: 0; padding: 9px 18px; display: flex; justify-content: space-between; gap: 12px; background: #111f29d9; font-size: 9px; pointer-events: none; }
-#loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 14px 24px; color: #f3e5bd; background: #142a36e8; border: 1px solid #a48c5b; box-shadow: 0 4px 18px #0008; font-size: 20px; white-space: nowrap; }
+#loading { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 24px; color: #e5cb87; background: #0d2236; font-size: 15px; letter-spacing: .2em; text-align: center; text-transform: uppercase; }
+#loading[hidden] { display: none; }
 #dialog { position: absolute; top: 55px; right: 14px; width: min(400px, 90vw); padding: 20px 24px; background: #1c2d38; border: 1px solid #c2a569; box-shadow: 0 5px 20px #0009; line-height: 1.6; }
 #close { float: right; }
 #dialog h2 { font-weight: normal; }

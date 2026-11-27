@@ -21,7 +21,7 @@ const words = {
     url: 'Link to this view', copy: 'Copy link', download: 'Download PNG',
     copied: 'Link copied.', manual: 'Select and copy the link above.',
     failed: 'The image could not be downloaded.',
-    credit: 'Canada Civ · Statistics Canada / Government of Canada data · Inspired by usaciv',
+    credit: 'Canada Civ · Statistics Canada / Natural Resources Canada data · Inspired by usaciv',
     licences: 'Statistics Canada Open Licence · Open Government Licence – Canada'
   },
   fr: {
@@ -29,7 +29,7 @@ const words = {
     url: 'Lien vers cette vue', copy: 'Copier le lien', download: 'Télécharger le PNG',
     copied: 'Lien copié.', manual: 'Sélectionnez et copiez le lien ci-dessus.',
     failed: 'Impossible de télécharger l’image.',
-    credit: 'Canada Civ · Données de Statistique Canada / du gouvernement du Canada · Inspiré de usaciv',
+    credit: 'Canada Civ · Données de Statistique Canada / Ressources naturelles Canada · Inspiré de usaciv',
     licences: 'Licence ouverte de Statistique Canada · Licence du gouvernement ouvert – Canada'
   }
 };
@@ -123,7 +123,14 @@ function downloadImage() {
     const link = document.createElement('a');
     link.download = 'canada-civ.png';
     link.href = canvas.toDataURL('image/png');
-    link.click();
+    // Some browsers require a connected anchor for a download click.
+    link.hidden = true;
+    document.body.append(link);
+    try {
+      link.click();
+    } finally {
+      link.remove();
+    }
   } catch (_) {
     message('failed');
   }
