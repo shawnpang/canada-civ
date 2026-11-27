@@ -10,6 +10,9 @@ from pipeline.core.hexgrid import HexGrid
 ROOT=Path(__file__).resolve().parents[1]
 RAW=ROOT/'data/raw'; OUT=ROOT/'web/data'
 PROFILE='https://api.statcan.gc.ca/census-recensement/profile/sdmx/rest/data/STC_CP,{flow}/A5..1.1+6+7+40+229+331+374+375+376+377+378+1474+2014+2024+2230.1'
+# Total gender, total statistic, 2021 Census Profile. Shelter costs include
+# utilities where applicable; burden is the share paying 30% or more of income.
+CENSUS_ECONOMY='https://api.statcan.gc.ca/census-recensement/profile/sdmx/rest/data/STC_CP,{flow}/A5..1.1478+1480+2225.1'
 # Census industry tables count labour force, not jobs. Use only the separately
 # sourced employed-by-industry table for these mappings.
 YIELD_NAICS={'food':['11'],'production':['21','23','31-33'],'science':['51','54'],'culture':['71']}
@@ -20,6 +23,7 @@ def combine_jobs(jobs,codes):
 def urls():
  d={}
  for flow in ['DF_PR','DF_CD','DF_CMACA','DF_CSD']:d[f'census2021/{flow}.csv']=PROFILE.format(flow=flow)
+ for flow in ['DF_PR','DF_CMACA','DF_CSD']:d[f'census_economy/{flow}.csv']=CENSUS_ECONOMY.format(flow=flow)
  for level in [4,6]:d[f'census2021/geo{level}.json']=f'https://geo.statcan.gc.ca/geo_wa/rest/services/2021/Cartographic_boundary_files/MapServer/{level}/query?where=1%3D1&outFields=*&outSR=3347&geometryPrecision=0&maxAllowableOffset=1000&f=json'
  d['census2021/iqaluit.json']='https://geo.statcan.gc.ca/geo_wa/rest/services/2021/Cartographic_boundary_files/MapServer/9/query?where=CSDUID%3D%276204003%27&outFields=*&outSR=3347&geometryPrecision=0&maxAllowableOffset=500&f=json'
  for table in ['98100001','98100002','98100005','98100007']:d[f'population/{table}.zip']=f'https://www150.statcan.gc.ca/n1/tbl/csv/{table}-eng.zip'
@@ -32,15 +36,22 @@ def readzip(name):
   n=next(n for n in z.namelist() if n.endswith('.csv') and 'MetaData' not in n)
   return list(csv.DictReader(io.TextIOWrapper(z.open(n),encoding='utf-8-sig',newline='')))
 
-def csv_profiles():
+def read_profiles(paths):
  data={}
- for f in ['DF_PR','DF_CD','DF_CMACA','DF_CSD']:
-  with (RAW/'census2021'/f'{f}.csv').open(encoding='utf-8-sig',newline='') as fp:
+ for path in paths:
+  with path.open(encoding='utf-8-sig',newline='') as fp:
    for row in csv.DictReader(fp):
-    try:v=float(row['OBS_VALUE']);v=int(v) if v.is_integer() else v
+    try:
+     if row.get('FLAG') in {'1','2','4','6','O'}:raise ValueError('unavailable observation')
+     v=float(row['OBS_VALUE']);v=int(v) if v.is_integer() else v
     except (ValueError,TypeError):v=None
     data.setdefault(row['REF_AREA'],{})[row['CHARACTERISTIC']]=v
  return data
+
+def csv_profiles():
+ paths=[RAW/'census2021'/f'{f}.csv' for f in ['DF_PR','DF_CD','DF_CMACA','DF_CSD']]
+ paths += [RAW/'census_economy'/f'{f}.csv' for f in ['DF_PR','DF_CMACA','DF_CSD']]
+ return read_profiles(paths)
 
 def process():
  """Validate cached Census inputs and write the reusable profile interim."""
@@ -99,7 +110,30 @@ def ratio(a,b):return a/b if a is not None and b not in (None,0) else None
 
 def economy(prof,gdp=None,gdp_year=None):
  jobs={code:None for codes in YIELD_NAICS.values() for code in codes}
- return {'population':prof.get('1'),'employed':None,'jobs':jobs,'yields':{**{k:combine_jobs(jobs,v) for k,v in YIELD_NAICS.items()},'gold':gdp},'gdp':gdp,'gdp_year':gdp_year if gdp is not None else None,'unemployment':prof.get('2230')/100 if prof.get('2230') is not None else None,'median_income':prof.get('229'),'median_rent':None,'home_value':prof.get('1474'),'rent_burden':None,'growth':None,'growth_years':None,'pop_series':{'2021':prof.get('1')},'gdp_by_industry':{},'gdp_undisclosed':None}
+ return {'population':prof.get('1'),'employed':prof.get('2225'),'jobs':jobs,'yields':{**{k:combine_jobs(jobs,v) for k,v in YIELD_NAICS.items()},'gold':gdp},'gdp':gdp,'gdp_year':gdp_year if gdp is not None else None,'unemployment':prof.get('2230')/100 if prof.get('2230') is not None else None,'median_income':prof.get('229'),'median_rent':prof.get('1480'),'home_value':prof.get('1474'),'rent_burden':prof.get('1478')/100 if prof.get('1478') is not None else None,'growth':None,'growth_years':None,'pop_series':{'2021':prof.get('1')},'gdp_by_industry':{},'gdp_undisclosed':None}
+
+def refresh_census_economy():
+ """Refresh only economic Census fields in existing atlas payloads.
+
+ This is useful when the remainder of the atlas is maintained independently.
+ Provenance is verified before any output is written.
+ """
+ from pipeline.mvp_sources import catalogue
+ files=[f'{flow}.csv' for flow in ('DF_PR','DF_CMACA','DF_CSD')]
+ sources=catalogue({'census_economy':files})
+ profiles=read_profiles([RAW/'census_economy'/name for name in files])
+ nation=json.loads((OUT/'nation.json').read_text())
+ provinces=json.loads((OUT/'provinces.json').read_text())
+ cities=json.loads((OUT/'cities.json').read_text())
+ rows=[(nation['nation'],'2021A000011124')]
+ rows += [(p,'2021A0002'+p['pruid']) for p in provinces['provinces']]
+ rows += [(c, '2021A0005'+c['id'][4:] if c['kind']=='capital' else
+           '2021S050'+('4' if c['kind']=='ca' else '3')+c['id']) for c in cities]
+ for row,geography in rows:
+  values=economy(profiles.get(geography,{}))
+  for key in ('employed','median_rent','rent_burden'):row[key]=values[key]
+ write('nation.json',nation);write('provinces.json',provinces);write('cities.json',cities)
+ write('sources-census.json',sources)
 
 def definitions():
  entries=[
@@ -238,6 +272,7 @@ def build():
  world_ids={'statcan_boundaries_2021','nrcan_mrdem','nrcan_landcover_2020','etopo','natural_earth','atlas_rivers','atlas_lakes'}
  sources=[item for item in sources if item['id'] in world_ids]
  used={'census2021':['DF_PR.csv','DF_CD.csv','DF_CMACA.csv','DF_CSD.csv','geo4.json','geo6.json','iqaluit.json'],
+       'census_economy':['DF_PR.csv','DF_CMACA.csv','DF_CSD.csv'],
        'population':['98100005.zip','98100002.zip'], 'gdp':['36100468.zip','36100711.zip'],
        'labour2021':['metadata.json']+[p.name for p in sorted((RAW/'labour2021').glob('data-*.json'))]}
  sources.extend(catalogue(used))
