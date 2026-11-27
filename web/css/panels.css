@@ -1,0 +1,59 @@
+/* Atlas panels and national yield bar. */
+#yield-bar { position: absolute; z-index: 5; top: 44px; left: 0; right: 0; display: flex; align-items: stretch; gap: 2px; min-height: 48px; padding: 3px 12px; overflow-x: auto; scrollbar-width: thin; background: linear-gradient(#213747f5, #101d29f5); border-bottom: 1px solid #a48c5b; box-shadow: 0 3px 8px #0008; }
+.yield-chip { display: flex; flex: 0 0 auto; align-items: center; gap: 6px; padding: 4px 9px; background: transparent; border: 1px solid transparent; box-shadow: none; white-space: nowrap; }
+.yield-chip:hover, .yield-chip[aria-expanded="true"] { background: #5d502b99; border-color: #b59b62; }
+.yield-icon { color: #d9be77; font-size: 18px; }
+.yield-label { display: block; color: #bdb392; font: 9px Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+.yield-value { display: block; color: #f2e7c9; font: bold 13px Georgia, serif; font-variant-numeric: tabular-nums; }
+.yield-turn { align-self: center; margin-left: auto; padding: 0 8px; color: #d2c49e; font: 11px Georgia, serif; white-space: nowrap; }
+.cc-panel, .yield-report { position: absolute; z-index: 8; color: #f1e2b9; background: linear-gradient(160deg, #293e50f7, #101d29fa 72%); border: 1px solid #a88f58; box-shadow: 0 5px 20px #000a, inset 0 0 0 1px #f4d8991c; }
+.cc-panel { top: 93px; right: 12px; bottom: 35px; width: min(410px, calc(100vw - 24px)); overflow-y: auto; }
+.cc-panel[hidden], .yield-report[hidden], .city-roster-list[hidden] { display: none !important; }
+.cc-panel-header { position: relative; padding: 17px 52px 14px 18px; background: linear-gradient(130deg, #354c5d, #1a2a38); border-bottom: 1px solid #b39a5c80; }
+.cc-panel-header h2 { margin: 4px 0; color: #f3d38b; font-size: 25px; font-weight: normal; letter-spacing: .06em; }
+.cc-panel-header p { margin: 4px 0; color: #c7b991; font: 12px/1.45 Arial, sans-serif; }
+.cc-panel-kicker { color: #d2b66e; font: 10px Arial, sans-serif; text-transform: uppercase; letter-spacing: .16em; }
+.cc-panel-close, .yield-report-close { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; padding: 0; border-radius: 50%; font-size: 19px; line-height: 1; }
+.cc-panel-tabs { display: flex; gap: 4px; padding: 7px 10px; border-bottom: 1px solid #a58c5580; background: #101d29; }
+.cc-panel-tab { flex: 1; padding: 7px 5px; font: 10px Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+.cc-panel-tab[aria-selected="true"] { color: #ffe1a0; background: #5d502f; border-color: #d3b977; }
+.cc-panel-body { padding: 14px 17px 22px; }
+.cc-panel-section { margin-bottom: 16px; }
+.cc-panel-section h3 { margin: 0 0 9px; color: #e9cf91; font-size: 13px; font-weight: normal; text-transform: uppercase; letter-spacing: .13em; }
+.cc-stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.cc-stat { min-width: 0; padding: 9px; background: #0e1a24b8; border: 1px solid #ad955a55; border-radius: 3px; }
+.cc-stat-label { display: block; color: #bdb18f; font: 10px Arial, sans-serif; text-transform: uppercase; letter-spacing: .07em; }
+.cc-stat-value { display: block; margin-top: 4px; color: #f2dfb0; font: bold 16px Georgia, serif; overflow-wrap: anywhere; }
+.cc-stat-rank { display: block; margin-top: 3px; color: #d2b773; font: 11px Arial, sans-serif; }
+.cc-panel-note, .city-roster-note, .yield-report-note { color: #c0b593; font: 11px/1.5 Arial, sans-serif; }
+.cc-jobs-list { margin: 0; padding: 0; list-style: none; }
+.cc-jobs-list li { display: flex; justify-content: space-between; gap: 12px; padding: 7px 2px; border-bottom: 1px solid #bda15a30; font: 12px Arial, sans-serif; }
+.yield-report { top: 99px; left: 12px; width: min(620px, calc(100vw - 24px)); max-height: calc(100vh - 120px); overflow-y: auto; padding: 16px 18px; }
+.yield-report-header { position: relative; padding-right: 40px; border-bottom: 1px solid #b59b6280; }
+.yield-report-header h2 { margin: 0 0 10px; color: #f3d38b; font-size: 23px; font-weight: normal; }
+.yield-report-close { top: 0; right: 0; }
+.yield-report-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.yield-report-columns h3 { color: #e5c681; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+.yield-report-list { margin: 0; padding: 0; list-style: none; }
+.yield-report-row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 2px; border-bottom: 1px solid #bda15a30; font: 12px Arial, sans-serif; }
+.city-roster { position: absolute; z-index: 6; top: 100px; left: 12px; width: min(260px, calc(100vw - 24px)); color: #e9dab4; background: #142532f2; border: 1px solid #9f895a; box-shadow: 0 3px 10px #0008; }
+.city-roster-toggle { width: 100%; text-align: left; border: 0; border-radius: 0; color: #f0d79b; font-size: 13px; }
+.city-roster-list { max-height: min(55vh, 460px); overflow-y: auto; padding: 6px; }
+.city-roster-note { margin: 4px 5px 8px; }
+.city-roster-item { display: block; width: 100%; padding: 6px 8px; text-align: left; border: 0; border-bottom: 1px solid #a28f5c33; border-radius: 0; background: transparent; box-shadow: none; font-size: 12px; }
+@media (max-width: 600px) {
+  #yield-bar { top: 42px; min-height: 44px; padding: 2px 6px; }
+  .yield-chip { padding: 3px 7px; }
+  .yield-turn { margin-left: 0; }
+  .cc-panel { top: auto; right: 0; bottom: 28px; width: 100%; max-height: 58vh; }
+  .cc-panel-header { padding: 12px 48px 10px 14px; }
+  .cc-panel-header h2 { font-size: 21px; }
+  .yield-report { top: 92px; left: 6px; width: calc(100vw - 12px); max-height: calc(100vh - 130px); }
+  .city-roster { top: 93px; left: 8px; }
+}
+.yield-chip[aria-pressed="true"] { background: #5d502b99; border-color: #b59b62; }
+.yield-icon { color: var(--yield-color, #d9be77); }
+.yield-report-title small { color: #d2b66e; font: 10px Arial, sans-serif; letter-spacing: .14em; }
+.yield-report-total { color: #f2dfb0; font-weight: bold; }
+.yield-report-empty { color: #c0b593; font: 12px Arial, sans-serif; }
+.yield-report-number { white-space: nowrap; color: #f2dfb0; }
